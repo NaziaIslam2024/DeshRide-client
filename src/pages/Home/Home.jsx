@@ -5,6 +5,7 @@ const Home = () => {
         <div>
             Home
             This line send Inzamul 
+            another line added for checking purpose
         </div>
     );
 };
