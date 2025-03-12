@@ -84,7 +84,7 @@ const Navbar = () => {
               </ul>
             </div>
             <Link to="/" className="btn btn-ghost text-xl">
-              Project Name
+              ProjectName
             </Link>
           </div>
 
