@@ -1,11 +1,18 @@
 import React from 'react';
+import CarCategories from './CarCategories';
+import TrendingOffers from './TrendingOffers';
+import BangaloreSection from './BangaloreSection';
+import ExploreSlider from './ExploreSlider';
+import Promotion from './Promotion'
 
 const Home = () => {
     return (
         <div>
-            Home
-            This line send Inzamul 
-            another line added for checking purpose
+            <CarCategories></CarCategories>
+            <TrendingOffers></TrendingOffers>
+            <BangaloreSection></BangaloreSection>
+            <ExploreSlider></ExploreSlider>
+            <Promotion></Promotion>
         </div>
     );
 };
