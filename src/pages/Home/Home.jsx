@@ -4,6 +4,7 @@ const Home = () => {
     return (
         <div>
             Home
+            This line send Inzamul 
         </div>
     );
 };
