@@ -58,16 +58,27 @@ const ExploreSlider = () => {
         className="max-w-6xl mx-auto"
       >
         {places.map((place, index) => (
-          <SwiperSlide key={index} className="bg-white p-4 rounded-lg shadow-lg">
-            <div className="relative">
-              <img src={place.image} alt={place.title} className="w-full h-56 object-cover rounded-lg" />
-              <div className="absolute bottom-4 right-4 bg-white p-2 rounded-full shadow-md">
-                <FaArrowUpRightFromSquare className="text-gray-600" />
-              </div>
+          <SwiperSlide 
+          key={index} 
+          className="bg-white p-4 rounded-lg shadow-lg min-h-[420px] flex flex-col"
+        >
+          <div className="relative h-2/3">
+            <img 
+              src={place.image} 
+              alt={place.title} 
+              className="w-full h-56 object-cover rounded-lg"
+            />
+            <div className="absolute bottom-4 right-4 bg-white p-2 rounded-full shadow-md">
+              <FaArrowUpRightFromSquare className="text-gray-600" />
             </div>
-            <h3 className="font-semibold mt-4 text-lg">{place.title}</h3>
-            <p className="text-gray-600 mt-2 text-sm">{place.description}</p>
-          </SwiperSlide>
+          </div>
+          <div className="flex-grow flex flex-col justify-between">
+            <h3 className="font-semibold mt-4 text-lg line-clamp-2">{place.title}</h3>
+            <p className="text-gray-600 mt-2 text-sm line-clamp-2 overflow-hidden">
+              {place.description}
+            </p>
+          </div>
+        </SwiperSlide>
         ))}
       </Swiper>
       <div className="flex justify-center mt-6">
