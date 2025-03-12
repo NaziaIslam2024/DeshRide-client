@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-/* eslint-disable no-unused-vars */
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -62,22 +61,23 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
 
-      if (currentUser?.email) {
-        const user = { email: currentUser.email };
-        axiosPublic
-          .post("/jwt", user, { withCredentials: true })
-          .then((res) => {
-            console.log("login token", res.data);
-            setLoading(false);
-          });
-      } else {
-        axiosPublic
-          .post("/logout", {}, { withCredentials: true })
-          .then((res) => {
-            console.log("logout data : ", res.data);
-            setLoading(false);
-          });
-      }
+      // todo: need to update
+      // if (currentUser?.email) {
+      //   const user = { email: currentUser.email };
+      //   axiosPublic
+      //     .post("/jwt", user, { withCredentials: true })
+      //     .then((res) => {
+      //       console.log("login token", res.data);
+      //       setLoading(false);
+      //     });
+      // } else {
+      //   axiosPublic
+      //     .post("/logout", {}, { withCredentials: true })
+      //     .then((res) => {
+      //       console.log("logout data : ", res.data);
+      //       setLoading(false);
+      //     });
+      // }
     });
 
     return () => unsubscribe();
