@@ -5,6 +5,8 @@ import BangaloreSection from './BangaloreSection';
 import ExploreSlider from './ExploreSlider';
 import Promotion from './Promotion'
 import Stories from './Stories';
+import Download from './Download';
+import Host from './Host';
 
 const Home = () => {
     return (
@@ -15,6 +17,8 @@ const Home = () => {
             <ExploreSlider></ExploreSlider>
             <Promotion></Promotion>
             <Stories></Stories>
+            <Download></Download>
+            <Host></Host>
         </div>
     );
 };
