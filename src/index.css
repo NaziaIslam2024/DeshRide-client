@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+.swiper-pagination-bullet-active {
+    background-color: green !important;
+    width: 30px !important;
+    height: 4px !important;
+    border-radius: 4px !important;
+}
