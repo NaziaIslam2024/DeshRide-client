@@ -4,6 +4,7 @@ import TrendingOffers from '../../components/HomePage/TrendingOffers';
 import BangaloreSection from '../../components/HomePage/BangaloreSection';
 import ExploreSlider from '../../components/HomePage/ExploreSlider';
 import Promotion from '../../components/HomePage/Promotion';
+import Stories from '../../components/HomePage/Stories';
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
             <BangaloreSection></BangaloreSection>
             <ExploreSlider></ExploreSlider>
             <Promotion></Promotion>
+            <Stories></Stories>
         </div>
     );
 };

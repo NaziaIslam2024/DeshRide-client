@@ -21,7 +21,7 @@ const Promotion = () => {
       ]; 
 
     return (
-        <div className="md:w-[60%] w-11/12 mx-auto mt-10 mb-20 px-4 relative">
+        <div className="md:w-[60%] w-11/12 mx-auto mt-10 px-4 relative">
         <Swiper
           modules={[Navigation, Pagination]}
           slidesPerView={1.3}
@@ -33,7 +33,7 @@ const Promotion = () => {
           }}
           pagination={{ el: ".swiper-pagination", clickable: true }}
           breakpoints={{
-            768: { slidesPerView: 1.5, spaceBetween: 40 },
+            768: { slidesPerView: 1, spaceBetween: 40 },
             1024: { slidesPerView: 1.3, spaceBetween: 50 },
           }}
           className="relative"
