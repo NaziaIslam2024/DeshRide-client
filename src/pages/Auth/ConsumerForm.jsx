@@ -1,0 +1,105 @@
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { User, Mail, Phone, Lock, UserCheck, Eye, EyeOff } from "lucide-react";
+import { useForm } from "react-hook-form";
+
+export default function ConsumerForm() {
+  const [showPassword, setShowPassword] = useState(false);
+  const consumerForm = useForm();
+
+  const handleSubmit = (data) => {
+    console.log("Consumer Form Data:", data);
+  };
+
+  return (
+    <motion.form
+      key="consumer"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="space-y-4"
+      onSubmit={consumerForm.handleSubmit(handleSubmit)}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="relative">
+          <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            {...consumerForm.register("fullName")}
+            type="text"
+            placeholder="Full Name"
+            className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+          />
+        </div>
+        <div className="relative">
+          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            {...consumerForm.register("email")}
+            type="email"
+            placeholder="Email Address"
+            className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+          />
+        </div>
+      </div>
+      <div className="relative">
+        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <input
+          {...consumerForm.register("phoneNumber")}
+          type="tel"
+          placeholder="Phone Number"
+          className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+        />
+      </div>
+      <div className="relative">
+        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <input
+          {...consumerForm.register("password")}
+          type={showPassword ? "text" : "password"}
+          placeholder="Password"
+          className="w-full pl-10 pr-10 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        >
+          {showPassword ? (
+            <EyeOff className="w-4 h-4" />
+          ) : (
+            <Eye className="w-4 h-4" />
+          )}
+        </button>
+      </div>
+      <motion.button
+        type="submit"
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2.5 rounded-lg font-medium text-sm hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md shadow-blue-200"
+      >
+        Register as Consumer
+      </motion.button>
+      <div className="relative my-6">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-200"></div>
+        </div>
+        <div className="relative flex justify-center">
+          <span className="bg-white px-4 text-xs text-gray-500">
+            Or continue with
+          </span>
+        </div>
+      </div>
+      <motion.button
+        type="button"
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        className="w-full border py-2.5 rounded-lg font-medium text-sm hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+      >
+        <img
+          src="https://www.google.com/favicon.ico"
+          alt="Google"
+          className="w-4 h-4"
+        />
+        Sign up with Google
+      </motion.button>
+    </motion.form>
+  );
+}

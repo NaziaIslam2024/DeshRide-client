@@ -1,0 +1,274 @@
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Car,
+  Mail,
+  Phone,
+  Lock,
+  PhoneCall,
+  UserCheck,
+  MapPin,
+  FileCheck,
+  CarFront,
+  ClipboardCheck,
+  CreditCard,
+  KeyRound,
+  Eye,
+  EyeOff,
+} from "lucide-react";
+import { useForm } from "react-hook-form";
+
+const vehicleTypes = [
+  "Sedan",
+  "SUV",
+  "Hatchback",
+  "Minivan",
+  "Luxury",
+  "Electric",
+];
+
+export default function ProviderForm() {
+  const [hasCar, setHasCar] = useState(null);
+  const [carUsage, setCarUsage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const providerForm = useForm();
+
+  const handleSubmit = (data) => {
+    const formData = {
+      ...data,
+      hasCar: hasCar || false,
+      carUsage: hasCar ? carUsage : undefined,
+    };
+    console.log("Provider Form Data:", formData);
+  };
+
+  return (
+    <motion.form
+      key="provider"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="space-y-6"
+      onSubmit={providerForm.handleSubmit(handleSubmit)}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="relative">
+          <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            {...providerForm.register("fullName")}
+            type="text"
+            placeholder="Full Name"
+            className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+          />
+        </div>
+        <div className="relative">
+          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            {...providerForm.register("email")}
+            type="email"
+            placeholder="Email Address"
+            className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+          />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="relative">
+          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            {...providerForm.register("phoneNumber")}
+            type="tel"
+            placeholder="Phone Number"
+            className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+          />
+        </div>
+        <div className="relative">
+          <PhoneCall className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            {...providerForm.register("emergencyContact")}
+            type="tel"
+            placeholder="Emergency Contact"
+            className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+          />
+        </div>
+      </div>
+      <div className="relative">
+        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <input
+          {...providerForm.register("password")}
+          type={showPassword ? "text" : "password"}
+          placeholder="Password"
+          className="w-full pl-10 pr-10 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        >
+          {showPassword ? (
+            <EyeOff className="w-4 h-4" />
+          ) : (
+            <Eye className="w-4 h-4" />
+          )}
+        </button>
+      </div>
+      <div className="relative">
+        <FileCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <input
+          {...providerForm.register("nid")}
+          type="text"
+          placeholder="NID Number"
+          className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+        />
+      </div>
+      <div className="relative">
+        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <input
+          {...providerForm.register("address")}
+          type="text"
+          placeholder="Address"
+          className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+        />
+      </div>
+
+      <div className="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-100">
+        <p className="text-sm font-medium text-gray-700">Do you own a car?</p>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={() => setHasCar(true)}
+            className={`flex-1 p-4 rounded-lg border transition-all ${
+              hasCar === true
+                ? "border-blue-500 bg-blue-50 shadow-sm"
+                : "border-gray-200 hover:border-blue-200 bg-white"
+            }`}
+          >
+            <CarFront className="w-5 h-5 mx-auto mb-2 text-blue-600" />
+            <p className="text-sm">Yes, I have a car</p>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setHasCar(false);
+              setCarUsage(null);
+            }}
+            className={`flex-1 p-4 rounded-lg border transition-all ${
+              hasCar === false
+                ? "border-blue-500 bg-blue-50 shadow-sm"
+                : "border-gray-200 hover:border-blue-200 bg-white"
+            }`}
+          >
+            <KeyRound className="w-5 h-5 mx-auto mb-2 text-blue-600" />
+            <p className="text-sm">No, I don't have a car</p>
+          </button>
+        </div>
+      </div>
+
+      {hasCar && (
+        <div className="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-100">
+          <p className="text-sm font-medium text-gray-700">
+            How would you like to use your car?
+          </p>
+          <div className="flex gap-4">
+            <button
+              type="button"
+              onClick={() => setCarUsage("drive")}
+              className={`flex-1 p-4 rounded-lg border transition-all ${
+                carUsage === "drive"
+                  ? "border-blue-500 bg-blue-50 shadow-sm"
+                  : "border-gray-200 hover:border-blue-200 bg-white"
+              }`}
+            >
+              <Car className="w-5 h-5 mx-auto mb-2 text-blue-600" />
+              <p className="text-sm">Drive my own car</p>
+            </button>
+            <button
+              type="button"
+              onClick={() => setCarUsage("rent")}
+              className={`flex-1 p-4 rounded-lg border transition-all ${
+                carUsage === "rent"
+                  ? "border-blue-500 bg-blue-50 shadow-sm"
+                  : "border-gray-200 hover:border-blue-200 bg-white"
+              }`}
+            >
+              <CreditCard className="w-5 h-5 mx-auto mb-2 text-blue-600" />
+              <p className="text-sm">Rent my car</p>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {hasCar && carUsage && (
+        <>
+          <div className="relative">
+            <CarFront className="absolute left-3 top-3 text-gray-400 w-4 h-4" />
+            <select
+              {...providerForm.register("vehicleType")}
+              className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors appearance-none bg-white"
+            >
+              <option value="">Select Vehicle Type</option>
+              {vehicleTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="relative">
+              <Car className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <input
+                {...providerForm.register("vehicleModel")}
+                type="text"
+                placeholder="Vehicle Model"
+                className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+              />
+            </div>
+            <div className="relative md:col-span-2">
+              <ClipboardCheck className="absolute left-3 top-3 text-gray-400 w-4 h-4" />
+              <textarea
+                {...providerForm.register("vehicleDetails")}
+                placeholder="Vehicle Details (Color, Year, Special Features, etc.)"
+                rows={3}
+                className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors resize-none"
+              />
+            </div>
+          </div>
+        </>
+      )}
+
+      {hasCar === false && (
+        <div className="relative">
+          <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            {...providerForm.register("drivingLicense")}
+            type="text"
+            placeholder="Driving License Number"
+            className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+          />
+        </div>
+      )}
+
+      <div className="flex items-center gap-2">
+        <input
+          {...providerForm.register("termsAccepted")}
+          type="checkbox"
+          id="terms"
+          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+        />
+        <label htmlFor="terms" className="text-sm text-gray-600">
+          I agree to the Terms and Conditions
+        </label>
+      </div>
+
+      <motion.button
+        type="submit"
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2.5 rounded-lg font-medium text-sm hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md shadow-blue-200"
+      >
+        Register as Provider
+      </motion.button>
+    </motion.form>
+  );
+}
