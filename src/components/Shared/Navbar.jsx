@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
   const links = (
     <>
       <li>
@@ -60,9 +63,8 @@ const Navbar = () => {
                 Become a Host
               </button>
               <button className="btn py-2 px-5 rounded-4xl">Get the App</button>
-              <button className="btn py-2 px-5 rounded-4xl">
-                Login / signup
-              </button>
+              <button className="btn py-2 px-5 rounded-4xl">Login</button>
+              <button className="btn py-2 px-5 rounded-4xl">SignUp</button>
               {/* {links} */}
             </ul>
           </div>
@@ -76,15 +78,44 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end gap-5 hidden lg:flex">
-          <button className="btn bg-transparent text-white py-2 px-5 rounded-4xl">
-            Become a Host
-          </button>
-          <button className="btn bg-transparent text-white py-2 px-5 rounded-4xl">
-            Get the App
-          </button>
-          <button className="btn bg-transparent text-white py-2 px-5 rounded-4xl">
-            Login / signup
-          </button>
+          <Link to={"/"} className="btn bg-transparent text-white py-2 px-5 rounded-4xl">
+            Home
+          </Link>
+          <Link to={""} className="btn bg-transparent text-white py-2 px-5 rounded-4xl">
+            Join Now
+          </Link>
+          {user ? (
+            <>
+              <Link
+                to={"#"}
+                className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+              >
+                Join Now
+              </Link>{" "}
+              <Link
+                to={"/login"}
+                className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+              >
+                Login
+              </Link>
+            </>
+          ) : (
+            <>
+              {" "}
+              <Link
+                to={"/login"}
+                className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+              >
+                Login
+              </Link>
+              <Link
+                to={"/register"}
+                className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+              >
+                SignUp
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>
