@@ -11,8 +11,10 @@ import Host from './Host';
 
 const Home = () => {
     return (
-        <div className='container mx-auto'>
+
+        <div className=''>
             <Banner></Banner>
+            <div className='container mx-auto'>
             <CarCategories></CarCategories>
             <TrendingOffers></TrendingOffers>
             <BangaloreSection></BangaloreSection>
@@ -21,6 +23,7 @@ const Home = () => {
             <Stories></Stories>
             <Download></Download>
             <Host></Host>
+            </div>
         </div>
     );
 };
