@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 .swiper-pagination-bullet-active {
     background-color: green !important;

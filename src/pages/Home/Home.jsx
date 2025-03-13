@@ -1,4 +1,5 @@
 import React from 'react';
+import Banner from './Banner';
 import CarCategories from './CarCategories';
 import TrendingOffers from './TrendingOffers';
 import BangaloreSection from './BangaloreSection';
@@ -11,7 +12,10 @@ import FAQ from './FAQ';
 
 const Home = () => {
     return (
-        <div>
+
+        <div className=''>
+            <Banner></Banner>
+            <div className='container mx-auto'>
             <CarCategories></CarCategories>
             <TrendingOffers></TrendingOffers>
             <BangaloreSection></BangaloreSection>
@@ -21,6 +25,7 @@ const Home = () => {
             <Download></Download>
             <Host></Host>
             <FAQ></FAQ>
+            </div>
         </div>
     );
 };
