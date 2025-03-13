@@ -34,7 +34,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="mb-4 text-center bg-[#1149AD]  text-white shadow-sm ">
+    <div className="text-center bg-[#4445fb]  text-white shadow-sm ">
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
