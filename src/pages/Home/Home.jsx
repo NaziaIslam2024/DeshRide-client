@@ -8,6 +8,7 @@ import Promotion from './Promotion'
 import Stories from './Stories';
 import Download from './Download';
 import Host from './Host';
+import FAQ from './FAQ';
 
 const Home = () => {
     return (
@@ -23,6 +24,7 @@ const Home = () => {
             <Stories></Stories>
             <Download></Download>
             <Host></Host>
+            <FAQ></FAQ>
             </div>
         </div>
     );
