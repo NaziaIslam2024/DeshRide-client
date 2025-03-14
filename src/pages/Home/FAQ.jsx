@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 const faqs = [
-  { question: "How much does it cost to rent a car in Bangalore?", answer: "The cost varies based on the car type and duration." },
-  { question: "Which website is best to rent a car?", answer: "There are multiple options like Zoomcar, Revv, and Myles." },
+  { question: "How much does it cost to rent a car with DeshRide?", answer: "DeshRide offers competitive rates based on the car type, rental duration, and location within Bangladesh." },
+  { question: "How do I book a car on DeshRide?", answer: "You can book a car through our website by selecting a vehicle, choosing rental dates, and confirming your booking with payment." },
   { question: "Is renting a car cheaper than buying one?", answer: "Renting can be cheaper if you don't need a car daily." },
-  { question: "What is the process to rent a car in Bangalore?", answer: "You need to book online, provide documents, and make payment." },
-  { question: "What are the popular types of cars available for rent in Bangalore and how do their features vary?", answer: "Sedans, SUVs, and hatchbacks are available with different comfort and mileage features." },
+  { question: "Can I rent a car with a driver on DeshRide?", answer: "Yes, DeshRide provides both self-drive and chauffeur-driven car rental options for your convenience." },
+  { question: "What types of cars are available on DeshRide?", answer: "Sedans, SUVs, and hatchbacks are available with different comfort and mileage features." },
 ];
 
 const FAQ = () => {
@@ -14,12 +14,15 @@ const FAQ = () => {
 
   return (
     <div className="w-11/12 mx-auto my-10">
-      <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 relative">
+      <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">
         Frequently Asked Questions
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="flex flex-wrap gap-4 items-start">
         {faqs.map((faq, index) => (
-          <div key={index} className="bg-white border rounded-lg p-4 shadow-md">
+          <div
+            key={index}
+            className="bg-white border rounded-lg p-4 shadow-md w-full md:w-[48%] transition-all duration-300"
+          >
             <button
               className="flex justify-between items-center w-full text-left font-semibold"
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -27,7 +30,13 @@ const FAQ = () => {
               <span className="text-sm md:text-base">Q. {faq.question}</span>
               <ChevronDown className={`w-5 h-5 transition-transform ${openIndex === index ? "rotate-180" : ""}`} />
             </button>
-            {openIndex === index && <p className="mt-2 text-sm text-gray-700">{faq.answer}</p>}
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                openIndex === index ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"
+              }`}
+            >
+              <p className="text-sm text-gray-700">{faq.answer}</p>
+            </div>
           </div>
         ))}
       </div>

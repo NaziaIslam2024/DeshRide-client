@@ -6,7 +6,11 @@ import bannerContent2 from "../../assets/Images/banner/banner-content-2.svg";
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import { Pagination } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
+
+
 
 
 const reviews = [
@@ -66,14 +70,15 @@ const reviews = [
 const Testimonial = () => {
 
     return (
-        <div className='mt-10 p-5 w-11/12 mx-auto bg-[#4445fb] text-white'>
+        <div className='mt-10 p-5 w-11/12 mx-auto'>
             <h1 className="text-center text-2xl font-semibold mb-4">Story of satisfaction</h1>
             <p className="text-center max-w-3xl mx-auto mb-8">
                 Our consumers has shared their valuable thoughts and feedback which encourage us to provide the best service to our customers.
             </p>
             <Swiper
+                navigation={true}
                 slidesPerView={1}
-                spaceBetween={10}
+                spaceBetween={5}
                 pagination={{
                     clickable: true,
                 }}
@@ -91,24 +96,20 @@ const Testimonial = () => {
                         spaceBetween: 50,
                     },
                 }}
-                modules={[Pagination]}
-                className="mySwiper"
+                modules={[Pagination, Navigation]}
+                className="custom-swiper"
             >
                 {
                     reviews.map((review, index) => (
                         <SwiperSlide key={index}>
-                            <div className="py-4 border flex flex-col border-white w-full shadow-xl backdrop-blur-sm text-center items-center h-72">
+                            <div className="py-4 flex flex-col w-full shadow-lg backdrop-blur-sm text-center items-center h-72">
                                 <img
                                     src={review.userAvatar}
                                     alt={review.userName}
                                     className="w-12 h-12 rounded-full mr-4 mb-6"
                                 />
-                                {/* <div className="py-5 px-6">
-                                    <p className="text-white mb-4">{review.title}</p>
-                                    <h2 className="items-end">{review.userName}</h2>
-                                </div> */}
                                 <div className="flex flex-col justify-between flex-1 w-full px-6">
-                                    <p className="text-white min-h-[60px] flex items-center justify-center">
+                                    <p className="min-h-[60px] flex items-center justify-center text-justify">
                                         {review.title}
                                     </p>
                                     <h2 className="mt-auto">{review.userName}</h2>
