@@ -9,6 +9,7 @@ import Stories from './Stories';
 import Download from './Download';
 import Host from './Host';
 import FAQ from './FAQ';
+import ShowUserLocation from './ShowUserLocation';
 
 const Home = () => {
     return (
@@ -24,6 +25,7 @@ const Home = () => {
             <Stories></Stories>
             <Download></Download>
             <Host></Host>
+            <ShowUserLocation></ShowUserLocation>
             <FAQ></FAQ>
             </div>
         </div>
