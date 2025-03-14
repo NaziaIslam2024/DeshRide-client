@@ -10,7 +10,7 @@ import 'swiper/css/navigation';
 import { Pagination } from 'swiper/modules';
 import { Navigation } from 'swiper/modules';
 
-
+import './Testimonial.css';
 
 
 const reviews = [
