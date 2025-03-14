@@ -1,0 +1,24 @@
+.custom-swiper .swiper-button-next,
+.custom-swiper .swiper-button-prev {
+   
+    color: black; /* Change arrow color */
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    /* right: 60%; */
+    /* left: 40%; */
+    top: 320px;
+    bottom: -10px;
+}
+
+.custom-swiper .swiper-button-next:hover,
+.custom-swiper .swiper-button-prev:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* Change on hover */
+    color: blue;
+}
+
+.custom-swiper .swiper-button-next::after,
+.custom-swiper .swiper-button-prev::after {
+    font-size: 20px; /* Adjust arrow size */
+    font-weight: bold;
+}

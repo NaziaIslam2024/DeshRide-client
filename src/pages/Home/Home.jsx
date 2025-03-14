@@ -9,7 +9,7 @@ import Stories from './Stories';
 import Download from './Download';
 import Host from './Host';
 import FAQ from './FAQ';
-import ShowUserLocation from './ShowUserLocation';
+import Testimonial from './Testimonial';
 
 const Home = () => {
     return (
@@ -17,16 +17,16 @@ const Home = () => {
         <div className=''>
             <Banner></Banner>
             <div className='container mx-auto'>
-            <CarCategories></CarCategories>
-            <TrendingOffers></TrendingOffers>
-            <BangaloreSection></BangaloreSection>
-            <ExploreSlider></ExploreSlider>
-            <Promotion></Promotion>
-            <Stories></Stories>
-            <Download></Download>
-            <Host></Host>
-            <ShowUserLocation></ShowUserLocation>
-            <FAQ></FAQ>
+                <CarCategories></CarCategories>
+                <TrendingOffers></TrendingOffers>
+                <BangaloreSection></BangaloreSection>
+                <ExploreSlider></ExploreSlider>
+                <Promotion></Promotion>
+                <Stories></Stories>
+                <Download></Download>
+                <Host></Host>
+                <Testimonial></Testimonial>
+                <FAQ></FAQ>
             </div>
         </div>
     );

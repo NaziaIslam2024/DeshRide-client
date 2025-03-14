@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { User, Mail, Phone, Lock, UserCheck, Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../providers/AuthProvider";
 
 export default function ConsumerForm() {
   const [showPassword, setShowPassword] = useState(false);
   const consumerForm = useForm();
+  const { createNewUser, setUser, updateUser } = useAuth();
+  console.log(createNewUser);
 
   const handleSubmit = (data) => {
     console.log("Consumer Form Data:", data);
