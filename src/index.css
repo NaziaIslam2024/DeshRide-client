@@ -11,3 +11,7 @@
     position: relative !important;
     margin-top: 20px !important;
 }
+.marquee-space {
+    display: flex;
+    justify-content: space-between;
+  }
