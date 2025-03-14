@@ -10,6 +10,7 @@ import Download from './Download';
 import Host from './Host';
 import FAQ from './FAQ';
 import Testimonial from './Testimonial';
+import Gallery from './Gallery';
 
 const Home = () => {
     return (
@@ -22,6 +23,7 @@ const Home = () => {
                 <BangaloreSection></BangaloreSection>
                 <ExploreSlider></ExploreSlider>
                 <Promotion></Promotion>
+                <Gallery></Gallery>
                 <Stories></Stories>
                 <Download></Download>
                 <Host></Host>
