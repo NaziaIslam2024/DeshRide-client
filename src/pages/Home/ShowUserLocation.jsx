@@ -79,8 +79,8 @@ const ShowUserLocation = () => {
 
   const getIcon = (type) => {
     const iconMap = {
-      user: "https://cdn-icons-png.flaticon.com/512/61/61168.png", 
-      school: "https://cdn-icons-png.flaticon.com/512/1041/1041916.png", 
+      user: "https://png.pngtree.com/png-vector/20230407/ourmid/pngtree-you-are-here-with-map-pointer-vector-png-image_6689796.png", 
+      
       marketplace: "https://cdn-icons-png.flaticon.com/512/9198/9198446.png", 
       motorcycle: "https://cdn-icons-png.flaticon.com/512/3721/3721619.png", 
       school: "https://cdn-icons-png.flaticon.com/512/3778/3778120.png", 
