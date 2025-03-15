@@ -10,6 +10,7 @@ import Download from './Download';
 import Host from './Host';
 import FAQ from './FAQ';
 import Testimonial from './Testimonial';
+import ShowUserLocation from './ShowUserLocation';
 
 const Home = () => {
     return (
@@ -26,6 +27,7 @@ const Home = () => {
                 <Download></Download>
                 <Host></Host>
                 <Testimonial></Testimonial>
+                <ShowUserLocation></ShowUserLocation>
                 <FAQ></FAQ>
             </div>
         </div>
