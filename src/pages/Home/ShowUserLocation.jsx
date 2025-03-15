@@ -79,19 +79,19 @@ const ShowUserLocation = () => {
 
   const getIcon = (type) => {
     const iconMap = {
-      user: "https://png.pngtree.com/png-vector/20230407/ourmid/pngtree-you-are-here-with-map-pointer-vector-png-image_6689796.png", 
-      
-      marketplace: "https://cdn-icons-png.flaticon.com/512/9198/9198446.png", 
-      motorcycle: "https://cdn-icons-png.flaticon.com/512/3721/3721619.png", 
-      school: "https://cdn-icons-png.flaticon.com/512/3778/3778120.png", 
-      pharmacy: "https://cdn.iconscout.com/icon/free/png-256/free-pharmacy-location-icon-download-in-svg-png-gif-file-formats--medicine-pin-placeholder-pack-maps-and-navigation-icons-3813370.png", 
-      hospital: "https://static.vecteezy.com/system/resources/previews/009/350/681/non_2x/building-place-hospital-png.png", 
-      restaurant: "https://cdn-icons-png.flaticon.com/512/4287/4287725.png", // Fork & knife
-      hotel: "https://cdn-icons-png.flaticon.com/512/1690/1690224.png", // Bed
-      bank: "https://cdn-icons-png.flaticon.com/512/1041/1041916.png", // Bank building
-      station: "https://cdn-icons-png.flaticon.com/512/684/684908.png", // Train
-      supermarket: "https://cdn-icons-png.flaticon.com/512/2331/2331970.png", // Cart
-      default: "https://cdn-icons-png.flaticon.com/512/854/854992.png", // Pin
+      user: "https://cdn-icons-png.flaticon.com/512/3307/3307717.png", 
+      fuel: "https://cdn-icons-png.flaticon.com/512/7720/7720738.png", 
+      marketplace: "https://cdn-icons-png.flaticon.com/512/8059/8059048.png", 
+      motorcycle: "https://static.thenounproject.com/png/192174-200.png", 
+      school: "https://cdn-icons-png.flaticon.com/512/4705/4705140.png", 
+      pharmacy: "https://cdn-icons-png.flaticon.com/512/9922/9922129.png", 
+      hospital: "https://cdn-icons-png.flaticon.com/512/10714/10714002.png", 
+      restaurant: "https://cdn-icons-png.flaticon.com/512/4287/4287725.png", 
+      hotel: "https://cdn-icons-png.flaticon.com/512/1690/1690224.png",
+      bank: "https://cdn-icons-png.flaticon.com/512/1041/1041916.png", 
+      station: "https://cdn-icons-png.flaticon.com/512/684/684908.png", 
+      supermarket: "https://cdn-icons-png.flaticon.com/512/2331/2331970.png", 
+      default: "https://cdn-icons-png.flaticon.com/512/854/854992.png",
     };
 
     // Customize size for "user" type
