@@ -11,3 +11,10 @@
     position: relative !important;
     margin-top: 20px !important;
 }
+.pagination-custom .swiper-pagination{
+    /* background-color: red; */
+    position: absolute !important;
+    bottom : 0px !important;
+    left : 580px !important;
+
+}
