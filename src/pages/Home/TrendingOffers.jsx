@@ -20,7 +20,7 @@ const TrendingOffers = () => {
   ];
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-10 relative">
+    <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-10 relative mb-[100px]">
       <h2 className="text-white text-xl sm:text-2xl font-semibold text-center mb-4 sm:mb-6">
         Trending Offers
       </h2>

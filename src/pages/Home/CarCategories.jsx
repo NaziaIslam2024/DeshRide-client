@@ -45,7 +45,7 @@ const CarCategories = () => {
       ];
 
     return (
-        <div className="mt-10 px-5 w-11/12 mx-auto">
+        <div className="mb-[100px] px-5 w-11/12 mx-auto">
            <h2 className="text-center text-2xl font-semibold mb-4">
               Perfect Car for Every Journey in Bangladesh
            </h2>

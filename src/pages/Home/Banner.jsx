@@ -28,7 +28,7 @@ const slides = [
 
 const Banner = () => {
   return (
-    <div className="pagination-custom ">
+    <div className="pagination-custom mb-[100px]">
       <Swiper
         autoplay={{
           delay: 3000, // Change slide every 3 seconds

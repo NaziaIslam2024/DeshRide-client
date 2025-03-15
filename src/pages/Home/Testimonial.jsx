@@ -70,7 +70,7 @@ const reviews = [
 const Testimonial = () => {
 
     return (
-        <div className='mt-10 p-5 w-11/12 mx-auto'>
+        <div className='mb-[100px] p-5 w-11/12 mx-auto'>
             <h1 className="text-center text-2xl font-semibold mb-4">Story of satisfaction</h1>
             <p className="text-center max-w-3xl mx-auto mb-8">
                 Our consumers has shared their valuable thoughts and feedback which encourage us to provide the best service to our customers.

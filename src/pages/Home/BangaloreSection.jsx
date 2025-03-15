@@ -5,7 +5,7 @@ import img4 from "../../assets/Usecase-3.webp";
 
 const BangaloreSection = () => {
   return (
-    <div className="w-11/12 mt-10 bg-slate-100 mx-auto p-6">
+    <div className="w-11/12 mt-10 bg-slate-100 mx-auto p-6 mb-[100px]">
       
       <div className="flex flex-col lg:flex-row items-center gap-8">
         <img
