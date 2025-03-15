@@ -3,7 +3,7 @@ import Marquee from "react-fast-marquee";
 
 const Gallery = () => {
 return (
-    <div className="w-11/12 mx-auto my-10 border-b-4 border-t-4 pt-10 border-gray-200 pb-10 ">
+    <div className="w-11/12 mx-auto my-10 border-b-4 border-t-4 pt-10 border-gray-200 pb-10 mb-[100px]">
         <h1 className="text-3xl font-bold text-center pb-10 ">Moments from DeshRide </h1>
         <Marquee gradient={false} className="marquee-space" pauseOnHover speed={40}>
             <div className="grid grid-cols-4 gap-4">

@@ -40,7 +40,7 @@ const places = [
 
 const ExploreSlider = () => {
   return (
-    <div className="w-11/12 mx-auto mt-10 py-10 px-4">
+    <div className="w-11/12 mx-auto py-10 px-4 mb-[100px]">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-2xl font-semibold mb-6">Places to explore around Bangalore</h2>
       </div>

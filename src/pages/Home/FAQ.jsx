@@ -13,7 +13,7 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <div className="w-11/12 mx-auto my-10">
+    <div className="w-11/12 mx-auto mb-[100px]">
       <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">
         Frequently Asked Questions
       </h2>
