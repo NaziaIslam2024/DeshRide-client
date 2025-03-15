@@ -15,3 +15,34 @@
     display: flex;
     justify-content: space-between;
   }
+
+
+/* Global scrollbar styles */
+*::-webkit-scrollbar {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom, #ffe4e4, #ec9a9a) !important;
+    border-radius: 0px !important;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #750202, #cc2084, #dd1c02, ) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 6px rgba(187, 102, 102, 0.8) !important;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #a07043, #f13a22) !important;
+    box-shadow: 0 0 12px rgba(192, 49, 24, 0.8), 0 0 24px rgba(179, 45, 4, 0.6) !important;
+  }
+  /* For Firefox */
+  * {
+    scrollbar-width: thin !important;
+    scrollbar-color: #ec0cec #ffe4e4 !important;
+  }
+  
+
+
