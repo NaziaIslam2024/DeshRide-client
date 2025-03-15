@@ -21,7 +21,7 @@ const Promotion = () => {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-6 sm:mt-10 px-4 sm:px-6 lg:px-8 relative">
+    <div className="w-full max-w-4xl mx-auto mt-6 sm:mt-10 px-4 sm:px-6 lg:px-8 relative mb-[100px]">
       <div className="relative">
         <Swiper
           modules={[Navigation, Pagination]}

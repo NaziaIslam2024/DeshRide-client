@@ -59,7 +59,7 @@ const stories = [
 
 const Stories = () => {
   return (
-    <div className="w-11/12 mx-auto px-4 mt-10">
+    <div className="w-11/12 mx-auto px-4 mb-[100px]">
       <h2 className="text-xl md:text-2xl font-bold text-center mb-6">Zoomcar Stories</h2>
       <Swiper
         modules={[Pagination]}

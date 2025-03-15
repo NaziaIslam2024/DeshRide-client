@@ -11,13 +11,20 @@
     position: relative !important;
     margin-top: 20px !important;
 }
+.pagination-custom .swiper-pagination{
+    /* background-color: red; */
+    position: absolute !important;
+    bottom : 0px !important;
+    left : 580px !important;
+
+}
 .marquee-space {
     display: flex;
     justify-content: space-between;
   }
 
 
-/* Global scrollbar styles */
+/* scrollbar styles start */
 *::-webkit-scrollbar {
     width: 12px !important;
     height: 12px !important;
@@ -43,6 +50,8 @@
     scrollbar-width: thin !important;
     scrollbar-color: #ec0cec #ffe4e4 !important;
   }
+
+/* scrollbar styles end */
   
 
 
