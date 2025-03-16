@@ -10,18 +10,18 @@ const TrendingOffers = () => {
     {
       id: 1,
       title: "FREEAIRPORT",
-      description: "Get Zoomcar delivered to the Airport terminal for free",
+      description: "Get DeshRide delivered to the Airport terminal for free",
     },
     {
       id: 2,
       title: "FREEHD",
-      description: "Get Zoomcar delivered to your doorstep for free",
+      description: "Get DeshRide delivered to your doorstep for free",
     },
   ];
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-10 relative mb-[100px]">
-      <h2 className="text-white text-xl sm:text-2xl font-semibold text-center mb-4 sm:mb-6">
+    <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative mb-[100px]">
+      <h2 className="text-xl sm:text-2xl font-semibold text-center mb-4 sm:mb-6">
         Trending Offers
       </h2>
       
