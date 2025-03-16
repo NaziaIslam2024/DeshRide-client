@@ -6,7 +6,7 @@ import { IoMdPaperPlane } from "react-icons/io";
 import car from "../../../src/assets/Images/banner/icons8-sedan-64.png";
 import taxi from "../../../src/assets/Images/banner/icons8-taxi-50.png";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
+import { Pagination, Navigation, Autoplay  } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -42,20 +42,20 @@ const Banner = () => {
           // el: ".swiper-pagination-banner"
         }}
         navigation={false}
-        modules={[Pagination, Navigation]}
+        modules={[Pagination, Navigation, Autoplay ]}
         className="mySwiperBanner relative"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <div
-              className="h-[400px] flex  pr-20"
+              className="h-[600px] flex  pr-20"
               style={{
                 backgroundImage: `linear-gradient(rgba(0,0,0,0.64),rgba(0,0,0,0.64)),url(${slide.image})`,
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
               }}
             >
-              <div className="  text-white  hidden lg:block absolute  right-[0px] md:right-[30px] md:top-[160px] 2xl:right-[400px] ">
+              <div className="  text-white  hidden lg:block absolute  right-[0px] md:right-[30px] md:top-[240px] 2xl:right-[400px] ">
                 <h2
                   className="font-bold text-4xl text-right"
                   dangerouslySetInnerHTML={{ __html: slide.title }}
@@ -67,7 +67,7 @@ const Banner = () => {
         ))}
       </Swiper>
       {/* search card design  */}
-      <div className="p-2 w-sm md:w-md xl:w-xl absolute left-[0px] md:left-[30px] md:top-[160px] 2xl:left-[400px] z-20  ">
+      <div className="p-2 w-[370px] md:w-md xl:w-xl absolute left-[0px] md:left-[30px] top-[260px] 2xl:left-[400px] z-20  ">
         <div className="flex">
           <div className="flex w-1/2 justify-center gap-2 items-center bg-white py-3 px-8 rounded-t-xl mr-2 ">
             <img src={taxi} alt="" className="w-5 h-5" />
