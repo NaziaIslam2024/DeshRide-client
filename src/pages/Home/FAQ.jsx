@@ -7,13 +7,14 @@ const faqs = [
   { question: "Is renting a car cheaper than buying one?", answer: "Renting can be cheaper if you don't need a car daily." },
   { question: "Can I rent a car with a driver on DeshRide?", answer: "Yes, DeshRide provides both self-drive and chauffeur-driven car rental options for your convenience." },
   { question: "What types of cars are available on DeshRide?", answer: "Sedans, SUVs, and hatchbacks are available with different comfort and mileage features." },
+  { question: "Do I need a driving license to rent a car?", answer: "Yes, a valid Bangladeshi or international driving license is required for self-drive rentals." }
 ];
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <div className="w-11/12 mx-auto mb-[100px]">
+    <div className="w-11/12 mx-auto mt-[100px] mb-[100px]">
       <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">
         Frequently Asked Questions
       </h2>

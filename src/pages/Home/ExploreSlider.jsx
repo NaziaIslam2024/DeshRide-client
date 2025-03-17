@@ -13,36 +13,37 @@ import image5 from "../../assets/Img4.jpg";
 const places = [
   {
     image: image1,
-    title: 'Explore the Best of Chennai and Beyond with Zoomcar',
-    description: 'Chennai, the cultural heart of South India, is a fascinating blend of tradition and modernity.',
+    title: "Explore the Best of Dhaka and Beyond with DeshRide",
+    description: "Dhaka, the vibrant capital of Bangladesh, is a perfect mix of history, culture, and modernity.",
   },
   {
     image: image2,
-    title: 'Explore the Best of Bangalore and Beyond with Zoomcar',
-    description: 'Bangalore, fondly known as the Garden City and the Silicon Valley of India.',
+    title: "Exploring the Natural Beauty of Sylhet with DeshRide",
+    description: "Sylhet, known for its lush tea gardens and breathtaking landscapes, is a must-visit destination in Bangladesh.",
   },
   {
     image: image3,
-    title: 'Cruising the Coastal Beauty: Unforgettable Road Trips in South India',
-    description: 'Embark on a journey like never before with our guide to road trips in South India.',
+    title: "Cox’s Bazar: The Longest Sea Beach Awaits Your Road Trip",
+    description: "Take a scenic road trip to Cox’s Bazar, home to the world's longest unbroken sandy beach.",
   },
   {
     image: image4,
-    title: 'Beyond the City Limits: Unleashing the Family Road Trip with Self-Drive Car Rentals in Bangalore',
-    description: 'Embark on a memorable family road trip with our self-drive car rentals in Bangalore.',
+    title: "A Historic Journey to Sonargaon: The Ancient Capital of Bengal",
+    description: "Step back in time with a visit to Sonargaon, a treasure trove of history, culture, and beautiful architecture.",
   },
   {
     image: image5,
-    title: 'Choosing the Right Time: A Seasonal Guide for Bangalore to Ooty Travel',
-    description: 'Discover the ultimate seasonal guide for your Bangalore to Ooty trip with Zoomcar.',
+    title: "Unwind at Kuakata: The Land of Sunrise & Sunset",
+    description: "Enjoy the breathtaking view of both sunrise and sunset over the sea at Kuakata, a hidden gem of Bangladesh.",
   }
 ];
+
 
 const ExploreSlider = () => {
   return (
     <div className="w-11/12 mx-auto py-10 px-4 mb-[100px]">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-2xl font-semibold mb-6">Places to explore around Bangalore</h2>
+        <h2 className="text-2xl font-semibold mb-6">Places to explore around Bangladesh</h2>
       </div>
       <Swiper
         modules={[Navigation, Pagination]}
