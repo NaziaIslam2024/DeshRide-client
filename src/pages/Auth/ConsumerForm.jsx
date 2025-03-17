@@ -26,12 +26,12 @@ export default function ConsumerForm() {
     // console.log(name, email, password);
 
     // Validate password
-    if (!passwordRegex.test(password)) {
-      setError(
-        "Password must be at least 6 characters long and include an uppercase and a lowercase letter."
-      );
-      return;
-    }
+    // if (!passwordRegex.test(password)) {
+    //   // setError(
+    //   //   "Password must be at least 6 characters long and include an uppercase and a lowercase letter."
+    //   // );
+    //   return;
+    // }
 
     // setError("");  // error state need to set
 
