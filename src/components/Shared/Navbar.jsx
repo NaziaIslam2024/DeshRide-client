@@ -97,6 +97,7 @@ const Navbar = () => {
           >
             Join Now
           </Link> */}
+          
           {user ? (
             <>
               <Link
@@ -115,6 +116,10 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <Link to={"/about"}
+                className="btn bg-transparent text-white py-2 px-5 rounded-4xl">
+                  About
+              </Link>
               <Link
                 to={"/login"}
                 className="btn bg-transparent text-white py-2 px-5 rounded-4xl"

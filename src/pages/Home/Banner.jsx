@@ -14,14 +14,23 @@ import { Link } from "react-router";
 const slides = [
   {
     image:
-      "https://images.unsplash.com/photo-1494783367193-149034c05e8f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    contentImage: bannerContent1,
+    //   "https://images.unsplash.com/photo-1494783367193-149034c05e8f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // contentImage: bannerContent1,
+    "../../../src/assets/Images/banner/young-woman-testing-car-car-showroom.jpg",
     title: "Get to your destination <br> with peace of mind",
   },
   {
     image:
-      "https://images.unsplash.com/photo-1530127676576-acdb8fbb5690?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    contentImage: bannerContent2,
+    //   "https://images.unsplash.com/photo-1530127676576-acdb8fbb5690?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // contentImage: bannerContent2,
+    "../../../src/assets/Images/banner/woman-charging-her-car-looking-cherger-bher-phone.jpg",
+    title: "Experience the best <br> comfort and style on the road",
+  },
+  {
+    image:
+    //   "https://images.unsplash.com/photo-1530127676576-acdb8fbb5690?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // contentImage: bannerContent2,
+    "../../../src/assets/Images/banner/beard-young-man-sitting-with-his-friend-car-taking-selfie.jpg",
     title: "Experience the best <br> comfort and style on the road",
   },
 ];
@@ -51,8 +60,10 @@ const Banner = () => {
               className="h-[600px] flex  pr-20"
               style={{
                 backgroundImage: `linear-gradient(rgba(0,0,0,0.64),rgba(0,0,0,0.64)),url(${slide.image})`,
+                backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
+
               }}
             >
               <div className="  text-white  hidden lg:block absolute  right-[0px] md:right-[30px] md:top-[240px] 2xl:right-[400px] ">
