@@ -40,7 +40,7 @@ const ShowUserLocation = () => {
   const fetchNearbyPlaces = async (lat, lng) => {
     try {
       // Increase radius from 2000 meters to 5000 meters (adjust as needed)
-      const radius = 3000; // Change this value to increase/decrease radius (in meters)
+      const radius = 1000; // Change this value to increase/decrease radius (in meters)
       const overpassQuery = `
         [out:json];
         (
