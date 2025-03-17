@@ -91,6 +91,12 @@ const Navbar = () => {
           >
             Home
           </Link>
+          <Link
+            to={"/dashboard"}
+            className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+          >
+            Dashboard
+          </Link>
           {/* <Link
             to={""}
             className="btn bg-transparent text-white py-2 px-5 rounded-4xl"

@@ -16,7 +16,7 @@ import Gallery from "./Gallery";
 const Home = () => {
   return (
     <div className="">
-      <Banner></Banner>
+      {/* <Banner></Banner> */}
       <div className="container mx-auto">
         <CarCategories></CarCategories>
         <TrendingOffers></TrendingOffers>

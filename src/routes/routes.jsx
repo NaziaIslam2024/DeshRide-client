@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home";
 import Dashboard from "../Layout/Dashboard/Dashboard";
 import Login from "../pages/Auth/Login";
 import Registration from "../pages/Auth/Registration";
+import VehicleList from "../pages/Dashboard/Admin/VehicleList";
 
 export const router = createBrowserRouter([
   {
@@ -28,5 +29,11 @@ export const router = createBrowserRouter([
   {
     path: "Dashboard",
     element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: 'vehicle',
+        element: <VehicleList></VehicleList>
+      }
+    ]
   },
 ]);
