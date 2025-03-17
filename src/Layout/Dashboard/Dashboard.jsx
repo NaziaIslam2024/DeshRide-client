@@ -17,7 +17,7 @@ const Dashboard = () => {
   return (
     <div className="exo2">
       <TopBar
-        toggleSidebar={toggleSidebar} 
+        toggleSidebar={toggleSidebar}  isSidebarOpen={isSidebarOpen}
       />
       <div style={{ height: "calc(100vh - 100px)" }} className="flex">
         <div

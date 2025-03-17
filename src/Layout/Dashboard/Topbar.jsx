@@ -1,24 +1,25 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
-import { FaBars, FaSun, FaMoon, FaBell, FaSearch } from "react-icons/fa"; // Icons
+import {
+  FaBars,
+  FaSun,
+  FaMoon,
+  FaBell,
+  FaSearch,
+  FaTimes,
+} from "react-icons/fa"; // Icons
 import { motion, AnimatePresence } from "framer-motion"; // For animations
 import { Link } from "react-router";
 
-
-const TopBar = ({ toggleSidebar }) => {
-
+const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
   const [darkMode, setDarkMode] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [currentNews, setCurrentNews] = useState(0);
-  const [imageError, setImageError] = useState(false); 
+  const [imageError, setImageError] = useState(false);
 
-  const user = {
-
-  }
-
-
+  const user = {};
 
   // Key points to display in the breaking news system
   const newsItems = [
@@ -33,7 +34,7 @@ const TopBar = ({ toggleSidebar }) => {
     "🗣️ Refer a Friend & Earn Rewards!",
     "✅ Verified Drivers for a Trustworthy Experience!",
   ];
-  
+
   // Rotate through news items every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,7 +62,7 @@ const TopBar = ({ toggleSidebar }) => {
           whileHover={{ scale: 1.05 }}
         >
           <img
-            src={'https://i.ibb.co.com/chGxPSCm/Copy-of-Desh-Ride-logo.png'}
+            src={"https://i.ibb.co.com/chGxPSCm/Copy-of-Desh-Ride-logo.png"}
             alt="Logo"
             className="h-10 w-10 md:h-12 md:w-12 object-contain"
           />
@@ -71,11 +72,26 @@ const TopBar = ({ toggleSidebar }) => {
         </motion.div>
         <motion.button
           onClick={toggleSidebar}
-          className="text-4xl text-white focus:outline-none md:hidden"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          className={`text-white focus:outline-none md:hidden p-2 rounded-full transition-all duration-300 ${
+            isSidebarOpen ? "bg-red-500" : ""
+          }`}
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.8, rotate: 180 }}
+          aria-label="Toggle Sidebar"
         >
-          <FaBars />
+          <motion.div
+            key={isSidebarOpen ? "close" : "menu"}
+            initial={{ rotate: 0, opacity: 0 }}
+            animate={{ rotate: 360, opacity: 1 }}
+            exit={{ rotate: -360, opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            {isSidebarOpen ? (
+              <FaTimes className="text-3xl" />
+            ) : (
+              <FaBars className="text-3xl" />
+            )}
+          </motion.div>
         </motion.button>
       </div>
 
@@ -114,16 +130,13 @@ const TopBar = ({ toggleSidebar }) => {
           onClick={() => setDarkMode(!darkMode)}
           className="text-white text-xl focus:outline-none"
           whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 , rotate: 180}}
+          whileTap={{ scale: 0.9, rotate: 180 }}
         >
           {darkMode ? <FaSun /> : <FaMoon />}
         </motion.button>
 
         {/* Profile Image & Dropdown Menu */}
-        <motion.div
-          className="relative"
-          whileHover={{ scale: 1.05 }}
-        >
+        <motion.div className="relative" whileHover={{ scale: 1.05 }}>
           <button
             onClick={() => setShowProfileMenu(!showProfileMenu)}
             className="flex items-center space-x-2 focus:outline-none"
@@ -168,10 +181,16 @@ const TopBar = ({ toggleSidebar }) => {
                     {user?.displayName || "Guest User"}
                   </p>
                   <div className="mt-2 space-y-2">
-                    <Link to={'dashboard/profile'} className="w-full text-left text-sm text-gray-600  hover:bg-gray-100  p-2 rounded-lg">
+                    <Link
+                      to={"dashboard/profile"}
+                      className="w-full text-left text-sm text-gray-600  hover:bg-gray-100  p-2 rounded-lg"
+                    >
                       Profile
                     </Link>
-                    <button onClick={''} className="w-full text-left text-sm text-gray-600  hover:bg-gray-100  p-2 rounded-lg">
+                    <button
+                      onClick={""}
+                      className="w-full text-left text-sm text-gray-600  hover:bg-gray-100  p-2 rounded-lg"
+                    >
                       Logout
                     </button>
                   </div>
