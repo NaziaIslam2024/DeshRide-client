@@ -11,15 +11,7 @@ const Sustainability = () => {
         <div>
           <h3 className="text-4xl font-medium py-10">Sustainability</h3>
           <p>
-            Uber is committing to becoming a fully electric, zero-emission
-            platform by 2040, with 100% of rides taking place in zero-emission
-            vehicles, on public transit, or with micromobility. It is our
-            responsibility as the largest mobility platform in the world to more
-            aggressively tackle the challenge of climate change. We will do this
-            by offering riders more ways to ride green, helping drivers go
-            electric, making transparency a priority and partnering with NGOs
-            and the private sector to help expedite a clean and just energy
-            transition.
+           Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae maiores iure quo enim cum quisquam velit, sit molestias fugit autem? Ab optio unde quibusdam cum saepe odit blanditiis pariatur veritatis tempore quos deserunt harum tempora, consequatur molestias nam a reprehenderit commodi fugit. Repudiandae aperiam maiores inventore blanditiis nam eveniet harum praesentium, nobis iste aliquid quod ea cupiditate vero fuga. Labore.
           </p>
 
         </div>

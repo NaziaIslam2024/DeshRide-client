@@ -10,7 +10,7 @@ const RidesAndBeyond = () => {
                 <div>
                     <h3 className='text-4xl font-medium py-10'>Rides and beyond</h3>
                     <p>
-                    In addition to helping riders find a way to go from point A to point B, we're helping people order food quickly and affordably, removing barriers to healthcare, creating new freight-booking solutions, and helping companies provide a seamless employee travel experience. And always helping drivers and couriers earn.
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt molestiae soluta delectus pariatur fuga totam placeat numquam aperiam illo tenetur maxime repellendus et perspiciatis illum temporibus magnam aut, molestias debitis! Odio labore eaque dolorum enim accusamus totam blanditiis esse iure!
                     </p>
                 </div>
             </div>
