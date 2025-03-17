@@ -9,14 +9,13 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
     { path: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
     { path: "/", label: "Home", icon: <FaHome /> },
     { path: "vehicle", label: "Vehicle List", icon: <FaUser /> },
-    { path: "calender", label: "Calendar", icon: <FaCalendarAlt /> },
   ];
 
   return (
-    <div
+    <div 
       className={`${
         isSidebarOpen ? "w-64" : "w-0 md:w-64"
-      } bg-gray-800 text-white transition-all duration-300 flex flex-col justify-between h-[calc(100vh-104px)] overflow-hidden dark:bg-gray-900 dark:text-gray-100`}
+      } bg-gray-800 text-white transition-all duration-300 flex flex-col justify-between h-[calc(100vh-104px)] overflow-hidden `}
     >
       <div className="p-4">
         <ul className="space-y-2">
@@ -29,8 +28,8 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 className={({ isActive }) =>
                   `flex items-center space-x-3 p-3 rounded-lg text-lg transition-all duration-200 ${
                     isActive
-                      ? "text-white shimmer-border bg-red-500" // Apply shimmer border effect when active
-                      : "text-gray-300 hover:bg-blue-700 hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      ? "text-white shimmer-border bg-red-500 rounded-l-lg  custom-outward-curve" // Apply shimmer border effect when active
+                      : "text-gray-300 hover:bg-[#38058a] "
                   }`
                 }
               >
