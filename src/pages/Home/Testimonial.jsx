@@ -7,8 +7,7 @@ import bannerContent2 from "../../assets/Images/banner/banner-content-2.svg";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { Pagination } from 'swiper/modules';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Autoplay,  Pagination} from 'swiper/modules';
 
 import './Testimonial.css';
 
@@ -82,6 +81,10 @@ const Testimonial = () => {
                 pagination={{
                     clickable: true,
                 }}
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                }}
                 breakpoints={{
                     640: {
                         slidesPerView: 1,
@@ -96,7 +99,7 @@ const Testimonial = () => {
                         spaceBetween: 50,
                     },
                 }}
-                modules={[Pagination, Navigation]}
+                modules={[Pagination, Navigation, Autoplay]}
                 className="custom-swiper"
             >
                 {

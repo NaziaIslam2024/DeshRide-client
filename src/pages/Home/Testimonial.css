@@ -1,14 +1,25 @@
+.custom-swiper {
+    position: relative;
+    padding-bottom: 0px;
+    /* width: 100%; */
+    height: 350px;
+}
 .custom-swiper .swiper-button-next,
 .custom-swiper .swiper-button-prev {
    
     color: black; /* Change arrow color */
     padding: 10px;
     transition: all 0.3s ease-in-out;
+    /* background-color: blue; */
     position: absolute;
-    /* right: 60%; */
-    /* left: 40%; */
-    top: 320px;
-    bottom: -10px;
+    top: auto;
+    bottom: 0px;
+}
+.custom-swiper .swiper-button-next {
+    right: 47%; 
+}
+.custom-swiper .swiper-button-prev {
+    left: 47%; 
 }
 
 .custom-swiper .swiper-button-next:hover,
@@ -21,4 +32,22 @@
 .custom-swiper .swiper-button-prev::after {
     font-size: 20px; /* Adjust arrow size */
     font-weight: bold;
+}
+/* For screens 640px and above */
+@media (max-width: 640px) {
+    .custom-swiper .swiper-button-next {
+        right: 40%; /* Adjust as needed */
+    }
+    .custom-swiper .swiper-button-prev {
+        left: 40%;
+    }
+}
+/* For screens 768px and above */
+@media (min-width: 768px) {
+    .custom-swiper .swiper-button-next {
+        right: 45%;
+    }
+    .custom-swiper .swiper-button-prev {
+        left: 45%;
+    }
 }
