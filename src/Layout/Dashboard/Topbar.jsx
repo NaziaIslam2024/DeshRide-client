@@ -53,7 +53,7 @@ const TopBar = ({ toggleSidebar }) => {
   };
 
   return (
-    <div className="h-auto w-full flex items-center justify-between px-6 py-4 shadow-md bg-gradient-to-r from-[#143D3A] to-[#1A5E5A] ">
+    <div className="h-auto w-full flex items-center justify-between px-6 py-4 shadow-md bg-[#38058a] ">
       {/* Logo and Toggle Button (Visible on all devices) */}
       <div className="flex items-center space-x-4">
         <motion.div
