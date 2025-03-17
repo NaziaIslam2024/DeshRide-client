@@ -3,15 +3,62 @@ import { motion } from "framer-motion";
 import { User, Mail, Phone, Lock, UserCheck, Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../providers/AuthProvider";
+import { useNavigate } from "react-router";
 
 export default function ConsumerForm() {
   const [showPassword, setShowPassword] = useState(false);
   const consumerForm = useForm();
   const { createNewUser, setUser, updateUser } = useAuth();
-  console.log(createNewUser);
+  //   console.log(createNewUser);
+
+  // ? checking purpose
+  const navigate = useNavigate();
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
+  // ? checking purpose
 
   const handleSubmit = (data) => {
-    console.log("Consumer Form Data:", data);
+    // console.log("Consumer Form Data:", data);
+    const name = data.fullName;
+    const email = data.email;
+    const password = data.password;
+
+    // console.log(name, email, password);
+
+    // Validate password
+    if (!passwordRegex.test(password)) {
+      setError(
+        "Password must be at least 6 characters long and include an uppercase and a lowercase letter."
+      );
+      return;
+    }
+
+    // setError("");  // error state need to set
+
+    // create user
+    createNewUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("Congratulations! Successfully created a new account", {
+          position: "top-left",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        // Update user profile using updateUser
+        updateUser({ displayName: name })
+          .then(() => {
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        // setError("Failed to create account. Please try again.");
+      });
   };
 
   return (

@@ -10,8 +10,7 @@ import { Eye, EyeOff } from "lucide-react";
 import GoogleLogin from "./GoogleLogin";
 
 const Login = () => {
-  const { signInUser, setUser, setLoginMail, setLoading } =
-    useContext(AuthContext);
+  const { signInUser, setUser, setLoading } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -22,7 +21,7 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    setLoginMail(email);
+    // setLoginMail(email);
 
     signInUser(email, password)
       .then((result) => {

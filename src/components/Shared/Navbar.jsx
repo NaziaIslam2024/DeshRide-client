@@ -3,36 +3,43 @@ import { Link } from "react-router";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
-  console.log(user);
-  const links = (
-    <>
-      <li>
-        {" "}
-        <Link to="/" className="mx-2">
-          Home
-        </Link>
-      </li>
-      <li>
-        {" "}
-        <Link to="/dashboard" className="mx-2">
-          Dashboard
-        </Link>
-      </li>
-      <li>
-        {" "}
-        <Link to="/login" className="mx-2">
-          Login
-        </Link>
-      </li>
-      <li>
-        {" "}
-        <Link to="/register" className="mx-2">
-          Register
-        </Link>{" "}
-      </li>
-    </>
-  );
+  const { user, logOut } = useContext(AuthContext);
+  // console.log(user);
+  // const links = (
+  //   <>
+  //     <li>
+  //       <Link to="/" className="mx-2">
+  //         Home
+  //       </Link>
+  //     </li>
+  //     <li>
+  //       <Link to="/dashboard" className="mx-2">
+  //         Dashboard
+  //       </Link>
+  //     </li>
+
+  //     {!user ? (
+  //       <li>
+  //         <button onClick={logOut} className="mx-2">
+  //           Logout
+  //         </button>
+  //       </li>
+  //     ) : (
+  //       <>
+  //         <li>
+  //           <Link to="/login" className="mx-2">
+  //             Login
+  //           </Link>
+  //         </li>
+  //         <li>
+  //           <Link to="/register" className="mx-2">
+  //             Register
+  //           </Link>
+  //         </li>
+  //       </>
+  //     )}
+  //   </>
+  // );
   return (
     <div className="text-center bg-[#4445fb]  text-white shadow-sm ">
       <div className="navbar container mx-auto">
@@ -78,12 +85,18 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end gap-5 hidden lg:flex">
-          <Link to={"/"} className="btn bg-transparent text-white py-2 px-5 rounded-4xl">
+          <Link
+            to={"/"}
+            className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+          >
             Home
           </Link>
-          <Link to={""} className="btn bg-transparent text-white py-2 px-5 rounded-4xl">
+          {/* <Link
+            to={""}
+            className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+          >
             Join Now
-          </Link>
+          </Link> */}
           {user ? (
             <>
               <Link
@@ -91,17 +104,17 @@ const Navbar = () => {
                 className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
               >
                 Join Now
-              </Link>{" "}
+              </Link>
               <Link
                 to={"/login"}
+                onClick={logOut}
                 className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
               >
-                Login
+                Logout
               </Link>
             </>
           ) : (
             <>
-              {" "}
               <Link
                 to={"/login"}
                 className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
