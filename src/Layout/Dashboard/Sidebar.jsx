@@ -17,7 +17,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
         isSidebarOpen ? "w-64" : "w-0 md:w-64"
       } bg-gray-800 text-white transition-all duration-300 flex flex-col justify-between h-[calc(100vh-104px)] overflow-hidden `}
     >
-      <div className="p-4">
+      <div className="pl-4 mt-4">
         <ul className="space-y-2">
           {navItems.map((item, index) => (
             <li key={index}>
@@ -26,9 +26,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 to={item.path}
                 end // Add this prop to ensure exact matching
                 className={({ isActive }) =>
-                  `flex items-center space-x-3 p-3 rounded-lg text-lg transition-all duration-200 ${
+                  `flex items-center space-x-3 p-3 rounded-l-lg text-lg transition-all duration-200 ${
                     isActive
-                      ? "text-white shimmer-border bg-red-500 rounded-l-lg  custom-outward-curve" // Apply shimmer border effect when active
+                      ? "text-red-500 shimmer-border bg-white rounded-l-lg font-bold  custom-outward-curve" // Apply shimmer border effect when active
                       : "text-gray-300 hover:bg-[#38058a] "
                   }`
                 }

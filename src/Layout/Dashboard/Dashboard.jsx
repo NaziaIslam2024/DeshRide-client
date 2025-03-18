@@ -15,7 +15,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="exo2">
+    <div className="">
       <TopBar
         toggleSidebar={toggleSidebar}  isSidebarOpen={isSidebarOpen}
       />
@@ -36,7 +36,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="flex-1 bg-gray-100 overflow-y-auto h-full dark:bg-[#0B0716]">
+        <div className="flex-1  overflow-y-auto h-full dark:bg-[#0B0716]">
           <Outlet></Outlet>
         </div>
       </div>

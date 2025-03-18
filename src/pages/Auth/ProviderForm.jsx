@@ -17,6 +17,9 @@ import {
   EyeOff,
 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../providers/AuthProvider";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const vehicleTypes = [
   "Sedan",
@@ -31,6 +34,13 @@ export default function ProviderForm() {
   const [hasCar, setHasCar] = useState(null);
   const [carUsage, setCarUsage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const { createNewUser, setUser, updateUser } = useAuth();
+
+  // ? checking purpose
+  const navigate = useNavigate();
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
+  // ? checking purpose
 
   const providerForm = useForm();
 
@@ -41,6 +51,35 @@ export default function ProviderForm() {
       carUsage: hasCar ? carUsage : undefined,
     };
     console.log("Provider Form Data:", formData);
+
+    const name = data.fullName;
+    const email = data.email;
+    const password = data.password;
+
+    //
+    createNewUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("Congratulations! Successfully created a new account", {
+          position: "top-left",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        // Update user profile using updateUser
+        updateUser({ displayName: name })
+          .then(() => {
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        // setError("Failed to create account. Please try again.");
+      });
   };
 
   return (
