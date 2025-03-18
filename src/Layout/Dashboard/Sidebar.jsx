@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import { FaTachometerAlt, FaHome, FaCar } from "react-icons/fa"; // Icons from react-icons
+import { FaTachometerAlt, FaHome, FaCar, FaUser } from "react-icons/fa"; // Icons from react-icons
 import { NavLink } from "react-router";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
@@ -8,7 +8,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
     { path: "/", label: "Home", icon: <FaHome /> },
+    { path: "my-profile", label: "My Profile", icon: <FaUser /> },
     { path: "vehicle", label: "Vehicle List", icon: <FaCar /> },
+    { path: "all-vehicle", label: "All Vehicle", icon: <FaCar /> },
   ];
 
   return (
