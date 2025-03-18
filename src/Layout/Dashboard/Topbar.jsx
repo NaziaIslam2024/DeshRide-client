@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-
 import {
   FaBars,
   FaSun,
@@ -11,6 +10,7 @@ import {
 } from "react-icons/fa"; // Icons
 import { motion, AnimatePresence } from "framer-motion"; // For animations
 import { Link } from "react-router";
+import logo from '../../assets/Images/logo/DeshRideLogo.png'
 
 const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
   const [darkMode, setDarkMode] = useState(true);
@@ -59,16 +59,13 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
       <div className="flex items-center space-x-4">
         <motion.div
           className="flex items-center space-x-2"
-          whileHover={{ scale: 1.05 }}
         >
-          <img
-            src={"https://i.ibb.co.com/chGxPSCm/Copy-of-Desh-Ride-logo.png"}
+          <img 
+            src={logo}
             alt="Logo"
-            className="h-10 w-10 md:h-12 md:w-12 object-contain"
+            className="h-14  md:h-14 object-contain"
           />
-          <span className="text-white text-lg md:text-xl font-bold hidden md:block italic">
-            DESHRIDE
-          </span>
+          
         </motion.div>
         <motion.button
           onClick={toggleSidebar}

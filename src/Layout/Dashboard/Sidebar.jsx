@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import { FaTachometerAlt, FaHome, FaUser, FaCalendarAlt } from "react-icons/fa"; // Icons from react-icons
+import { FaTachometerAlt, FaHome, FaCar } from "react-icons/fa"; // Icons from react-icons
 import { NavLink } from "react-router";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
@@ -8,7 +8,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
     { path: "/", label: "Home", icon: <FaHome /> },
-    { path: "vehicle", label: "Vehicle List", icon: <FaUser /> },
+    { path: "vehicle", label: "Vehicle List", icon: <FaCar /> },
   ];
 
   return (
@@ -26,10 +26,10 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 to={item.path}
                 end // Add this prop to ensure exact matching
                 className={({ isActive }) =>
-                  `flex items-center space-x-3 p-3 rounded-l-lg text-lg transition-all duration-200 ${
+                  `flex items-center space-x-3 p-3 text-lg transition-all duration-200 ${
                     isActive
-                      ? "text-red-500 shimmer-border bg-white rounded-l-lg font-bold  custom-outward-curve" // Apply shimmer border effect when active
-                      : "text-gray-300 hover:bg-[#38058a] "
+                      ? "text-white border-l-4 border-t-4 border-b-4 shimmer-border bg-red-500 rounded-l-4xl font-bold  custom-outward-curve" // Apply shimmer border effect when active
+                      : "text-white font-bold hover:bg-purple-500 rounded-l-4xl"
                   }`
                 }
               >
