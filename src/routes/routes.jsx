@@ -7,11 +7,14 @@ import Registration from "../pages/Auth/Registration";
 import VehicleList from "../pages/Dashboard/Admin/VehicleList";
 import About from "../pages/About/About";
 import PrivacyPolicy from "../pages/privacy&policy/PrivacyPolicy";
+import MyProfile from "../pages/Dashboard/Shared/MyProfile";
+import ErrorPage from "../components/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -43,7 +46,11 @@ export const router = createBrowserRouter([
       {
         path: 'vehicle',
         element: <VehicleList></VehicleList>
-      }
+      },
+      {
+        path: 'my-profile',
+        element: <MyProfile></MyProfile>
+      },
     ]
   },
 ]);
