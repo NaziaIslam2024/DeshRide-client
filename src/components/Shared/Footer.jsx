@@ -4,7 +4,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="mx-auto w-11/12">
+    <div className="">
     <footer className="footer sm:footer-horizontal bg-base-200 text-base-content p-10">
       <aside>
         <div className="flex items-center"> 
