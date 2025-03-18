@@ -6,6 +6,7 @@ import Login from "../pages/Auth/Login";
 import Registration from "../pages/Auth/Registration";
 import VehicleList from "../pages/Dashboard/Admin/VehicleList";
 import About from "../pages/About/About";
+import PrivacyPolicy from "../pages/privacy&policy/PrivacyPolicy";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
         path: "register",
         element: <Registration></Registration>,
       },
+      {
+        path: "privacy&policy",
+        element: <PrivacyPolicy></PrivacyPolicy>
+      }
     ],
   },
 
