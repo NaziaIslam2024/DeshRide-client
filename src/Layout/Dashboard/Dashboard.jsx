@@ -29,7 +29,7 @@ const Dashboard = () => {
           <div className="p-4">
             <button
               onClick={'hello'}
-              className="bg-red-500 hover:bg-red-600 w-full p-2 rounded text-center"
+              className="bg-red-500 hover:bg-red-600 w-full p-3 rounded text-center"
             >
               Logout
             </button>
