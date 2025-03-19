@@ -32,20 +32,7 @@ export default function ConsumerForm() {
 
     // console.log(consumerData);
 
-    // send the data in backend
-    // try {
-    //   const response = await axiosPublic.post(
-    //     "/api/users/consumerUsers",
-    //     consumerData
-    //   );
-    //   console.log("Data sent successfully:", response.data);
-    // } catch (error) {
-    //   console.error("Error sending data:", error);
-    // }
-
-    // console.log(name, email, password);
-
-    // Validate password
+    // todo : Validate password
     // if (!passwordRegex.test(password)) {
     //   // setError(
     //   //   "Password must be at least 6 characters long and include an uppercase and a lowercase letter."
@@ -69,7 +56,7 @@ export default function ConsumerForm() {
         // send the data in backend
         try {
           const response = await axiosPublic.post(
-            "/api/users/consumerUsers",
+            "/users/consumerUsers",
             consumerData
           );
           console.log("Data sent successfully:", response.data);
@@ -106,7 +93,9 @@ export default function ConsumerForm() {
         <div className="relative">
           <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
-            {...consumerForm.register("fullName")}
+            {...consumerForm.register("fullName", {
+              required: "Name is required",
+            })}
             type="text"
             placeholder="Full Name"
             className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -115,7 +104,9 @@ export default function ConsumerForm() {
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
-            {...consumerForm.register("email")}
+            {...consumerForm.register("email", {
+              required: "Email is required",
+            })}
             type="email"
             placeholder="Email Address"
             className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -125,7 +116,9 @@ export default function ConsumerForm() {
       <div className="relative">
         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
         <input
-          {...consumerForm.register("phoneNumber")}
+          {...consumerForm.register("phoneNumber", {
+            required: "Phone Number is required",
+          })}
           type="tel"
           placeholder="Phone Number"
           className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -134,7 +127,9 @@ export default function ConsumerForm() {
       <div className="relative">
         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
         <input
-          {...consumerForm.register("pass")}
+          {...consumerForm.register("pass", {
+            required: "Password is required",
+          })}
           type={showPassword ? "text" : "password"}
           placeholder="Password"
           className="w-full pl-10 pr-10 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
