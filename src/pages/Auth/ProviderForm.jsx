@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../providers/AuthProvider";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const vehicleTypes = [
   "Sedan",
@@ -38,6 +39,8 @@ export default function ProviderForm() {
 
   // ? checking purpose
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
+
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
   // ? checking purpose
@@ -60,29 +63,41 @@ export default function ProviderForm() {
     console.log(providerData);
 
     //
-    // createNewUser(email, password)
-    //   .then((result) => {
-    //     const user = result.user;
-    //     setUser(user);
-    //     toast.success("Congratulations! Successfully created a new account", {
-    //       position: "top-left",
-    //       autoClose: 2000,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //     });
-    //     // Update user profile using updateUser
-    //     updateUser({ displayName: name })
-    //       .then(() => {
-    //         navigate("/");
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     // setError("Failed to create account. Please try again.");
-    //   });
+    createNewUser(email, password)
+      .then(async (result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("Congratulations! Successfully created a new account", {
+          position: "top-left",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+
+        // ?  send the data in backend todo: need to update the names
+        try {
+          const response = await axiosPublic.post(
+            "/api/users/consumerUsers",
+            consumerData
+          );
+          console.log("Data sent successfully:", response.data);
+        } catch (error) {
+          console.error("Error sending data:", error);
+        }
+        //
+        // Update user profile using updateUser
+        updateUser({ displayName: name })
+          .then(() => {
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        // setError("Failed to create account. Please try again.");
+      });
   };
 
   return (

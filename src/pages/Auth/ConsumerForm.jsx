@@ -4,6 +4,8 @@ import { User, Mail, Phone, Lock, UserCheck, Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../providers/AuthProvider";
 import { useNavigate } from "react-router";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { toast } from "react-toastify";
 
 export default function ConsumerForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,18 +15,33 @@ export default function ConsumerForm() {
 
   // ? checking purpose
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
+
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
   // ? checking purpose
 
-  const handleSubmit = (data) => {
+  const handleSubmit = async (data) => {
     const name = data.fullName;
     const email = data.email;
     const password = data.pass;
-    // console.log(data);
+    const userName = `${name.toLowerCase()}_${Date.now()}`;
 
-    const { pass, ...consumerData } = data;
-    console.log(consumerData);
+    const { pass, ...withoutPasswordData } = data;
+    const consumerData = { ...withoutPasswordData, userName, role: "consumer" };
+
+    // console.log(consumerData);
+
+    // send the data in backend
+    // try {
+    //   const response = await axiosPublic.post(
+    //     "/api/users/consumerUsers",
+    //     consumerData
+    //   );
+    //   console.log("Data sent successfully:", response.data);
+    // } catch (error) {
+    //   console.error("Error sending data:", error);
+    // }
 
     // console.log(name, email, password);
 
@@ -39,29 +56,41 @@ export default function ConsumerForm() {
     // setError("");  // error state need to set
 
     // create user
-    // createNewUser(email, password)
-    //   .then((result) => {
-    //     const user = result.user;
-    //     setUser(user);
-    //     toast.success("Congratulations! Successfully created a new account", {
-    //       position: "top-left",
-    //       autoClose: 2000,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //     });
-    //     // Update user profile using updateUser
-    //     updateUser({ displayName: name })
-    //       .then(() => {
-    //         navigate("/");
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     // setError("Failed to create account. Please try again.");
-    //   });
+    createNewUser(email, password)
+      .then(async (result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("Congratulations! Successfully created a new account", {
+          position: "top-left",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        // send the data in backend
+        try {
+          const response = await axiosPublic.post(
+            "/api/users/consumerUsers",
+            consumerData
+          );
+          console.log("Data sent successfully:", response.data);
+        } catch (error) {
+          console.error("Error sending data:", error);
+        }
+
+        //
+        // Update user profile using updateUser
+        updateUser({ displayName: name })
+          .then(() => {
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        // setError("Failed to create account. Please try again.");
+      });
   };
 
   return (
