@@ -63,7 +63,7 @@ export default function ProviderForm() {
     const providerData = { ...withoutPasswordData, userName, role: "provider" };
 
     console.log(providerData);
-    console.log(withoutPasswordData);
+    // console.log(withoutPasswordData);
 
     // create the profile (firebase & backend save data)
     createNewUser(email, password)
