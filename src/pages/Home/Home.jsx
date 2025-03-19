@@ -13,14 +13,16 @@ import Testimonial from "./Testimonial";
 import ShowUserLocation from "./ShowUserLocation";
 import Gallery from "./Gallery";
 import Services from "./Services";
+import Statistics from "./Statistics";
 
 const Home = () => {
   return (
     <div className="">
       <Banner></Banner>
       <div className="container mx-auto">
-        <CarCategories></CarCategories>
         <Services></Services>
+        <CarCategories></CarCategories>
+        <Statistics></Statistics>
         <TrendingOffers></TrendingOffers>
         <BangaloreSection></BangaloreSection>
         <ExploreSlider></ExploreSlider>
