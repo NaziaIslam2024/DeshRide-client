@@ -14,6 +14,7 @@ import ShowUserLocation from "./ShowUserLocation";
 import Gallery from "./Gallery";
 import Services from "./Services";
 import Statistics from "./Statistics";
+import WhyChooseUs from "./WhyChooseUs";
 
 const Home = () => {
   return (
@@ -29,7 +30,7 @@ const Home = () => {
         <Promotion></Promotion>
         <Gallery></Gallery>
         <Stories></Stories>
-        <Download></Download>
+        <WhyChooseUs></WhyChooseUs>
         <Host></Host>
         <Testimonial></Testimonial>
       </div>
