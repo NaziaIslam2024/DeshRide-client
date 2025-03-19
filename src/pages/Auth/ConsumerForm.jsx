@@ -18,10 +18,13 @@ export default function ConsumerForm() {
   // ? checking purpose
 
   const handleSubmit = (data) => {
-    // console.log("Consumer Form Data:", data);
     const name = data.fullName;
     const email = data.email;
-    const password = data.password;
+    const password = data.pass;
+    // console.log(data);
+
+    const { pass, ...consumerData } = data;
+    console.log(consumerData);
 
     // console.log(name, email, password);
 
@@ -36,29 +39,29 @@ export default function ConsumerForm() {
     // setError("");  // error state need to set
 
     // create user
-    createNewUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        toast.success("Congratulations! Successfully created a new account", {
-          position: "top-left",
-          autoClose: 2000,
-          closeOnClick: true,
-          pauseOnHover: true,
-        });
-        // Update user profile using updateUser
-        updateUser({ displayName: name })
-          .then(() => {
-            navigate("/");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        // setError("Failed to create account. Please try again.");
-      });
+    // createNewUser(email, password)
+    //   .then((result) => {
+    //     const user = result.user;
+    //     setUser(user);
+    //     toast.success("Congratulations! Successfully created a new account", {
+    //       position: "top-left",
+    //       autoClose: 2000,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //     });
+    //     // Update user profile using updateUser
+    //     updateUser({ displayName: name })
+    //       .then(() => {
+    //         navigate("/");
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     // setError("Failed to create account. Please try again.");
+    //   });
   };
 
   return (
@@ -102,7 +105,7 @@ export default function ConsumerForm() {
       <div className="relative">
         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
         <input
-          {...consumerForm.register("password")}
+          {...consumerForm.register("pass")}
           type={showPassword ? "text" : "password"}
           placeholder="Password"
           className="w-full pl-10 pr-10 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
