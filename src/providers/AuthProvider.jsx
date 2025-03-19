@@ -100,9 +100,4 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use authentication context
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
-
 export default AuthProvider;

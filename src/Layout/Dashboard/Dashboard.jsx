@@ -7,7 +7,6 @@ const Dashboard = () => {
         <div>
             <TopBar></TopBar>
             <Sidebar></Sidebar>
-            
         </div>
     );
 };
