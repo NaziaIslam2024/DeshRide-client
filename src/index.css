@@ -52,6 +52,121 @@
   }
 
 /* scrollbar styles end */
-  
 
 
+@keyframes car {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes cloud1 {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes cloud2 {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes road-line {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-car {
+  animation: car 12s linear infinite;
+}
+
+.animate-cloud1 {
+  animation: cloud1 10s linear infinite;
+}
+
+.animate-cloud2 {
+  animation: cloud2 15s linear infinite;
+}
+
+.animate-road-line {
+  animation: road-line 7s linear infinite;
+}
+
+
+
+/* ------------- */
+
+
+/* Animated Border */
+.animated-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -4px; /* Creates border thickness */
+  background: conic-gradient(
+    from 0deg,
+    #aa03aa,
+    #008888,
+    #ff00ff,
+    #057505,
+    #ffff00,
+    #ff0000,
+    #002be9
+  );
+  animation: rotate-border 4s linear infinite;
+  border-radius: 1.5rem; /* Matches rounded-3xl */
+  z-index: -1;
+}
+
+.animated-border::after {
+  content: '';
+  position: absolute;
+  inset: 6px; /* Inner padding to show border */
+  background: inherit; /* Matches bg-white/90 */
+  border-radius: 1.25rem; /* Slightly smaller to show border */
+  z-index: -1;
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Shine Animation for Button */
+@keyframes shine {
+  0% { transform: translateX(-150%) skewX(-12deg); }
+  100% { transform: translateX(150%) skewX(-12deg); }
+}
+
+/* Border Rotation Animation */
+@keyframes rotate-border {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.animate-shine {
+  animation: shine 1.5s infinite ease-in-out;
+}

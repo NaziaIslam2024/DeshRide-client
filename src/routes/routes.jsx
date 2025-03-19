@@ -4,13 +4,17 @@ import Home from "../pages/Home/Home";
 import Dashboard from "../Layout/Dashboard/Dashboard";
 import Login from "../pages/Auth/Login";
 import Registration from "../pages/Auth/Registration";
+import VehicleList from "../pages/Dashboard/Admin/VehicleList";
 import About from "../pages/About/About";
-import PrivateRoutes from "./PrivateRoutes";
+import PrivacyPolicy from "../pages/privacy&policy/PrivacyPolicy";
+import MyProfile from "../pages/Dashboard/Shared/MyProfile";
+import ErrorPage from "../components/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -28,12 +32,25 @@ export const router = createBrowserRouter([
         path: "register",
         element: <Registration></Registration>,
       },
+      {
+        path: "privacy&policy",
+        element: <PrivacyPolicy></PrivacyPolicy>
+      }
     ],
   },
 
   {
     path: "Dashboard",
-    // element:<PrivateRoutes> <Dashboard></Dashboard></PrivateRoutes>,
-    element:<Dashboard></Dashboard>,
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: 'vehicle',
+        element: <VehicleList></VehicleList>
+      },
+      {
+        path: 'my-profile',
+        element: <MyProfile></MyProfile>
+      },
+    ]
   },
 ]);
