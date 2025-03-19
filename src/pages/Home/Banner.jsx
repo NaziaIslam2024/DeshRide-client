@@ -78,7 +78,7 @@ const Banner = () => {
         ))}
       </Swiper>
       {/* search card design  */}
-      <div className="p-2 w-[370px] md:w-md xl:w-xl absolute left-[0px] md:left-[30px] top-[260px] 2xl:left-[400px] z-20  ">
+      <div className="p-2 w-[315px] sm:w-md xl:w-xl absolute left-[0px] md:left-[30px] top-[260px] 2xl:left-[400px] z-20  ">
         <div className="flex">
           <div className="flex w-1/2 justify-center gap-2 items-center bg-white py-3 px-8 rounded-t-xl mr-2 ">
             <img src={taxi} alt="" className="w-5 h-5" />

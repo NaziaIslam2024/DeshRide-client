@@ -2,6 +2,7 @@ import React from 'react';
 import Sustainability from './Sustainability';
 import RidesAndBeyond from './RidesAndBeyond';
 import bannerImag from "../../assets/Images/about/parked-vehicles.jpg"
+import Team from './Team';
 const About = () => {
     return (
         <div>
@@ -18,6 +19,7 @@ const About = () => {
             </div>
             <Sustainability></Sustainability>
             <RidesAndBeyond></RidesAndBeyond>
+            <Team></Team>
         </div>
     );
 };
