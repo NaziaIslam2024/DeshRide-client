@@ -13,6 +13,8 @@ import Testimonial from "./Testimonial";
 import ShowUserLocation from "./ShowUserLocation";
 import Gallery from "./Gallery";
 import Services from "./Services";
+import Statistics from "./Statistics";
+import WhyChooseUs from "./WhyChooseUs";
 
 const Home = () => {
   return (
@@ -20,8 +22,9 @@ const Home = () => {
       <Banner></Banner>
       
       <div className="container mx-auto">
-        <CarCategories></CarCategories>
         <Services></Services>
+        <CarCategories></CarCategories>
+        <Statistics></Statistics>
         <TrendingOffers></TrendingOffers>
         <BangaloreSection></BangaloreSection>
         <ExploreSlider></ExploreSlider>
@@ -32,7 +35,7 @@ const Home = () => {
 
         <div className="container mx-auto">
         <Stories></Stories>
-        <Download></Download>
+        <WhyChooseUs></WhyChooseUs>
         <Host></Host>
         <Testimonial></Testimonial>
       </div>
