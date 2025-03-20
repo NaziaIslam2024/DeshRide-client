@@ -18,6 +18,7 @@ const Home = () => {
   return (
     <div className="">
       <Banner></Banner>
+      
       <div className="container mx-auto">
         <CarCategories></CarCategories>
         <Services></Services>
@@ -25,12 +26,17 @@ const Home = () => {
         <BangaloreSection></BangaloreSection>
         <ExploreSlider></ExploreSlider>
         <Promotion></Promotion>
+        </div>
+
         <Gallery></Gallery>
+
+        <div className="container mx-auto">
         <Stories></Stories>
         <Download></Download>
         <Host></Host>
         <Testimonial></Testimonial>
       </div>
+
       <ShowUserLocation></ShowUserLocation>
       <div className="container mx-auto">
         <FAQ></FAQ>
