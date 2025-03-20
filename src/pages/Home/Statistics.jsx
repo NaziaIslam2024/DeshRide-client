@@ -30,7 +30,6 @@ const services = [
 ];
 
 
-
 const Statistics = () => {
     return (
         <section className="w-11/12 mx-auto mb-[100px]">
@@ -44,7 +43,7 @@ const Statistics = () => {
                 {services.map((service, index) => (
                     <div
                         key={index}
-                        className="bg-[#4445fb]/10 rounded-lg p-6 shadow-md text-center transition-transform hover:scale-105"
+                        className="bg-[#f3f4f6] rounded-lg p-6 shadow-md text-center transition-transform hover:scale-105"
                     >
                         <div className="mb-4 flex justify-center">{service.icon}</div>
                         <p className="text-xl font-semibold">{service.stat}</p>
