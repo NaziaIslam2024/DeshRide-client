@@ -33,7 +33,19 @@ const WhyChooseUs = () => {
             <p className='text-center max-w-3xl mx-auto mb-8'>
                 We’ve got your back. These are the reasons to make relationship with DeshRide.
             </p>
-           
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                {services.map((service, index) => (
+                    <div
+                        key={index}
+                        className="border border-black rounded-lg p-6 shadow-md text-left flex flex-col items-start"
+                    >
+                        <div className="mb-4 flex justify-center">{service.icon}</div>
+                        <h3 className="text-xl font-semibold">{service.title}</h3>
+                        <p className="text-gray-600 mt-2">{service.description}</p>
+                    </div>
+                ))}
+            </div>
+
         </section>
     );
 };
