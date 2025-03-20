@@ -77,7 +77,7 @@ export default function ProviderForm() {
           pauseOnHover: true,
         });
 
-        // ?  send the data in backend todo: need to update the names
+        //  send the data in backend
         try {
           const response = await axiosPublic.post(
             "/users/providerUsers",
