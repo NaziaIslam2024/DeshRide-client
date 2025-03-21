@@ -20,8 +20,9 @@ const useRole = () => {
       return res.data;
     },
   });
+  const userRole = userData?.userRole;
 
-  return [userData, userDataLoading, userRoleRefetch, error];
+  return [userRole, userData, userDataLoading, userRoleRefetch, error];
 };
 
 export default useRole;

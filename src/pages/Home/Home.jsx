@@ -15,18 +15,8 @@ import Gallery from "./Gallery";
 import Services from "./Services";
 import Statistics from "./Statistics";
 import WhyChooseUs from "./WhyChooseUs";
-import useRole from "../../hooks/useRole";
 
 const Home = () => {
-  const [
-    userData,
-    userDataLoading,
-    userRoleRefetch,
-    error,
-    // userData?.userRole,
-    // userDataLoading,
-  ] = useRole();
-  console.log(userData);
   return (
     <div className="">
       <Banner></Banner>
