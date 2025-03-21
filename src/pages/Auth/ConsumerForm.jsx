@@ -56,7 +56,7 @@ export default function ConsumerForm() {
         // send the data in backend
         try {
           const response = await axiosPublic.post(
-            "/users/consumerUsers",
+            "/users/all_users",
             consumerData
           );
           console.log("Data sent successfully:", response.data);
