@@ -11,6 +11,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
     { path: "my-profile", label: "My Profile", icon: <FaUser /> },
     { path: "vehicle", label: "Vehicle List", icon: <FaCar /> },
     { path: "all-vehicle", label: "All Vehicle", icon: <FaCar /> },
+    { path: "all-user", label: "All Users", icon: <FaCar /> },
   ];
 
   return (

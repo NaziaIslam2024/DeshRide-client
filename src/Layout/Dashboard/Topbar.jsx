@@ -11,6 +11,8 @@ import {
 import { motion, AnimatePresence } from "framer-motion"; // For animations
 import { Link } from "react-router";
 import logo from '../../assets/Images/logo/DeshRideLogo.png'
+import useAuth from "../../hooks/useAuth";
+
 
 const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
   const [darkMode, setDarkMode] = useState(true);
@@ -19,7 +21,7 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
   const [currentNews, setCurrentNews] = useState(0);
   const [imageError, setImageError] = useState(false);
 
-  const user = {};
+  const {user} = useAuth()
 
   // Key points to display in the breaking news system
   const newsItems = [
