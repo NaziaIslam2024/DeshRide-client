@@ -4,6 +4,8 @@ import { User, Mail, Phone, Lock, UserCheck, Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../providers/AuthProvider";
 import { useNavigate } from "react-router";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { toast } from "react-toastify";
 
 export default function ConsumerForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,19 +15,24 @@ export default function ConsumerForm() {
 
   // ? checking purpose
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
+
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
   // ? checking purpose
 
-  const handleSubmit = (data) => {
-    // console.log("Consumer Form Data:", data);
+  const handleSubmit = async (data) => {
     const name = data.fullName;
     const email = data.email;
-    const password = data.password;
+    const password = data.pass;
+    const userName = `${name.toLowerCase()}_${Date.now()}`;
 
-    // console.log(name, email, password);
+    const { pass, ...withoutPasswordData } = data;
+    const consumerData = { ...withoutPasswordData, userName, role: "consumer" };
 
-    // Validate password
+    // console.log(consumerData);
+
+    // todo : Validate password
     // if (!passwordRegex.test(password)) {
     //   // setError(
     //   //   "Password must be at least 6 characters long and include an uppercase and a lowercase letter."
@@ -37,7 +44,7 @@ export default function ConsumerForm() {
 
     // create user
     createNewUser(email, password)
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
         setUser(user);
         toast.success("Congratulations! Successfully created a new account", {
@@ -46,6 +53,18 @@ export default function ConsumerForm() {
           closeOnClick: true,
           pauseOnHover: true,
         });
+        // send the data in backend
+        try {
+          const response = await axiosPublic.post(
+            "/users/consumerUsers",
+            consumerData
+          );
+          console.log("Data sent successfully:", response.data);
+        } catch (error) {
+          console.error("Error sending data:", error);
+        }
+
+        //
         // Update user profile using updateUser
         updateUser({ displayName: name })
           .then(() => {
@@ -74,7 +93,9 @@ export default function ConsumerForm() {
         <div className="relative">
           <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
-            {...consumerForm.register("fullName")}
+            {...consumerForm.register("fullName", {
+              required: "Name is required",
+            })}
             type="text"
             placeholder="Full Name"
             className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -83,7 +104,9 @@ export default function ConsumerForm() {
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
-            {...consumerForm.register("email")}
+            {...consumerForm.register("email", {
+              required: "Email is required",
+            })}
             type="email"
             placeholder="Email Address"
             className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -93,7 +116,9 @@ export default function ConsumerForm() {
       <div className="relative">
         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
         <input
-          {...consumerForm.register("phoneNumber")}
+          {...consumerForm.register("phoneNumber", {
+            required: "Phone Number is required",
+          })}
           type="tel"
           placeholder="Phone Number"
           className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -102,7 +127,9 @@ export default function ConsumerForm() {
       <div className="relative">
         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
         <input
-          {...consumerForm.register("password")}
+          {...consumerForm.register("pass", {
+            required: "Password is required",
+          })}
           type={showPassword ? "text" : "password"}
           placeholder="Password"
           className="w-full pl-10 pr-10 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"

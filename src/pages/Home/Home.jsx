@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <div className="">
       <Banner></Banner>
-      
+
       <div className="container mx-auto">
         <Services></Services>
         <CarCategories></CarCategories>
@@ -29,11 +29,11 @@ const Home = () => {
         <BangaloreSection></BangaloreSection>
         <ExploreSlider></ExploreSlider>
         <Promotion></Promotion>
-        </div>
+      </div>
 
-        <Gallery></Gallery>
+      <Gallery></Gallery>
 
-        <div className="container mx-auto">
+      <div className="container mx-auto">
         <Stories></Stories>
         <WhyChooseUs></WhyChooseUs>
         <Host></Host>
