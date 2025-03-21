@@ -13,12 +13,8 @@ import Testimonial from "./Testimonial";
 import ShowUserLocation from "./ShowUserLocation";
 import Gallery from "./Gallery";
 import Services from "./Services";
-import useRole from "../../hooks/useRole";
 
 const Home = () => {
-  const [isRole] = useRole();
-  console.log(isRole);
-
   return (
     <div className="">
       <Banner></Banner>

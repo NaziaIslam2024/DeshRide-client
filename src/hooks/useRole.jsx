@@ -1,31 +1,66 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./useAxiosSecure";
 import { useAuth } from "../providers/AuthProvider";
+import useAxiosPublic from "./useAxiosPublic";
+import { useState, useEffect } from "react";
 
 const useRole = () => {
-  const { user, loading } = useAuth();
-  const axiosSecure = useAxiosSecure();
-  console.log(user?.email);
+  const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
 
+  // States
+  const [userRole, setUserRole] = useState(null);
+  const [userRoleLoading, setUserRoleLoading] = useState(true);
+
+  // Fetch user data
   const {
-    data: isRole,
-    isLoading: isRoleLoading,
+    data: userData,
+    isLoading: userDataLoading,
     error,
     refetch: userRoleRefetch,
   } = useQuery({
-    queryKey: [user?.email, "isRole"],
-    enabled: !!user?.email && !loading,
+    queryKey: [user?.email, "userData"],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users/getUser/${user?.email}`);
+      const res = await axiosPublic.get(`/users/getUser/${user?.email}`);
       return res.data;
     },
   });
+
+  // Effect to update role when userData changes
+  useEffect(() => {
+    if (userData) {
+      const { role, hasCar, carUsage } = userData;
+
+      if (role === "provider") {
+        if (hasCar && carUsage === "drive") {
+          setUserRole("driver_with_car");
+        } else if (hasCar && carUsage === "rent") {
+          setUserRole("renter");
+        } else if (!hasCar) {
+          setUserRole("provider_without_car");
+        }
+      } else if (role === "consumer") {
+        setUserRole("consumer");
+      }
+
+      setUserRoleLoading(false);
+    }
+  }, [userData]); // Runs only when userData changes
 
   if (error) {
     console.error("Error fetching role:", error);
   }
 
-  return [isRole, isRoleLoading, error, userRoleRefetch];
+  console.log("User role:", userRole);
+
+  return [
+    userData,
+    userDataLoading,
+    userRoleRefetch,
+    error,
+    userRole,
+    userRoleLoading,
+  ];
 };
 
 export default useRole;
