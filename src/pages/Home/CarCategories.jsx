@@ -11,36 +11,37 @@ const CarCategories = () => {
           description:
             "Enjoy a premium driving experience with Sedans. Ideal for business travel or longer drives, they provide comfort, elegance, and plenty of legroom.",
           button: "Rent Sedans",
+          button: "Sedans",
         },
         {
           title: "Hatchbacks",
           description:
             "Spacious, convenient, and economical, hatchbacks are great for zipping around the city. They're easy to park, fuel-efficient, and perfect for short drives or long trips!",
-          button: "Rent Hatchbacks",
+          button: "Hatchbacks",
         },
         {
           title: "Electric Cars",   
           description:
             "Go green with electric vehicles. Experience the latest in eco-friendly technology while saving on fuel costs. Perfect for city commutes and short getaways.",
-          button: "Rent EVs ",
+          button: "E- Cars",
         },
         {
           title: "SUVs and Family Cars",
           description:
-            "Perfect for road trips with your family or group outings, SUVs offer ample space and comfort for 6-7 passengers. Whether it's a weekend getaway or a wedding trip, these cars are built for Bangladeshi families and friend groups.",
-          button: "Rent SUVs",
+            "Perfect for road trips with your family or group outings, SUVs offer ample space and comfort for 6-7 passengers. It's a weekend getaway or a wedding trip, these cars are built for families and friend groups.",
+          button: "Sports Utility Vehicles",
         },
         {
           title: "Minivans",
           description:
             "Need extra space? Minivans are perfect for large families or group trips. Travel comfortably with plenty of room for passengers and luggage.",
-          button: "Rent Minivans ",
+          button: "Minivans",
         },
         {
           title: "Luxury Cars",
           description:
             "Experience top-tier comfort and style with our luxury cars. Ideal for special occasions, business events, or simply enjoying a premium ride.",
-          button: "Rent Luxury Cars",
+          button: "BMW, Audi, Mercedes",
         },
       ];
 

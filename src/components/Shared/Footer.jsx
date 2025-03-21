@@ -3,8 +3,10 @@ import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <div className="">
-      <footer className="footer sm:footer-horizontal text-base-content p-10 bg-background-light-100">
+
+    <div className="bg-background-light-100">
+      <div className="w-11/12 mx-auto">
+      <footer className="footer sm:footer-horizontal  text-base-content p-10">
         <aside>
           <div className="flex items-center">
             <img
@@ -72,7 +74,10 @@ const Footer = () => {
           </div>
         </nav>
       </footer>
+      
+      </div>
       <footer className="footer sm:footer-horizontal footer-center bg-primary-light-100 text-base-content p-4">
+    
         <aside>
           <p>
             Copyright © {new Date().getFullYear()} - All rights reserved by 6

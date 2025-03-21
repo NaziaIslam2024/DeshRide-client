@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../providers/AuthProvider";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const vehicleTypes = [
   "Sedan",
@@ -38,6 +39,8 @@ export default function ProviderForm() {
 
   // ? checking purpose
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
+
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
   // ? checking purpose
@@ -50,15 +53,21 @@ export default function ProviderForm() {
       hasCar: hasCar || false,
       carUsage: hasCar ? carUsage : undefined,
     };
-    console.log("Provider Form Data:", formData);
 
     const name = data.fullName;
     const email = data.email;
-    const password = data.password;
+    const password = data.pass;
+    const userName = `${name.toLowerCase()}_${Date.now()}`;
 
-    //
+    const { pass, ...withoutPasswordData } = formData;
+    const providerData = { ...withoutPasswordData, userName, role: "provider" };
+
+    console.log(providerData);
+    // console.log(withoutPasswordData);
+
+    // create the profile (firebase & backend save data)
     createNewUser(email, password)
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
         setUser(user);
         toast.success("Congratulations! Successfully created a new account", {
@@ -67,6 +76,18 @@ export default function ProviderForm() {
           closeOnClick: true,
           pauseOnHover: true,
         });
+
+        //  send the data in backend
+        try {
+          const response = await axiosPublic.post(
+            "/users/all_users",
+            providerData
+          );
+          console.log("Data sent successfully:", response.data);
+        } catch (error) {
+          console.error("Error sending data:", error);
+        }
+        //
         // Update user profile using updateUser
         updateUser({ displayName: name })
           .then(() => {
@@ -95,7 +116,9 @@ export default function ProviderForm() {
         <div className="relative">
           <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
-            {...providerForm.register("fullName")}
+            {...providerForm.register("fullName", {
+              required: "Name is required",
+            })}
             type="text"
             placeholder="Full Name"
             className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -104,7 +127,9 @@ export default function ProviderForm() {
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
-            {...providerForm.register("email")}
+            {...providerForm.register("email", {
+              required: "Email is required",
+            })}
             type="email"
             placeholder="Email Address"
             className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -115,7 +140,9 @@ export default function ProviderForm() {
         <div className="relative">
           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
-            {...providerForm.register("phoneNumber")}
+            {...providerForm.register("phoneNumber", {
+              required: "Phone Number is required",
+            })}
             type="tel"
             placeholder="Phone Number"
             className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -124,7 +151,9 @@ export default function ProviderForm() {
         <div className="relative">
           <PhoneCall className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
-            {...providerForm.register("emergencyContact")}
+            {...providerForm.register("emergencyContact", {
+              required: "Emergency Contact is required",
+            })}
             type="tel"
             placeholder="Emergency Contact"
             className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -134,7 +163,9 @@ export default function ProviderForm() {
       <div className="relative">
         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
         <input
-          {...providerForm.register("password")}
+          {...providerForm.register("pass", {
+            required: "Password is required",
+          })}
           type={showPassword ? "text" : "password"}
           placeholder="Password"
           className="w-full pl-10 pr-10 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -154,7 +185,9 @@ export default function ProviderForm() {
       <div className="relative">
         <FileCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
         <input
-          {...providerForm.register("nid")}
+          {...providerForm.register("nid", {
+            required: "NID is required",
+          })}
           type="text"
           placeholder="NID Number"
           className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -163,7 +196,9 @@ export default function ProviderForm() {
       <div className="relative">
         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
         <input
-          {...providerForm.register("address")}
+          {...providerForm.register("address", {
+            required: "Address is required",
+          })}
           type="text"
           placeholder="Address"
           className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -257,7 +292,9 @@ export default function ProviderForm() {
             <div className="relative">
               <Car className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
-                {...providerForm.register("vehicleModel")}
+                {...providerForm.register("vehicleModel", {
+                  required: "Field is required",
+                })}
                 type="text"
                 placeholder="Vehicle Model"
                 className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -280,7 +317,9 @@ export default function ProviderForm() {
         <div className="relative">
           <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
-            {...providerForm.register("drivingLicense")}
+            {...providerForm.register("drivingLicense", {
+              required: "Field is required",
+            })}
             type="text"
             placeholder="Driving License Number"
             className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
@@ -290,7 +329,9 @@ export default function ProviderForm() {
 
       <div className="flex items-center gap-2">
         <input
-          {...providerForm.register("termsAccepted")}
+          {...providerForm.register("termsAccepted", {
+            required: "Field is required",
+          })}
           type="checkbox"
           id="terms"
           className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
