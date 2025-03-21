@@ -77,13 +77,13 @@ const Stories = () => {
         {stories.map((story) => (
           <SwiperSlide 
             key={story.id} 
-            className="border rounded-lg p-4 shadow-md bg-white flex flex-col justify-between h-[320px] md:h-[340px] lg:h-[360px]"
+            className="border rounded-lg p-4 shadow-md bg-accent-light-100 flex flex-col justify-between h-[320px] md:h-[340px] lg:h-[360px]"
           >
             <div>
               <h3 className="font-bold text-base md:text-lg">{story.name}</h3>
               <p className="text-xs md:text-sm text-gray-600">Booked {story.bookedDaysAgo} days ago</p>
               <p className="font-semibold mt-2 text-sm md:text-base">{story.car}</p>
-              <p className="text-green-600 font-bold text-sm md:text-base">⭐ {story.rating} | {story.trips} trips</p>
+              <p className="text-text-light-600 font-bold text-sm md:text-base">⭐ {story.rating} | {story.trips} trips</p>
             </div>
             <p className="text-gray-700 text-sm md:text-base mt-2 line-clamp-3">{story.review}</p>
           </SwiperSlide>

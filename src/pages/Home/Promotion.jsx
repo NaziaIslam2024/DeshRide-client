@@ -53,10 +53,10 @@ const Promotion = () => {
         </Swiper>
 
         {/* Navigation Buttons */}
-        <button className="prev-btn absolute top-1/2 -left-4 sm:-left-6 lg:-left-8 text-white bg-gray-700 p-1.5 sm:p-2 rounded-full transform -translate-y-1/2 hidden sm:flex items-center justify-center hover:bg-gray-600 transition-colors z-10">
+        <button className="prev-btn absolute top-1/2 -left-4 sm:-left-6 lg:-left-8 text-white bg-secondary-light-700 p-1.5 sm:p-2 rounded-full transform -translate-y-1/2 hidden sm:flex items-center justify-center hover:bg-gray-600 transition-colors z-10">
           <FaArrowLeft size={16} />
         </button>
-        <button className="next-btn absolute top-1/2 -right-4 sm:-right-6 lg:-right-8 text-white bg-gray-700 p-1.5 sm:p-2 rounded-full transform -translate-y-1/2 hidden sm:flex items-center justify-center hover:bg-gray-600 transition-colors z-10">
+        <button className="next-btn absolute top-1/2 -right-4 sm:-right-6 lg:-right-8 text-white bg-secondary-light-700 p-1.5 sm:p-2 rounded-full transform -translate-y-1/2 hidden sm:flex items-center justify-center hover:bg-gray-600 transition-colors z-10">
           <FaArrowRight size={16} />
         </button>
 

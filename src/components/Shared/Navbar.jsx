@@ -41,7 +41,7 @@ const Navbar = () => {
   //   </>
   // );
   return (
-    <div className="text-center bg-[#4445fb]  text-white shadow-sm ">
+    <div className="text-center bg-background-light-100  text-black shadow-sm ">
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
@@ -87,19 +87,19 @@ const Navbar = () => {
         <div className="navbar-end gap-5 hidden lg:flex">
           <Link
             to={"/"}
-            className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+            className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
           >
             Home
           </Link>
           <Link
             to={"/dashboard"}
-            className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+             className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
           >
             Dashboard
           </Link>
           {/* <Link
             to={""}
-            className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+            className="btn bg-transparent text-white py-2 px-5 rounded-xl"
           >
             Join Now
           </Link> */}
@@ -108,14 +108,14 @@ const Navbar = () => {
             <>
               <Link
                 to={"#"}
-                className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+                className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
               >
                 Join Now
               </Link>
               <Link
                 to={"/login"}
                 onClick={logOut}
-                className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+                 className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
               >
                 Logout
               </Link>
@@ -123,18 +123,18 @@ const Navbar = () => {
           ) : (
             <>
               <Link to={"/about"}
-                className="btn bg-transparent text-white py-2 px-5 rounded-4xl">
+                 className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg">
                   About
               </Link>
               <Link
                 to={"/login"}
-                className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+                className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
               >
                 Login
               </Link>
               <Link
                 to={"/register"}
-                className="btn bg-transparent text-white py-2 px-5 rounded-4xl"
+                className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
               >
                 SignUp
               </Link>

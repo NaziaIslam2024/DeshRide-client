@@ -31,7 +31,7 @@ const Home = () => {
         <Host></Host>
         <Testimonial></Testimonial>
       </div>
-      <ShowUserLocation></ShowUserLocation>
+      {/* <ShowUserLocation></ShowUserLocation> */}
       <div className="container mx-auto">
         <FAQ></FAQ>
       </div>

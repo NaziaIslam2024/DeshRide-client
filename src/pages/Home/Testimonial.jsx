@@ -105,7 +105,7 @@ const Testimonial = () => {
                 {
                     reviews.map((review, index) => (
                         <SwiperSlide key={index}>
-                            <div className="py-4 flex flex-col w-full shadow-lg backdrop-blur-sm text-center items-center h-72">
+                            <div className="py-4 flex flex-col w-full shadow-lg backdrop-blur-sm text-center items-center h-72 bg-accent-light-100 rounded-lg">
                                 <img
                                     src={review.userAvatar}
                                     alt={review.userName}
