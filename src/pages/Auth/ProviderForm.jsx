@@ -80,7 +80,7 @@ export default function ProviderForm() {
         //  send the data in backend
         try {
           const response = await axiosPublic.post(
-            "/users/providerUsers",
+            "/users/all_users",
             providerData
           );
           console.log("Data sent successfully:", response.data);
