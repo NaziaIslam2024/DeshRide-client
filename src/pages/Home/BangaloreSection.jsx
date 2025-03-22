@@ -5,7 +5,7 @@ import img4 from "../../assets/Usecase-3.webp";
 
 const BangaloreSection = () => {
   return (
-    <div className="w-11/12 mt-10 bg-slate-100 mx-auto p-6 mb-[100px]">
+    <div className="w-11/12 mt-10 mx-auto p-6 mb-[100px] rounded-lg">
       
       <div className="flex flex-col lg:flex-row items-center gap-8">
         <img
@@ -29,7 +29,7 @@ const BangaloreSection = () => {
             processions, and more on one self-drive car-sharing platform.
           </p>
 
-          <button className="mt-4 bg-black text-white px-6 py-2 rounded hover:opacity-80">
+          <button className="mt-4 bg-primary-light-300 hover:bg-primary-light-700 hover:text-white px-6 py-2 rounded hover:opacity-80">
             BOOK CAR
           </button>
         </div>
@@ -39,7 +39,7 @@ const BangaloreSection = () => {
       <div className="mt-10">
         <h3 className="text-xl text-center font-semibold">
           Short-term rentals starting at 
-          <span className="bg-blue-600 text-white px-2 py-1 rounded ml-2">৳799</span>
+          <span className="bg-secondary-light-400 text-white px-2 py-1 rounded ml-2">৳799</span>
         </h3>
         <p className="text-gray-600 text-center text-sm">Get convenience, comfort, and privacy in your self-drive car in Bangladesh.</p>
       </div>
@@ -47,7 +47,7 @@ const BangaloreSection = () => {
       
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   
-  <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300 ease-in-out">
+  <div className="bg-accent-light-100  rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300 ease-in-out">
     <img src={img2} alt="Attractions" className="w-full h-48 object-cover"/>
     <div className="p-4">
       <h4 className="font-semibold">Discover Bangladesh’s Top Destinations <span className="ml-2">↗</span></h4>
@@ -57,7 +57,7 @@ const BangaloreSection = () => {
     </div>
   </div>
 
-  <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300 ease-in-out">
+  <div className="bg-accent-light-100  rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300 ease-in-out">
     <img src={img3} alt="Business Travel" className="w-full h-48 object-cover"/>
     <div className="p-4">
       <h4 className="font-semibold flex items-center">
@@ -70,7 +70,7 @@ const BangaloreSection = () => {
     </div>
   </div>
 
-  <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300 ease-in-out">
+  <div className="bg-accent-light-100 rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300 ease-in-out">
     <img src={img4} alt="Airport Transfer" className="w-full h-48 object-cover"/>
     <div className="p-4">
       <h4 className="font-semibold flex items-center">

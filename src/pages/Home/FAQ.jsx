@@ -22,7 +22,7 @@ const FAQ = () => {
         {faqs.map((faq, index) => (
           <div
             key={index}
-            className="bg-white border rounded-lg p-4 shadow-md w-full md:w-[48%] transition-all duration-300"
+            className="bg-primary-light-100 border rounded-lg p-4 shadow-md w-full md:w-[48%] transition-all duration-300"
           >
             <button
               className="flex justify-between items-center w-full text-left font-semibold"

@@ -61,6 +61,9 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
 
+      console.log(currentUser);
+    
+
       // if (currentUser?.email) {
       //   const user = { email: currentUser.email };
       //   axiosPublic
