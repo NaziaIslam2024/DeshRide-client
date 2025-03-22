@@ -9,6 +9,7 @@ import About from "../pages/About/About";
 import PrivacyPolicy from "../pages/privacy&policy/PrivacyPolicy";
 import MyProfile from "../pages/Dashboard/Shared/MyProfile";
 import ErrorPage from "../components/ErrorPage";
+import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-profile',
         element: <MyProfile></MyProfile>
+      },
+      {
+        path: 'all-user',
+        element: <AllUsers></AllUsers>
       },
     ]
   },
