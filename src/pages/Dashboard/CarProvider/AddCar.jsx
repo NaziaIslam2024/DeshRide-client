@@ -9,19 +9,55 @@ import useAxiosPublic from '../../../hooks/useAxiosPublic';
 const image_hosting_key = import.meta.env.VITE_Image_hosting_key;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddCar = () => {
-    const axiosPublic = useAxiosPublic();
+    const axiosPublic = "http://localhost:5001";
     const { user } = useAuth();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-   
+
     const onSubmit = async (data) => {
         console.log(data);
-        const imageFile = { image: data.image[0]}
-        const res = await axiosPublic.post(image_hosting_api, imageFile, {
-            headers: {
-                'content-type' : 'multipart/form-data'
+        // const imageFile = { image: data.image[0],  }
+        try {
+            const imageFields = ["VehicleRegImg", "drivingLicenseImg"];
+            // const imageFields = [] VehicleRegImg:data.VehicleRegImg[0], drivingLicenseImg:data.drivingLicenseImg[0] ];
+            const uploadedImages = {};
+            //upload img in imgbb 
+            // const res = await axiosPublic.post(image_hosting_api, imageFile, {
+            //     headers: {
+            //         'content-type': 'multipart/form-data'
+            //     }
+            // });
+
+            for (const field of imageFields) {
+                if (data[field]?.[0]) {
+                    const formData = new FormData();
+                    formData.append("image", data[field][0]);
+
+                    const res = await fetch(image_hosting_api, {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    const result = await res.json();
+                    if (result.success) {
+                        uploadedImages[field] = result.data.url;
+                    }
+                }
             }
-        });
-        console.log(res.data);
+            const formDataWithUrls = {
+                fullName: data.fullName,
+                email: data.email,
+                nid: data.nid,
+                licenseNo: data.licenseNo,
+                VehicleRegistrationNo: data.VehicleRegistrationNo,
+                licenseImageUrl: uploadedImages["drivingLicenseImg"] || "",
+                vehicleRegImageUrl: uploadedImages["VehicleRegImg"] || "",
+            };
+
+            console.log("Final Form Data: ", formDataWithUrls);
+            
+        }catch (error) {
+            console.error("Image upload failed:", error);
+        }
     }
 
     return (
@@ -36,7 +72,7 @@ const AddCar = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}>
                 {/* <input type="email" defaultValue={user.email} readOnly/> */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="relative">
                         <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                         <input
@@ -64,10 +100,8 @@ const AddCar = () => {
                                     ? "border-red-500 focus:border-red-500"
                                     : "border-accent-dark-300 focus:border-accent-light-500"
                             )}
-                            />
+                        />
                     </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="relative">
                         <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                         <input
@@ -83,20 +117,67 @@ const AddCar = () => {
                             )}
                         />
                     </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                         <input
-                            {...register("image", { required: true })}
-                            type="file"
-                            placeholder="Upload your Driving License"
+                            {...register("licenseNo", { required: true })}
+                            type="text"
+                            placeholder="Driving License Number"
+                            // className="w-full pl-10 pr-3 py-2 text-sm border border-accent-dark-300 rounded-lg focus:border-accent-light-500 focus:outline-none transition-colors"
                             className={clsx(
                                 "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
-                                errors.image
+                                errors.licenseNo
                                     ? "border-red-500 focus:border-red-500"
                                     : "border-accent-dark-300 focus:border-accent-light-500"
                             )}
                         />
-                        {/* {errors.drivingLicense && <span className="text-sm text-red-500">photo url field is required</span>} */}
+                    </div>
+                    <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                            {...register("drivingLicenseImg", { required: true })}
+                            type="file"
+                            placeholder="Upload your Driving License"
+                            className={clsx(
+                                "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                errors.drivingLicenseImg
+                                    ? "border-red-500 focus:border-red-500"
+                                    : "border-accent-dark-300 focus:border-accent-light-500"
+                            )}
+                        />
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="relative">
+                        <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                            {...register("VehicleRegistrationNo", { required: true })}
+                            type="text"
+                            placeholder="Vehicle Registration Number"
+                            // className="w-full pl-10 pr-3 py-2 text-sm border border-accent-dark-300 rounded-lg focus:border-accent-light-500 focus:outline-none transition-colors"
+                            className={clsx(
+                                "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                errors.VehicleRegistrationNo
+                                    ? "border-red-500 focus:border-red-500"
+                                    : "border-accent-dark-300 focus:border-accent-light-500"
+                            )}
+                        />
+                    </div>
+                    <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                            {...register("VehicleRegImg", { required: true })}
+                            type="file"
+                            placeholder="Upload your Driving License"
+                            className={clsx(
+                                "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                errors.VehicleRegImg
+                                    ? "border-red-500 focus:border-red-500"
+                                    : "border-accent-dark-300 focus:border-accent-light-500"
+                            )}
+                        />
                     </div>
                 </div>
                 <motion.button
