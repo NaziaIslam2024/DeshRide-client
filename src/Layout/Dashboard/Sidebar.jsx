@@ -12,6 +12,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
     { path: "vehicle", label: "Vehicle List", icon: <FaCar /> },
     { path: "all-vehicle", label: "All Vehicle", icon: <FaCar /> },
     { path: "all-user", label: "All Users", icon: <FaCar /> },
+    { path: "add-car", label: "Add Car", icon: <FaCar /> },
   ];
 
   return (

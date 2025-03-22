@@ -10,6 +10,7 @@ import PrivacyPolicy from "../pages/privacy&policy/PrivacyPolicy";
 import MyProfile from "../pages/Dashboard/Shared/MyProfile";
 import ErrorPage from "../components/ErrorPage";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
+import AddCar from "../pages/Dashboard/CarProvider/AddCar";
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
       {
         path: 'all-user',
         element: <AllUsers></AllUsers>
+      },
+      {
+        path: 'add-car',
+        element: <AddCar></AddCar>
       },
     ]
   },

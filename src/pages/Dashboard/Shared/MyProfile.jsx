@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import { useAuth } from '../../../providers/AuthProvider';
 
 const MyProfile = () => {
   const { user } = useAuth(); // Get the authenticated user's email from the useAuth hook
