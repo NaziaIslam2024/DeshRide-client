@@ -14,23 +14,20 @@ import { Link } from "react-router";
 const slides = [
   {
     image:
-    //   "https://images.unsplash.com/photo-1494783367193-149034c05e8f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    // contentImage: bannerContent1,
-    "../../../src/assets/Images/banner/young-woman-testing-car-car-showroom.jpg",
+      "https://images.unsplash.com/photo-1494783367193-149034c05e8f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    contentImage: bannerContent1,
     title: "Get to your destination <br> with peace of mind",
   },
+  // {
+  //   image:
+  //     "https://images.unsplash.com/photo-1530127676576-acdb8fbb5690?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   contentImage: bannerContent2,
+  //   title: "Experience the best <br> comfort and style on the road",
+  // },
   {
     image:
-    //   "https://images.unsplash.com/photo-1530127676576-acdb8fbb5690?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    // contentImage: bannerContent2,
-    "../../../src/assets/Images/banner/woman-charging-her-car-looking-cherger-bher-phone.jpg",
-    title: "Experience the best <br> comfort and style on the road",
-  },
-  {
-    image:
-    //   "https://images.unsplash.com/photo-1530127676576-acdb8fbb5690?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    // contentImage: bannerContent2,
-    "../../../src/assets/Images/banner/beard-young-man-sitting-with-his-friend-car-taking-selfie.jpg",
+      "https://images.unsplash.com/photo-1530127676576-acdb8fbb5690?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    contentImage: bannerContent2,
     title: "Experience the best <br> comfort and style on the road",
   },
 ];

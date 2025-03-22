@@ -50,7 +50,7 @@ const Team = () => {
           </ul>
         </div>
       </div>
-    
+              
     </div>
   );
 };

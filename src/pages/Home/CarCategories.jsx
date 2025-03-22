@@ -10,6 +10,7 @@ const CarCategories = () => {
           title: "Sedans",
           description:
             "Enjoy a premium driving experience with Sedans. Ideal for business travel or longer drives, they provide comfort, elegance, and plenty of legroom.",
+          button: "Rent Sedans",
           button: "Sedans",
         },
         {
@@ -19,7 +20,7 @@ const CarCategories = () => {
           button: "Hatchbacks",
         },
         {
-          title: "Electric Cars",
+          title: "Electric Cars",   
           description:
             "Go green with electric vehicles. Experience the latest in eco-friendly technology while saving on fuel costs. Perfect for city commutes and short getaways.",
           button: "E- Cars",
@@ -63,19 +64,19 @@ const CarCategories = () => {
                 1024: { slidesPerView: 3 },
                 1280: { slidesPerView: 4 },
               }}
-              navigation
+              // navigation
               pagination={{ clickable: true }}
               autoplay={{ delay: 3000 }}
               className="pb-10"
             >
               {categories.map((category, index) => (
                 <SwiperSlide key={index}>
-                  <div className="text-center p-6 rounded-lg shadow-lg flex flex-col justify-between h-full min-h-[270px] bg-gray-100">
+                  <div className="text-center p-6 rounded-lg shadow-lg flex flex-col justify-between h-full min-h-[300px] bg-accent-light-100">
                     <div className="flex-1">
                       <h3 className="text-xl font-semibold">{category.title}</h3>
-                      <p className="mt-2 text-sm">{category.description}</p>
+                      <p className="my-4 text-sm">{category.description}</p>
                     </div>
-                    <button className="mt-auto bg-gray-900 text-white px-4 py-2 rounded font-medium hover:bg-gray-700">
+                    <button className="mt-auto bg-primary-light-700 text-white px-4 py-2 rounded font-medium hover:bg-primary-light-500">
                       {category.button}
                     </button>
                   </div>
