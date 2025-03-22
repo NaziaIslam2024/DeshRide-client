@@ -1,11 +1,24 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router";
 
 // Function to generate random cars with random speeds
 const generateRandomCars = () => {
   const cars = [
-    { id: 1, src: 'https://png.pngtree.com/png-vector/20220504/ourmid/pngtree-red-convertible-car-stylish-and-luxurious-isolated-on-white-vector-png-image_30251826.png', speed: Math.random() * 10 + 5 },
-    { id: 2, src: 'https://static.vecteezy.com/system/resources/thumbnails/035/858/067/small_2x/police-car-side-view-png.png', speed: Math.random() * 10 + 5 },
-    { id: 3, src: 'https://pngimg.com/d/tesla_cybertruck_PNG17.png', speed: Math.random() * 10 + 5 },
+    {
+      id: 1,
+      src: "https://png.pngtree.com/png-vector/20220504/ourmid/pngtree-red-convertible-car-stylish-and-luxurious-isolated-on-white-vector-png-image_30251826.png",
+      speed: Math.random() * 10 + 5,
+    },
+    {
+      id: 2,
+      src: "https://static.vecteezy.com/system/resources/thumbnails/035/858/067/small_2x/police-car-side-view-png.png",
+      speed: Math.random() * 10 + 5,
+    },
+    {
+      id: 3,
+      src: "https://pngimg.com/d/tesla_cybertruck_PNG17.png",
+      speed: Math.random() * 10 + 5,
+    },
   ];
   return cars;
 };
@@ -38,9 +51,6 @@ const ErrorPage = () => {
         <div className="absolute bottom-8 sm:bottom-12 left-0 w-[50%] h-1 bg-yellow-400 animate-road-line"></div>
         <div className="absolute bottom-8 sm:bottom-12 left-96 w-[50%] h-1 bg-yellow-400 animate-road-line"></div>
 
-
-
-
         {/* Multiple Moving Cars */}
         {cars.map((car) => (
           <div
@@ -72,12 +82,13 @@ const ErrorPage = () => {
             Oops! Page Not Found
           </h2>
           <p className="text-sm sm:text-lg text-gray-700 mb-6 sm:mb-8 font-medium">
-            It looks like you've taken a wrong turn. The page you're looking for doesn't exist or has been moved.
+            It looks like you've taken a wrong turn. The page you're looking for
+            doesn't exist or has been moved.
           </p>
 
           {/* Enhanced Call-to-Action Button */}
-          <a
-            href="/"
+          <Link
+            to="/"
             className="relative inline-flex items-center justify-center bg-gradient-to-r from-purple-600 via-blue-500 to-pink-500 text-white font-bold py-2 px-6 sm:py-3 sm:px-8 rounded-full shadow-lg cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:scale-110 active:scale-95 group overflow-hidden"
           >
             <span className="relative z-10 flex items-center text-sm sm:text-base">
@@ -97,7 +108,7 @@ const ErrorPage = () => {
             </span>
             {/* Button Shine Effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -skew-x-12 animate-shine" />
-          </a>
+          </Link>
         </div>
       </div>
     </div>
