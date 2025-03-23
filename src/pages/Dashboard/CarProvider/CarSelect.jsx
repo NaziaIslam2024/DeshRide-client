@@ -25,7 +25,42 @@ const CarSelect = () => {
       nid: '1998987654321',
       // Remove hardcoded userEmail
     },
-    // ... other car entries
+    {
+        id: 3,
+        image: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d',
+        model: 'Ford Mustang',
+        registrationNo: 'MUS-2023',
+        brand: 'Ford',
+        vehicleTaxToken: 'TX-987321',
+        nid: '2000456789123'
+      },
+      {
+        id: 4,
+        image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537',
+        model: 'Tesla Model S',
+        registrationNo: 'TES-001',
+        brand: 'Tesla',
+        vehicleTaxToken: 'TX-654987',
+        nid: '2001123456789'
+      },
+      {
+        id: 5,
+        image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70',
+        model: 'Porsche 911',
+        registrationNo: 'POR-911',
+        brand: 'Porsche',
+        vehicleTaxToken: 'TX-147258',
+        nid: '1999567812345'
+      },
+      {
+        id: 6,
+        image: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d',
+        model: 'BMW X5',
+        registrationNo: 'BMW-2023',
+        brand: 'BMW',
+        vehicleTaxToken: 'TX-369258',
+        nid: '1998345678912'
+      }
   ]);
 
   const [selectedCar, setSelectedCar] = useState(null);
