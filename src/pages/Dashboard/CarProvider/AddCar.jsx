@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from "clsx";
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
@@ -9,23 +9,17 @@ import useAxiosPublic from '../../../hooks/useAxiosPublic';
 const image_hosting_key = import.meta.env.VITE_Image_hosting_key;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddCar = () => {
+    const [isChecked, setIsChecked] = useState(false);
     const axiosPublic = "http://localhost:5001";
     const { user } = useAuth();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
         console.log(data);
-        // const imageFile = { image: data.image[0],  }
+
         try {
-            const imageFields = ["VehicleRegImg", "drivingLicenseImg"];
-            // const imageFields = [] VehicleRegImg:data.VehicleRegImg[0], drivingLicenseImg:data.drivingLicenseImg[0] ];
+            const imageFields = ["VehicleRegImg", "VehicleTaxImg", "vehicleInsurance", "FitnessCertificate", "drivingLicenseImg"];
             const uploadedImages = {};
-            //upload img in imgbb 
-            // const res = await axiosPublic.post(image_hosting_api, imageFile, {
-            //     headers: {
-            //         'content-type': 'multipart/form-data'
-            //     }
-            // });
 
             for (const field of imageFields) {
                 if (data[field]?.[0]) {
@@ -47,27 +41,31 @@ const AddCar = () => {
                 fullName: data.fullName,
                 email: data.email,
                 nid: data.nid,
-                licenseNo: data.licenseNo,
+                // licenseNo: data.licenseNo,
                 VehicleRegistrationNo: data.VehicleRegistrationNo,
-                licenseImageUrl: uploadedImages["drivingLicenseImg"] || "",
+                vehicleTaxToken: data.vehicleTaxToken,
+                // licenseImageUrl: uploadedImages["drivingLicenseImg"] || "",
                 vehicleRegImageUrl: uploadedImages["VehicleRegImg"] || "",
+                vehicleTaxImageUrl: uploadedImages["VehicleTaxImg"] || "",
+                vehicleInsuranceImageUrl: uploadedImages["vehicleInsurance"] || "",
+                fitnessCertificateImageUrl: uploadedImages["FitnessCertificate"] || "",
             };
 
             console.log("Final Form Data: ", formDataWithUrls);
-            
-        }catch (error) {
+
+        } catch (error) {
             console.error("Image upload failed:", error);
         }
     }
 
     return (
-        <div className='w-11/12 mx-auto p-5 text-center items-center bg-accent-light-100 rounded-lg mt-10'>
+        <div className='w-9/12 mx-auto p-5 text-center items-center bg-accent-light-100 rounded-lg mt-10'>
             <h2 className='text-2xl text-accent-dark-200'>Do you want to invest a Car? Please provide these information.</h2>
             <h4 className='text-base mb-8'>**You have to upload document's scanned copy**</h4>
 
             <motion.form
                 onSubmit={handleSubmit(onSubmit)}
-                className='space-y-4'
+                className='space-y-8'
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}>
@@ -122,37 +120,6 @@ const AddCar = () => {
                     <div className="relative">
                         <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                         <input
-                            {...register("licenseNo", { required: true })}
-                            type="text"
-                            placeholder="Driving License Number"
-                            // className="w-full pl-10 pr-3 py-2 text-sm border border-accent-dark-300 rounded-lg focus:border-accent-light-500 focus:outline-none transition-colors"
-                            className={clsx(
-                                "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
-                                errors.licenseNo
-                                    ? "border-red-500 focus:border-red-500"
-                                    : "border-accent-dark-300 focus:border-accent-light-500"
-                            )}
-                        />
-                    </div>
-                    <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                        <input
-                            {...register("drivingLicenseImg", { required: true })}
-                            type="file"
-                            placeholder="Upload your Driving License"
-                            className={clsx(
-                                "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
-                                errors.drivingLicenseImg
-                                    ? "border-red-500 focus:border-red-500"
-                                    : "border-accent-dark-300 focus:border-accent-light-500"
-                            )}
-                        />
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="relative">
-                        <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                        <input
                             {...register("VehicleRegistrationNo", { required: true })}
                             type="text"
                             placeholder="Vehicle Registration Number"
@@ -166,20 +133,130 @@ const AddCar = () => {
                         />
                     </div>
                     <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <label className="floating-label">
+                            <span className="bg-red-900">Upload Vehicle Registration's Scanned Photo</span>
+                            <input
+                                {...register("VehicleRegImg", { required: true })}
+                                type="file"
+                                className={clsx(
+                                    "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                    errors.VehicleRegImg
+                                        ? "border-red-500 focus:border-red-500"
+                                        : "border-accent-dark-300 focus:border-accent-light-500"
+                                )}
+                            />
+                        </label>
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="relative">
+                        <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                         <input
-                            {...register("VehicleRegImg", { required: true })}
-                            type="file"
-                            placeholder="Upload your Driving License"
+                            {...register("vehicleTaxToken", { required: true })}
+                            type="text"
+                            placeholder="Vehicle Tax Token"
+                            // className="w-full pl-10 pr-3 py-2 text-sm border border-accent-dark-300 rounded-lg focus:border-accent-light-500 focus:outline-none transition-colors"
                             className={clsx(
                                 "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
-                                errors.VehicleRegImg
+                                errors.vehicleTaxToken
                                     ? "border-red-500 focus:border-red-500"
                                     : "border-accent-dark-300 focus:border-accent-light-500"
                             )}
                         />
                     </div>
+                    <div className="relative">
+                        <label className="floating-label">
+                            <span className="bg-red-900">Upload your Vehicle Tax Document's Scanned Photo</span>
+                            <input
+                                {...register("VehicleTaxImg", { required: true })}
+                                type="file"
+                                className={clsx(
+                                    "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                    errors.VehicleTaxImg
+                                        ? "border-red-500 focus:border-red-500"
+                                        : "border-accent-dark-300 focus:border-accent-light-500"
+                                )}
+                            />
+                        </label>
+                    </div>
                 </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="relative">
+                        <label className="floating-label">
+                            <span className="bg-red-900">Upload Vehicle Insurance document's Scanned Photo</span>
+                            <input
+                                {...register("vehicleInsurance", { required: true })}
+                                type="file"
+                                placeholder="Upload Vehicle insurance document's Scanned Photo"
+                                // className="w-full pl-10 pr-3 py-2 text-sm border border-accent-dark-300 rounded-lg focus:border-accent-light-500 focus:outline-none transition-colors"
+                                className={clsx(
+                                    "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                    errors.vehicleInsurance
+                                        ? "border-red-500 focus:border-red-500"
+                                        : "border-accent-dark-300 focus:border-accent-light-500"
+                                )}
+                            />
+                        </label>
+                    </div>
+                    <div className="relative">
+                        <label className="floating-label">
+                            <span className="bg-red-900">Upload Vehicle's Fitness Certificate's Scanned Photo</span>
+                            <input
+                                {...register("FitnessCertificate", { required: true })}
+                                type="file"
+                                className={clsx(
+                                    "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                    errors.FitnessCertificate
+                                        ? "border-red-500 focus:border-red-500"
+                                        : "border-accent-dark-300 focus:border-accent-light-500"
+                                )}
+                            />
+                        </label>
+                    </div>
+                </div>
+                <label className="fieldset-label">
+                    <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => setIsChecked(!isChecked)}
+                        className="checkbox border-accent-dark-300 bg-white checked:bg-green-400 checked:text-accent-dark-300 checked:border-accent-dark-300 " />
+                    Do you want to drive your own vehicle?
+                </label>
+                {isChecked && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="relative">
+                            <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                            <input
+                                {...register("licenseNo", { required: true })}
+                                type="text"
+                                placeholder="Driving License Number"
+                                // className="w-full pl-10 pr-3 py-2 text-sm border border-accent-dark-300 rounded-lg focus:border-accent-light-500 focus:outline-none transition-colors"
+                                className={clsx(
+                                    "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                    errors.licenseNo
+                                        ? "border-red-500 focus:border-red-500"
+                                        : "border-accent-dark-300 focus:border-accent-light-500"
+                                )}
+                            />
+                        </div>
+                        <div className="relative">
+                            <label className="floating-label">
+                                <span className="bg-red-900">Upload your Driving License Photo</span>
+                                <input
+                                    {...register("drivingLicenseImg", { required: true })}
+                                    type="file"
+                                    className={clsx(
+                                        "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                        errors.drivingLicenseImg
+                                            ? "border-red-500 focus:border-red-500"
+                                            : "border-accent-dark-300 focus:border-accent-light-500"
+                                    )}
+                                />
+                            </label>
+                        </div>
+                    </div>
+                )}
+
                 <motion.button
                     type="submit"
                     whileHover={{ scale: 1.01 }}
