@@ -5,18 +5,23 @@ import useAuth from '../../../hooks/useAuth';
 import { motion } from "framer-motion";
 import { User, Mail, Phone, Lock, UserCheck, Eye, EyeOff } from "lucide-react";
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 const image_hosting_key = import.meta.env.VITE_Image_hosting_key;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddCar = () => {
     const [isChecked, setIsChecked] = useState(false);
-    const axiosPublic = "http://localhost:5001";
+    // const axiosPublic = "http://localhost:5001";
+    const axiosPublic = useAxiosPublic();
     const { user } = useAuth();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data);
-
+        // console.log(data);
+        Swal.fire({
+            title: 'Adding...'
+        });
+        Swal.showLoading();
         try {
             const imageFields = ["VehicleRegImg", "VehicleTaxImg", "vehicleInsurance", "FitnessCertificate", "drivingLicenseImg"];
             const uploadedImages = {};
@@ -39,12 +44,12 @@ const AddCar = () => {
             }
             const formDataWithUrls = {
                 fullName: data.fullName,
-                email: data.email,
+                email: user.email,
                 nid: data.nid,
                 VehicleModel: data.VehicleModel,
-                // licenseNo: data.licenseNo,
                 VehicleRegistrationNo: data.VehicleRegistrationNo,
                 vehicleTaxToken: data.vehicleTaxToken,
+                // licenseNo: data.licenseNo,
                 // licenseImageUrl: uploadedImages["drivingLicenseImg"] || "",
                 vehicleRegImageUrl: uploadedImages["VehicleRegImg"] || "",
                 vehicleTaxImageUrl: uploadedImages["VehicleTaxImg"] || "",
@@ -53,9 +58,21 @@ const AddCar = () => {
             };
 
             console.log("Final Form Data: ", formDataWithUrls);
+            // Send Data to the Server
+            const addCarRes = await axiosPublic.post('/add-car', formDataWithUrls);
+            if(addCarRes.data.insertedId) {
+                Swal.close();
+                Swal.fire("Car added successfully");
+                reset();
+            }
+            else{
+                Swal.close();
+                Swal.fire("Failed to add car");
+                reset();
+            }
 
         } catch (error) {
-            console.error("Image upload failed:", error);
+            console.error("Something is wrong----->", error);
         }
     }
 
@@ -228,7 +245,7 @@ const AddCar = () => {
                         </label>
                     </div>
                 </div>
-                <label className="fieldset-label">
+                {/* <label className="fieldset-label">
                     <input
                         type="checkbox"
                         checked={isChecked}
@@ -269,7 +286,7 @@ const AddCar = () => {
                             </label>
                         </div>
                     </div>
-                )}
+                )} */}
 
                 <motion.button
                     type="submit"
