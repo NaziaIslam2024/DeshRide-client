@@ -41,6 +41,7 @@ const AddCar = () => {
                 fullName: data.fullName,
                 email: data.email,
                 nid: data.nid,
+                VehicleModel: data.VehicleModel,
                 // licenseNo: data.licenseNo,
                 VehicleRegistrationNo: data.VehicleRegistrationNo,
                 vehicleTaxToken: data.vehicleTaxToken,
@@ -116,14 +117,27 @@ const AddCar = () => {
                         />
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="relative">
+                        <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                            {...register("VehicleModel", { required: true })}
+                            type="text"
+                            placeholder="e.g.Toyota Prius 2020"
+                            className={clsx(
+                                "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                errors.VehicleModel
+                                    ? "border-red-500 focus:border-red-500"
+                                    : "border-accent-dark-300 focus:border-accent-light-500"
+                            )}
+                        />
+                    </div>
                     <div className="relative">
                         <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                         <input
                             {...register("VehicleRegistrationNo", { required: true })}
                             type="text"
                             placeholder="Vehicle Registration Number"
-                            // className="w-full pl-10 pr-3 py-2 text-sm border border-accent-dark-300 rounded-lg focus:border-accent-light-500 focus:outline-none transition-colors"
                             className={clsx(
                                 "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
                                 errors.VehicleRegistrationNo
@@ -132,23 +146,6 @@ const AddCar = () => {
                             )}
                         />
                     </div>
-                    <div className="relative">
-                        <label className="floating-label">
-                            <span className="bg-red-900">Upload Vehicle Registration's Scanned Photo</span>
-                            <input
-                                {...register("VehicleRegImg", { required: true })}
-                                type="file"
-                                className={clsx(
-                                    "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
-                                    errors.VehicleRegImg
-                                        ? "border-red-500 focus:border-red-500"
-                                        : "border-accent-dark-300 focus:border-accent-light-500"
-                                )}
-                            />
-                        </label>
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="relative">
                         <UserCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                         <input
@@ -163,6 +160,23 @@ const AddCar = () => {
                                     : "border-accent-dark-300 focus:border-accent-light-500"
                             )}
                         />
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="relative">
+                        <label className="floating-label">
+                            <span className="bg-red-900">Upload Vehicle Registration's Scanned Photo</span>
+                            <input
+                                {...register("VehicleRegImg", { required: true })}
+                                type="file"
+                                className={clsx(
+                                    "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
+                                    errors.VehicleRegImg
+                                        ? "border-red-500 focus:border-red-500"
+                                        : "border-accent-dark-300 focus:border-accent-light-500"
+                                )}
+                            />
+                        </label>
                     </div>
                     <div className="relative">
                         <label className="floating-label">
