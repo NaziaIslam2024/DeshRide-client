@@ -91,12 +91,7 @@ const Navbar = () => {
           >
             Home
           </Link>
-          <Link
-            to={"/dashboard"}
-             className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
-          >
-            Dashboard
-          </Link>
+         
           {/* <Link
             to={""}
             className="btn bg-transparent text-white py-2 px-5 rounded-xl"
@@ -105,13 +100,12 @@ const Navbar = () => {
           </Link> */}
           
           {user ? (
-            <>
-              <Link
-                to={"#"}
-                className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
-              >
-                Join Now
-              </Link>
+            <> <Link
+            to={"/dashboard"}
+             className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
+          >
+            Dashboard
+          </Link>
               <Link
                 to={"/login"}
                 onClick={logOut}
