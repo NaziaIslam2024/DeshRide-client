@@ -15,13 +15,16 @@ import Gallery from "./Gallery";
 import Services from "./Services";
 import Statistics from "./Statistics";
 import WhyChooseUs from "./WhyChooseUs";
+import EidCountdown from "./Eid/EidCountdown";
+import FloatingStar from "./Eid/FloatingStar";
 
 const Home = () => {
   return (
     <div className="">
       <Banner></Banner>
-
+      <FloatingStar></FloatingStar>
       <div className="container mx-auto">
+        <EidCountdown></EidCountdown>
         <Services></Services>
         <CarCategories></CarCategories>
         <Statistics></Statistics>
