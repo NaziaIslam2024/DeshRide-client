@@ -106,7 +106,8 @@ const AllUsers = () => {
 
   const fetchAllUsers = async () => {
     try {
-      const response = await axiosPublic.get('/users/all_users');
+      const response = await axios.get('http://localhost:5001/users/all_users'); // Use the full backend URL
+      console.log('API Response:', response.data); 
       setUsers(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       setError(err.message);

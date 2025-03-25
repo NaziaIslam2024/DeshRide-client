@@ -10,7 +10,8 @@ const image_hosting_key = import.meta.env.VITE_Image_hosting_key;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddCar = () => {
     const [isChecked, setIsChecked] = useState(false);
-    const axiosPublic = "http://localhost:5001";
+    // const axiosPublic = "http://localhost:5001";
+    const axiosPublic = "https://deshride-server.onrender.com/";
     const { user } = useAuth();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
