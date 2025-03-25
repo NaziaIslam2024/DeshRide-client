@@ -35,7 +35,7 @@ const EidCountdown = () => {
   );
 
   return (
-    <div className="min-h-[400px] flex items-center justify-center bg-gradient-to-br from-[#2C5364] via-[#203A43] to-[#0F2027] p-8 rounded-2xl shadow-2xl relative overflow-hidden">
+    <div className="mb-18 min-h-[400px] flex items-center justify-center bg-gradient-to-br from-[#2C5364] via-[#203A43] to-[#0F2027] p-8 rounded-2xl shadow-2xl relative overflow-hidden">
       {/* Background Image on Right */}
       <div 
         className="absolute inset-0 w-full h-full opacity-20 bg-cover bg-center"

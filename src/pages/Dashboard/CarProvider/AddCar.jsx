@@ -23,7 +23,8 @@ const AddCar = () => {
         });
         Swal.showLoading();
         try {
-            const imageFields = ["VehicleRegImg", "VehicleTaxImg", "vehicleInsurance", "FitnessCertificate", "drivingLicenseImg"];
+            // const imageFields = ["VehicleRegImg", "VehicleTaxImg", "vehicleInsurance", "FitnessCertificate", "drivingLicenseImg"];
+            const imageFields = ["VehicleRegImg"];
             const uploadedImages = {};
 
             for (const field of imageFields) {
@@ -59,10 +60,12 @@ const AddCar = () => {
 
             console.log("Final Form Data: ", formDataWithUrls);
             // Send Data to the Server
-            const addCarRes = await axiosPublic.post('/add-car', formDataWithUrls);
+            const addCarRes = await axiosPublic.post("/vehicles/add_vehicle", formDataWithUrls);
+            console.log("----------> ", addCarRes);
             if(addCarRes.data.insertedId) {
                 Swal.close();
                 Swal.fire("Car added successfully");
+                console.log("Car added successfully");
                 reset();
             }
             else{
@@ -71,7 +74,8 @@ const AddCar = () => {
                 reset();
             }
 
-        } catch (error) {
+        }
+        catch (error) {
             console.error("Something is wrong----->", error);
         }
     }
@@ -108,8 +112,7 @@ const AddCar = () => {
                         <input
                             {...register("email", { required: true })}
                             type="email"
-                            value={user?.email}
-                            placeholder="Email Address"
+                            value={user?.email} readOnly
                             className={clsx(
                                 "w-full pl-10 pr-3 py-2 text-sm border rounded-lg transition-colors focus:outline-none",
                                 errors.email
@@ -195,7 +198,7 @@ const AddCar = () => {
                             />
                         </label>
                     </div>
-                    <div className="relative">
+                   <div className="relative">
                         <label className="floating-label">
                             <span className="bg-red-900">Upload your Vehicle Tax Document's Scanned Photo</span>
                             <input
