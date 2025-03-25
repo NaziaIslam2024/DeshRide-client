@@ -9,7 +9,8 @@ const AllUsers = () => {
 useEffect(() => {
   const fetchAllUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/users/all_users'); // Use the full backend URL
+      // const response = await axios.get('http://localhost:5001/users/all_users'); // Use the full backend URL
+      const response = await axios.get('https://deshride-server.onrender.com//users/all_users'); // Use the full backend URL
       console.log('API Response:', response.data); 
       setUsers(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
