@@ -21,8 +21,11 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
   const [currentNews, setCurrentNews] = useState(0);
   const [imageError, setImageError] = useState(false);
 
-  const {user} = useAuth()
+  const {user, logOut} = useAuth()
 
+  if (!user){
+     return <Navigate to="/" />
+  }
   // Key points to display in the breaking news system
   const newsItems = [
     "🚀 New Ride Options Available Near You!",
@@ -187,7 +190,7 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
                       Profile
                     </Link>
                     <button
-                      onClick={""}
+                      onClick={logOut}
                       className="w-full text-left text-sm text-gray-600  hover:bg-gray-100  p-2 rounded-lg"
                     >
                       Logout
