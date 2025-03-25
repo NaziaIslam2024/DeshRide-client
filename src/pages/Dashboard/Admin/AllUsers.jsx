@@ -255,9 +255,9 @@ const AllUsers = () => {
                         />
                       </div>
                     </td>
-                    <td className="py-4 px-6 text-primary-dark-800 font-medium">{user.fullName}</td>
-                    <td className="py-4 px-6 text-primary-dark-600">{user.email}</td>
-                    <td className="py-4 px-6 text-primary-dark-600">{user.phoneNumber || 'N/A'}</td>
+                    <td className="py-4 px-6 text-black font-medium">{user.fullName}</td>
+                    <td className="py-4 px-6 text-black">{user.email}</td>
+                    <td className="py-4 px-6 text-black">{user.phoneNumber || 'N/A'}</td>
                     <td className="py-4 px-6">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium inline-block ${
                         user.role === 'admin' 
@@ -267,12 +267,12 @@ const AllUsers = () => {
                         {user.role}
                       </span>
                     </td>
-                    <td className="py-4 px-6 text-primary-dark-600 truncate max-w-xs">{user.address || 'Not provided'}</td>
+                    <td className="py-4 px-6 text-black truncate max-w-xs">{user.address || 'Not provided'}</td>
                     <td className="py-4 px-6 text-center">
                       <button
                         onClick={() => openDeleteModal(user)}
                         disabled={isDeleting}
-                        className="w-10 h-10 flex items-center justify-center bg-white text-primary-dark-400 hover:text-white hover:bg-primary-dark-500 rounded-full transition-all duration-300 transform hover:scale-110 shadow-md hover:shadow-lg group"
+                        className="w-10 h-10 flex items-center justify-center bg-white text-red-400 hover:text-white hover:bg-red-500 rounded-full transition-all duration-300 transform hover:scale-110 shadow-md hover:shadow-lg group"
                         title="Delete user"
                       >
                         {isDeleting && userToDelete?._id === user._id ? (
