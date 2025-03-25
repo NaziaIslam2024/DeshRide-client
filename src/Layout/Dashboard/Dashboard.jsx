@@ -1,26 +1,41 @@
-// Dashboard.jsx
 import TopBar from "./Topbar";
 import Sidebar from "./Sidebar";
-import { useState, useEffect } from "react"; // Added useEffect
+import { useState, useEffect } from "react";
 import { Navigate, Outlet } from "react-router";
 import { RiLogoutCircleFill } from "react-icons/ri";
 import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Local loading state
+  const [isLoading, setIsLoading] = useState(true);
   const { user, logOut } = useAuth();
+  const [userRole, setUserRole] = useState('consumer');
+  const [error, setError] = useState(null);
+  const axiosPublic= useAxiosPublic()
 
-  // Simulate a brief delay to let AuthProvider stabilize
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Done "loading" after a short delay
-    }, 500); // Adjust delay as needed (500ms should be enough for most auth setups)
+    const fetchUserData = async () => {
+      try {
+        if (!user?.email) {
+          throw new Error('User email is not available');
+        }
 
-    return () => clearTimeout(timer); // Cleanup
-  }, []);
+        // Fetch user data including role from backend
+        const response = await axiosPublic.get(`/users/getUser/${user.email}`);
+        setUserRole(response.data.role || 'consumer'); // Fallback to 'consumer' if role not provided
+      } catch (err) {
+        setError(err.message);
+        console.error("Failed to fetch user data:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  // Show loading spinner while waiting
+    fetchUserData();
+  }, [user?.email]); // Add user.email as dependency
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -29,7 +44,6 @@ const Dashboard = () => {
     );
   }
 
-  // Redirect only if user is null after loading
   if (!user) {
     return <Navigate to="/" />;
   }
@@ -40,14 +54,18 @@ const Dashboard = () => {
 
   return (
     <div className="">
-      <TopBar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+      <TopBar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} userRole={userRole} />
       <div style={{ height: "calc(100vh - 100px)" }} className="flex">
         <div
           className={`${
             isSidebarOpen ? "w-64" : "w-0 md:w-64"
           } bg-gray-800 text-white transition-all duration-300 flex flex-col justify-between overflow-hidden`}
         >
-          <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+          <Sidebar 
+            isSidebarOpen={isSidebarOpen} 
+            toggleSidebar={toggleSidebar} 
+            userRole={userRole} // Pass the userRole to Sidebar
+          />
           <div className="p-4">
             <button
               onClick={logOut}
