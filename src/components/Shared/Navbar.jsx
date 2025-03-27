@@ -132,12 +132,7 @@ const Navbar = () => {
               >
                 SignUp
               </Link>
-              <Link
-                to={"/signup2"}
-                className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
-              >
-                SignUp2
-              </Link>
+              
             </>
           )}
         </div>
