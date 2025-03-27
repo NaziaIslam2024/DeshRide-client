@@ -9,7 +9,7 @@ import {
   FaTimes,
 } from "react-icons/fa"; // Icons
 import { motion, AnimatePresence } from "framer-motion"; // For animations
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 import logo from '../../assets/Images/logo/DeshRideLogo.png'
 import useAuth from "../../hooks/useAuth";
 

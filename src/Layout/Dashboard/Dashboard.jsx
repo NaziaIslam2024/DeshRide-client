@@ -1,7 +1,7 @@
 import TopBar from "./Topbar";
 import Sidebar from "./Sidebar";
 import { useState, useEffect } from "react";
-import { Navigate, Outlet } from "react-router";
+import {Outlet } from "react-router";
 import { RiLogoutCircleFill } from "react-icons/ri";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
@@ -44,9 +44,6 @@ const Dashboard = () => {
     );
   }
 
-  if (!user) {
-    return <Navigate to="/" />;
-  }
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);

@@ -132,6 +132,7 @@ const Navbar = () => {
               >
                 SignUp
               </Link>
+              
             </>
           )}
         </div>

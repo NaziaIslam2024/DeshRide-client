@@ -8,13 +8,13 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
   // Define all possible navigation items
   const allNavItems = [
     // Common routes for all roles
-    { path: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt />, roles: ['admin', 'provider', 'consumer'] },
-    { path: "/", label: "Home", icon: <FaHome />, roles: ['admin', 'provider', 'consumer'] },
-    { path: "my-profile", label: "My Profile", icon: <FaUser />, roles: ['admin', 'provider', 'consumer'] },
+    { path: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
+    { path: "/", label: "Home", icon: <FaHome />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
+    { path: "my-profile", label: "My Profile", icon: <FaUser />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
     
     // Provider-specific routes
-    { path: "vehicle", label: "My Vehicles", icon: <FaCar />, roles: ['provider'] },
-    { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['provider'] },
+    { path: "vehicle", label: "My Vehicles", icon: <FaCar />, roles: ['providerOnly'] },
+    { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['providerOnly'] },
     
     // Admin-specific routes
     { path: "all-vehicle", label: "All Vehicles", icon: <FaCar />, roles: ['admin'] },
