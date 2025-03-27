@@ -10,6 +10,8 @@ const MyProfile = () => {
   const [error, setError] = useState(null);
   const axiosPublic = useAxiosPublic()
 
+  console.log(profileData);
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -96,7 +98,7 @@ const MyProfile = () => {
             <span className="text-2xl mr-4 text-blue-500">👤</span>
             <div>
               <p className="text-xs uppercase text-gray-500">User Role</p>
-              <p className="text-gray-800">{profileData.userRole}</p>
+              <p className="text-gray-800">{profileData.role}</p>
             </div>
           </div>
         </div>

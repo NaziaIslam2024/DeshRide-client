@@ -12,6 +12,7 @@ import ErrorPage from "../components/ErrorPage";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AddCar from "../pages/Dashboard/CarProvider/AddCar";
 import CarSelect from "../pages/Dashboard/CarProvider/CarSelect";
+import SignUp2 from "../pages/Auth/SignUp2";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <Registration></Registration>,
+      },
+      {
+        path: "/signup2",
+        element: <SignUp2></SignUp2>,
       },
       {
         path: "privacy&policy",
