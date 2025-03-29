@@ -43,8 +43,8 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
                 className={({ isActive }) =>
                   `flex items-center space-x-3 p-3 text-lg transition-all duration-200 ${
                     isActive
-                      ? "text-white border-white border-l-4 border-t-4 border-b-4 shimmer-border bg-lime-500 rounded-l-4xl font-bold custom-outward-curve"
-                      : "text-white font-bold hover:bg-white rounded-l-4xl hover:text-lime-500"
+                      ? "text-white border-white border-l-4 border-t-4 border-b-4 shimmer-border bg-emerald-500 rounded-l-4xl font-bold custom-outward-curve"
+                      : "text-white font-bold hover:bg-white rounded-l-4xl hover:text-emerald-500"
                   }`
                 }
               >

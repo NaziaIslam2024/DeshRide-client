@@ -10,39 +10,47 @@ const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { user, logOut } = useAuth();
-  const [userRole, setUserRole] = useState(null); // Initialize as null
+  const [userRole, setUserRole] = useState(null);
   const [error, setError] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false); // New state to track auth check
   const axiosPublic = useAxiosPublic();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (!user?.email) {
-          // If no user email, set loading to false and return
+    // Set a timeout to give Firebase time to check auth state
+    const timer = setTimeout(() => {
+      setAuthChecked(true);
+    }, 500); // 500ms should be enough time for Firebase to initialize
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (user?.email) {
+      const fetchUserData = async () => {
+        try {
+          const response = await axiosPublic.get(`/users/getUser/${user.email}`);
+          setUserRole(response.data.role || 'consumer');
+        } catch (err) {
+          setError(err.message);
+          console.error("Failed to fetch user data:", err);
+        } finally {
           setIsLoading(false);
-          return;
         }
-
-        // Fetch user data including role from backend
-        const response = await axiosPublic.get(`/users/getUser/${user.email}`);
-        setUserRole(response.data.role || 'consumer'); // Fallback to 'consumer' if role not provided
-      } catch (err) {
-        setError(err.message);
-        console.error("Failed to fetch user data:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, [user?.email, axiosPublic]); // Add axiosPublic as dependency
+      };
+      fetchUserData();
+    } else if (authChecked && !user) {
+      // Only redirect if we've given Firebase time to check AND there's no user
+      navigate('/');
+      setIsLoading(false);
+    }
+  }, [user, authChecked, axiosPublic, navigate]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  // If loading, show loading indicator
+  // Show loading spinner while checking
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -51,11 +59,7 @@ const Dashboard = () => {
     );
   }
 
-  // If no user or error, redirect or show appropriate message
-  if (!user || error) {
-    return navigate('/')
-  }
-
+  // Main dashboard render
   return (
     <div className="">
       <TopBar 
