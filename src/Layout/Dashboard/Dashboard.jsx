@@ -1,25 +1,27 @@
 import TopBar from "./Topbar";
 import Sidebar from "./Sidebar";
 import { useState, useEffect } from "react";
-import {Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { RiLogoutCircleFill } from "react-icons/ri";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { user, logOut } = useAuth();
-  const [userRole, setUserRole] = useState('consumer');
+  const [userRole, setUserRole] = useState(null); // Initialize as null
   const [error, setError] = useState(null);
-  const axiosPublic= useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         if (!user?.email) {
-          throw new Error('User email is not available');
+          // If no user email, set loading to false and return
+          setIsLoading(false);
+          return;
         }
 
         // Fetch user data including role from backend
@@ -34,8 +36,13 @@ const Dashboard = () => {
     };
 
     fetchUserData();
-  }, [user?.email]); // Add user.email as dependency
+  }, [user?.email, axiosPublic]); // Add axiosPublic as dependency
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
+  // If loading, show loading indicator
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -44,14 +51,18 @@ const Dashboard = () => {
     );
   }
 
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
+  // If no user or error, redirect or show appropriate message
+  if (!user || error) {
+    return navigate('/')
+  }
 
   return (
     <div className="">
-      <TopBar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} userRole={userRole} />
+      <TopBar 
+        toggleSidebar={toggleSidebar} 
+        isSidebarOpen={isSidebarOpen} 
+        userRole={userRole} 
+      />
       <div style={{ height: "calc(100vh - 100px)" }} className="flex">
         <div
           className={`${
@@ -61,7 +72,7 @@ const Dashboard = () => {
           <Sidebar 
             isSidebarOpen={isSidebarOpen} 
             toggleSidebar={toggleSidebar} 
-            userRole={userRole} // Pass the userRole to Sidebar
+            userRole={userRole}
           />
           <div className="p-4">
             <button
