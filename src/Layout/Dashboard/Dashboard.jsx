@@ -1,41 +1,56 @@
 import TopBar from "./Topbar";
 import Sidebar from "./Sidebar";
 import { useState, useEffect } from "react";
-import {Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { RiLogoutCircleFill } from "react-icons/ri";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { user, logOut } = useAuth();
-  const [userRole, setUserRole] = useState('consumer');
+  const [userRole, setUserRole] = useState(null);
   const [error, setError] = useState(null);
-  const axiosPublic= useAxiosPublic()
+  const [authChecked, setAuthChecked] = useState(false); // New state to track auth check
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (!user?.email) {
-          throw new Error('User email is not available');
+    // Set a timeout to give Firebase time to check auth state
+    const timer = setTimeout(() => {
+      setAuthChecked(true);
+    }, 500); // 500ms should be enough time for Firebase to initialize
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (user?.email) {
+      const fetchUserData = async () => {
+        try {
+          const response = await axiosPublic.get(`/users/getUser/${user.email}`);
+          setUserRole(response.data.role || 'consumer');
+        } catch (err) {
+          setError(err.message);
+          console.error("Failed to fetch user data:", err);
+        } finally {
+          setIsLoading(false);
         }
+      };
+      fetchUserData();
+    } else if (authChecked && !user) {
+      // Only redirect if we've given Firebase time to check AND there's no user
+      navigate('/');
+      setIsLoading(false);
+    }
+  }, [user, authChecked, axiosPublic, navigate]);
 
-        // Fetch user data including role from backend
-        const response = await axiosPublic.get(`/users/getUser/${user.email}`);
-        setUserRole(response.data.role || 'consumer'); // Fallback to 'consumer' if role not provided
-      } catch (err) {
-        setError(err.message);
-        console.error("Failed to fetch user data:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
 
-    fetchUserData();
-  }, [user?.email]); // Add user.email as dependency
-
+  // Show loading spinner while checking
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -44,14 +59,14 @@ const Dashboard = () => {
     );
   }
 
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
-
+  // Main dashboard render
   return (
     <div className="">
-      <TopBar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} userRole={userRole} />
+      <TopBar 
+        toggleSidebar={toggleSidebar} 
+        isSidebarOpen={isSidebarOpen} 
+        userRole={userRole} 
+      />
       <div style={{ height: "calc(100vh - 100px)" }} className="flex">
         <div
           className={`${
@@ -61,7 +76,7 @@ const Dashboard = () => {
           <Sidebar 
             isSidebarOpen={isSidebarOpen} 
             toggleSidebar={toggleSidebar} 
-            userRole={userRole} // Pass the userRole to Sidebar
+            userRole={userRole}
           />
           <div className="p-4">
             <button
