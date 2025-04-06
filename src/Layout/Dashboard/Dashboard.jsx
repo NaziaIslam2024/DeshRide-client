@@ -41,8 +41,9 @@ const Dashboard = () => {
       fetchUserData();
     } else if (authChecked && !user) {
       // Only redirect if we've given Firebase time to check AND there's no user
+      
       navigate('/');
-      setIsLoading(false);
+      setIsLoading(true);
     }
   }, [user, authChecked, axiosPublic, navigate]);
 
