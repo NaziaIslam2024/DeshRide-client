@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { motion } from "framer-motion";
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import useAuth from '../../../hooks/useAuth';
+
 
 const image_hosting_key = import.meta.env.VITE_Image_hosting_key;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -13,6 +14,8 @@ const AddCar = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
+    const {user} = useAuth()
+    console.log(user.displayName, user.email);
 
     const onSubmit = async (data) => {
         try {
@@ -30,6 +33,10 @@ const AddCar = () => {
             formData.append('fuelType', data.fuelType);
             formData.append('seats', data.seats);
             formData.append('features', data.features);
+            
+            // Append owner information
+            formData.append('addedBy', user.displayName);
+            formData.append('ownerEmail', user.email);
             
             // Append registration number if provided
             if (data.VehicleRegistrationNo) {
@@ -54,7 +61,6 @@ const AddCar = () => {
             reset();
             setImagePreview(null);
         } catch (error) {
-            // Show detailed error toast
             console.error('Car addition error:', error.response ? error.response.data : error.message);
             toast.error(error.response?.data?.message || 'Failed to add car. Please try again.');
         } finally {

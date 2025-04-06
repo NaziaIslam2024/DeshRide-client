@@ -11,14 +11,19 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
     { path: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
     { path: "/", label: "Home", icon: <FaHome />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
     { path: "my-profile", label: "My Profile", icon: <FaUser />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
+
+
+    // ownerDriver
+    { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['ownerDriver'] },
     
     // Provider-specific routes
     { path: "vehicle", label: "My Vehicles", icon: <FaCar />, roles: ['providerOnly'] },
     { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['providerOnly'] },
     
     // Admin-specific routes
-    { path: "all-vehicle", label: "All Vehicles", icon: <FaCar />, roles: ['admin'] },
+    // { path: "all-vehicle", label: "All Vehicles", icon: <FaCar />, roles: ['admin'] },
     { path: "all-user", label: "All Users", icon: <FaUsers />, roles: ['admin'] },
+    { path: "all-cars", label: "All Cars", icon: <FaCar />, roles: ['admin'] },
   ];
 
   // Filter navigation items based on user role
