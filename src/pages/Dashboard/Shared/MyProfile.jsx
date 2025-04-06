@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import Message from '../../Message/message';
+import AdminMessages from '../../Message/AdminMessages';
 
 const MyProfile = () => {
   const { user } = useAuth(); // Get the authenticated user's email from the useAuth hook
@@ -116,6 +118,18 @@ const MyProfile = () => {
           </button>
         </div>
       </div>
+      <div className="mt-10 w-full max-w-md">
+        {/* Here we pass the user's _id and role as props to the Message component */}
+        <Message userId={profileData._id} role={profileData.role} />
+      </div>
+      {profileData.role === 'admin' && (
+        <div className="mt-10 w-full max-w-md">
+
+          <AdminMessages></AdminMessages>
+        </div>
+      )}
+      {/* Admin Messages Section */}
+     
     </div>
   );
 };

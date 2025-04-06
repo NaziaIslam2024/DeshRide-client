@@ -12,6 +12,7 @@ import ErrorPage from "../components/ErrorPage";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AddCar from "../pages/Dashboard/CarProvider/AddCar";
 import CarSelect from "../pages/Dashboard/CarProvider/CarSelect";
+import Message from "../pages/Message/message";
 
 export const router = createBrowserRouter([
   {
@@ -70,7 +71,11 @@ export const router = createBrowserRouter([
       {
         path: 'all-vehicle',
         element: <CarSelect></CarSelect>
-      }
+      },
+      {
+        path: 'message',
+        element: <Message></Message>
+      },
     ]
   },
 ]);
