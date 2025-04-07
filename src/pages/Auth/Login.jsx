@@ -2,12 +2,13 @@
 import { useContext, useState } from "react";
 import { GrGoogle } from "react-icons/gr";
 // import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../providers/AuthProvider";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import GoogleLogin from "./GoogleLogin";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
   const { signInUser, setUser, setLoading } = useContext(AuthContext);
@@ -15,15 +16,30 @@ const Login = () => {
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState(""); // State for error message
-
+  const axiosPublic = useAxiosPublic()
+  const [failedLoginAttempts, setFailedLoginAttempts] = useState(0)
+  const [status , setStatus] = useState("unlocked")
+  console.log(failedLoginAttempts)
   // Sign in function using email and password
-  const handleLogin = (e) => {
+  const handleLogin =async (e) =>  {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    // setLoginMail(email);
+      const response = await axiosPublic.get(`/users/getUser/${email}`)
+      if(response.data.status = "locked"){
+        setStatus("locked")
+      }
 
-    signInUser(email, password)
+      if(localStorage.getItem('failed-attempts') > 3){
+        toast.error("You account has been locked", {
+          position: "top-left",
+          autoClose: 1500,
+          pauseOnHover: true,
+        }); // Success toast
+        await axiosPublic.patch(`/users/getUser/${email}`, { status: "locked"});
+
+      }
+      signInUser(email, password)
       .then((result) => {
         const user = result.user;
         setUser(user);
@@ -46,8 +62,11 @@ const Login = () => {
           pauseOnHover: true,
         }); // Error toast
         console.error("ERROR", error.message);
+        setFailedLoginAttempts(prev => prev + 1)
+        localStorage.setItem("failed-attempts", failedLoginAttempts+1)
         e.target.password.value = "";
       });
+   
   };
 
   return (
@@ -181,14 +200,24 @@ const Login = () => {
                   </a>
                 </div>
 
-                <motion.button
+                {
+                  status === "unlocked" ? <><motion.button
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                   className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition duration-200"
                   type="submit"
                 >
                   Sign in
-                </motion.button>
+                </motion.button></> : <>
+                <motion.button
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  className="w-full bg-gray-500 text-white py-3 rounded-lg font-medium  transition duration-200 border"
+               
+                >
+                  Sign in
+                </motion.button></>
+                }
 
                 <GoogleLogin setError={setError}></GoogleLogin>
               </form>
