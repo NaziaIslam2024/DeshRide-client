@@ -1,59 +1,58 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* swiper related styles  */
 .swiper-pagination-bullet-active {
-    background-color: green !important;
-    width: 30px !important;
-    height: 4px !important;
-    border-radius: 4px !important;
+  background-color: green !important;
+  width: 30px !important;
+  height: 4px !important;
+  border-radius: 4px !important;
 }
 .swiper-pagination {
-    position: relative !important;
-    margin-top: 20px !important;
+  position: relative !important;
+  margin-top: 20px !important;
 }
-.pagination-custom .swiper-pagination{
-    /* background-color: red; */
-    position: absolute !important;
-    bottom : 0px !important;
-    left : 580px !important;
-
+.pagination-custom .swiper-pagination {
+  /* background-color: red; */
+  position: absolute !important;
+  bottom: 0px !important;
+  left: 580px !important;
 }
 /* .marquee-space {
     display: flex;
     justify-content: space-between;
   } */
 
-
 /* scrollbar styles start */
 *::-webkit-scrollbar {
-    width: 12px !important;
-    height: 12px !important;
-  }
-  
-  *::-webkit-scrollbar-track {
-    background: linear-gradient(to bottom, #ffe4e4, #ec9a9a) !important;
-    border-radius: 0px !important;
-  }
-  
-  *::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, #750202, #cc2084, #dd1c02, ) !important;
-    border-radius: 10px !important;
-    box-shadow: 0 0 6px rgba(187, 102, 102, 0.8) !important;
-  }
-  
-  *::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, #a07043, #f13a22) !important;
-    box-shadow: 0 0 12px rgba(192, 49, 24, 0.8), 0 0 24px rgba(179, 45, 4, 0.6) !important;
-  }
-  /* For Firefox */
-  * {
-    scrollbar-width: thin !important;
-    scrollbar-color: #ec0cec #ffe4e4 !important;
-  }
+  width: 12px !important;
+  height: 12px !important;
+}
+
+*::-webkit-scrollbar-track {
+  background: linear-gradient(to bottom, #ffe4e4, #ec9a9a) !important;
+  border-radius: 0px !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #750202, #cc2084, #dd1c02) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 0 6px rgba(187, 102, 102, 0.8) !important;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #a07043, #f13a22) !important;
+  box-shadow: 0 0 12px rgba(192, 49, 24, 0.8), 0 0 24px rgba(179, 45, 4, 0.6) !important;
+}
+/* For Firefox */
+* {
+  scrollbar-width: thin !important;
+  scrollbar-color: #ec0cec #ffe4e4 !important;
+}
 
 /* scrollbar styles end */
 
-
+/* car keyframes starts */
 @keyframes car {
   0% {
     transform: translateX(100%);
@@ -105,11 +104,9 @@
 .animate-road-line {
   animation: road-line 7s linear infinite;
 }
-
-
+/* car keyframes ends */
 
 /* ------------- */
-
 
 /* Animated Border */
 .animated-border {
@@ -118,7 +115,7 @@
 }
 
 .animated-border::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -4px; /* Creates border thickness */
   background: conic-gradient(
@@ -137,7 +134,7 @@
 }
 
 .animated-border::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 6px; /* Inner padding to show border */
   background: inherit; /* Matches bg-white/90 */
@@ -147,20 +144,33 @@
 
 /* Bounce Animation */
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* Shine Animation for Button */
 @keyframes shine {
-  0% { transform: translateX(-150%) skewX(-12deg); }
-  100% { transform: translateX(150%) skewX(-12deg); }
+  0% {
+    transform: translateX(-150%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(150%) skewX(-12deg);
+  }
 }
 
 /* Border Rotation Animation */
 @keyframes rotate-border {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-bounce {
@@ -170,3 +180,18 @@
 .animate-shine {
   animation: shine 1.5s infinite ease-in-out;
 }
+
+/* dark mode toggle related styles  starts */
+@custom-variant dark (&:where(.dark, .dark *));
+/* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
+
+/* Add smooth transitions for theme changes */
+*,
+*::before,
+*::after {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 00ms !important;
+}
+/* dark mode toggle related styles  ends */

@@ -9,6 +9,9 @@ import {
   signOut,
   updateProfile,
   sendPasswordResetEmail,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.init";
@@ -47,9 +50,31 @@ const AuthProvider = ({ children }) => {
   };
 
   // Reset password
-  const resetPassword = (email) => {
-    return sendPasswordResetEmail(auth, email);
+  // const resetPassword = (email) => {
+  //   return sendPasswordResetEmail(auth, email);
+  // };
+  // ? reset password
+
+  const changePassword = async (email, oldPassword, newPassword) => {
+    // const auth = getAuth();
+    const user = auth.currentUser;
+
+    const credential = EmailAuthProvider.credential(email, oldPassword);
+
+    try {
+      // Step 1: Re-authenticate
+      await reauthenticateWithCredential(user, credential);
+
+      // Step 2: Update password
+      await updatePassword(user, newPassword);
+
+      console.log("✅ Password updated successfully!");
+    } catch (error) {
+      console.error("❌ Error changing password:", error.message);
+    }
   };
+
+  //   // ? reset password
 
   // Update user profile
   const updateUser = (updatedData) => {
@@ -91,7 +116,8 @@ const AuthProvider = ({ children }) => {
     updateUser,
     loading,
     signInWithGoogle,
-    resetPassword,
+    // resetPassword,
+    changePassword,
     setLoading,
   };
 
@@ -104,6 +130,5 @@ const AuthProvider = ({ children }) => {
 export const useAuth = () => {
   return useContext(AuthContext);
 };
-
 
 export default AuthProvider;
