@@ -1,142 +1,171 @@
-import React, { useContext } from "react";
-import { Link } from "react-router";
+import React, { useContext, useState, useEffect } from "react";
+import { NavLink, Link } from "react-router-dom"; // Changed Link to NavLink for active state
 import { AuthContext } from "../../providers/AuthProvider";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  // console.log(user);
-  // const links = (
-  //   <>
-  //     <li>
-  //       <Link to="/" className="mx-2">
-  //         Home
-  //       </Link>
-  //     </li>
-  //     <li>
-  //       <Link to="/dashboard" className="mx-2">
-  //         Dashboard
-  //       </Link>
-  //     </li>
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  //     {!user ? (
-  //       <li>
-  //         <button onClick={logOut} className="mx-2">
-  //           Logout
-  //         </button>
-  //       </li>
-  //     ) : (
-  //       <>
-  //         <li>
-  //           <Link to="/login" className="mx-2">
-  //             Login
-  //           </Link>
-  //         </li>
-  //         <li>
-  //           <Link to="/register" className="mx-2">
-  //             Register
-  //           </Link>
-  //         </li>
-  //       </>
-  //     )}
-  //   </>
-  // );
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Common links for the center menu
+  const CenterNavLinks = ({ mobile = false }) => (
+    <>
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
+            isActive ? "underline underline-offset-8 text-primary-light-700" : "hover:underline underline-offset-8"
+          }`
+        }
+        onClick={() => mobile && setIsMenuOpen(false)}
+      >
+        Home
+      </NavLink>
+      <NavLink
+        to="/about"
+        className={({ isActive }) =>
+          `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
+            isActive ? "underline underline-offset-8 text-primary-light-700" : "hover:underline underline-offset-8"
+          }`
+        }
+        onClick={() => mobile && setIsMenuOpen(false)}
+      >
+        About
+      </NavLink>
+      {user && (
+        <NavLink
+          to="/dashboard"
+          className={({ isActive }) =>
+            `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
+              isActive ? "underline underline-offset-8 text-primary-light-700" : "hover:underline underline-offset-8"
+            }`
+          }
+          onClick={() => mobile && setIsMenuOpen(false)}
+        >
+          Dashboard
+        </NavLink>
+      )}
+    </>
+  );
+
+  // Right-side links (Logout or Login/Register)
+  const RightNavLinks = ({ mobile = false }) => (
+    <>
+      {user ? (
+        <Link
+          to="/login"
+          onClick={() => {
+            logOut();
+            mobile && setIsMenuOpen(false);
+          }}
+          className={`${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5 bg-primary-light-500 text-white"} hover:bg-primary-light-700 hover:text-white rounded-lg transition-colors`}
+        >
+          Logout
+        </Link>
+      ) : (
+        <>
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
+                isActive ? "bg-primary-light-500 text-white" : "hover:bg-primary-light-500 hover:text-white"
+              }`
+            }
+            onClick={() => mobile && setIsMenuOpen(false)}
+          >
+            Login
+          </NavLink>
+          <NavLink
+            to="/register"
+            className={({ isActive }) =>
+              `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
+                isActive ? "bg-primary-light-500 text-white" : "hover:bg-primary-light-500 hover:text-white"
+              }`
+            }
+            onClick={() => mobile && setIsMenuOpen(false)}
+          >
+            Register
+          </NavLink>
+        </>
+      )}
+    </>
+  );
+
   return (
-    <div className="text-center bg-background-light-100  text-black shadow-sm ">
-      <div className="navbar container mx-auto">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+    <header
+      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-background-light-100/90 backdrop-blur-md shadow-sm" : "bg-background-light-100"
+      }`}
+    >
+      <div className="container mx-auto px-4">
+        <div className="navbar">
+          {/* Logo and Mobile Menu Button */}
+          <div className="navbar-start">
+            <div className="flex items-center">
+              <button
+                className="btn btn-ghost lg:hidden p-2"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
               >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow space-y-4"
-            >
-              <button className="btn py-2 px-5 rounded-4xl">
-                Become a Host
+                {isMenuOpen ? (
+                  <FaTimes className="h-5 w-5 transition-transform duration-300 rotate-180" />
+                ) : (
+                  <FaBars className="h-5 w-5 transition-transform duration-300" />
+                )}
               </button>
-              <button className="btn py-2 px-5 rounded-4xl">Get the App</button>
-              <button className="btn py-2 px-5 rounded-4xl">Login</button>
-              <button className="btn py-2 px-5 rounded-4xl">SignUp</button>
-              {/* {links} */}
+              <Link to="/" className=" flex justify-center items-center text-xl">
+                <img
+                  src="https://i.ibb.co.com/chGxPSCm/Copy-of-Desh-Ride-logo.png"
+                  alt="Desh Ride Logo"
+                  className="w-14 h-14"
+                />
+                <span className="ml-2">Desh Ride</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Center Navigation (Desktop) */}
+          <div className="navbar-center hidden lg:flex">
+            <ul className="menu menu-horizontal px-1 space-x-2">
+              <CenterNavLinks />
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl"><img src="https://i.ibb.co.com/chGxPSCm/Copy-of-Desh-Ride-logo.png" alt="" className="w-14 h-14" />Desh Ride</a>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {
-              // links
-            }
-          </ul>
-        </div>
-        <div className="navbar-end gap-5 hidden lg:flex">
-          <Link
-            to={"/"}
-            className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
-          >
-            Home
-          </Link>
-         
-          {/* <Link
-            to={""}
-            className="btn bg-transparent text-white py-2 px-5 rounded-xl"
-          >
-            Join Now
-          </Link> */}
-          
-          {user ? (
-            <> <Link
-            to={"/dashboard"}
-             className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
-          >
-            Dashboard
-          </Link>
-              <Link
-                to={"/login"}
-                onClick={logOut}
-                 className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
+
+          {/* Right Navigation (Desktop) */}
+          <div className="navbar-end hidden lg:flex space-x-2">
+            <RightNavLinks />
+          </div>
+
+          {/* Mobile Navigation */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.2 }}
+                className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-lg overflow-hidden"
               >
-                Logout
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to={"/about"}
-                 className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg">
-                  About
-              </Link>
-              <Link
-                to={"/login"}
-                className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
-              >
-                Login
-              </Link>
-              <Link
-                to={"/register"}
-                className="text-sm font-semibold hover:bg-primary-light-500 hover:text-white py-2 px-5 rounded-lg"
-              >
-                SignUp
-              </Link>
-            </>
-          )}
+                <div className="flex flex-col p-4 space-y-2">
+                  <CenterNavLinks mobile={true} />
+                  <RightNavLinks mobile={true} />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
