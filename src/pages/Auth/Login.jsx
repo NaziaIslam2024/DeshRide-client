@@ -29,7 +29,7 @@ const Login = () => {
       if(response.data.status = "locked"){
         setStatus("locked")
       }
-
+      
       if(localStorage.getItem('failed-attempts') > 3){
         toast.error("You account has been locked", {
           position: "top-left",
@@ -40,7 +40,7 @@ const Login = () => {
 
       }
       signInUser(email, password)
-      .then((result) => {
+      .then( async (result) => {
         const user = result.user;
         setUser(user);
         setLoading(false);
@@ -51,6 +51,7 @@ const Login = () => {
           autoClose: 1500,
           pauseOnHover: true,
         }); // Success toast
+        await axiosPublic.patch(`/users/getUser/${email}`, { status: "unlocked"});
 
         navigate(location?.state ? location.state : "/");
       })
