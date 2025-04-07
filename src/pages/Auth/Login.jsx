@@ -114,7 +114,7 @@ const Login = () => {
               {/* //? */}
               <div className="mb-4 text-center space-x-2">
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary btn-sm"
                   onClick={() => {
                     setEmail("consumer@deshrider.com");
                     setPassword("consumer@123DeshRider");
@@ -122,23 +122,25 @@ const Login = () => {
                 >
                   Consumer Login
                 </button>
+
                 <button
-                  className="btn btn-primary"
-                  onClick={() => {
-                    setEmail("admin@deshrider.com");
-                    setPassword("admin@123DeshRider");
-                  }}
-                >
-                  Admin Login
-                </button>
-                <button
-                  className="btn btn-primary"
+                  className="btn btn-primary btn-sm"
                   onClick={() => {
                     setEmail("car_investor_with_driver@deshrider.com");
                     setPassword("car_investor_with_driver@123DeshRider");
                   }}
                 >
                   Driver Login
+                </button>
+
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("admin@deshrider.com");
+                    setPassword("admin@123DeshRider");
+                  }}
+                >
+                  Admin Login
                 </button>
               </div>
               {/* //? */}
