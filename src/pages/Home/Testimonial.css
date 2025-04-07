@@ -7,7 +7,7 @@
 .custom-swiper .swiper-button-next,
 .custom-swiper .swiper-button-prev {
    
-    color: black; /* Change arrow color */
+    color: var(--color-secondary-light-600); /* Change arrow color */
     padding: 10px;
     transition: all 0.3s ease-in-out;
     /* background-color: blue; */
@@ -24,8 +24,7 @@
 
 .custom-swiper .swiper-button-next:hover,
 .custom-swiper .swiper-button-prev:hover {
-    background-color: rgba(255, 255, 255, 0.8); /* Change on hover */
-    color: blue;
+    color: var(--color-secondary-light-700);
 }
 
 .custom-swiper .swiper-button-next::after,

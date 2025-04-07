@@ -9,8 +9,10 @@ import {
   FaTimes,
 } from "react-icons/fa"; // Icons
 import { motion, AnimatePresence } from "framer-motion"; // For animations
-import { Link } from "react-router";
+import { Link,  } from "react-router";
 import logo from '../../assets/Images/logo/DeshRideLogo.png'
+import useAuth from "../../hooks/useAuth";
+
 
 const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
   const [darkMode, setDarkMode] = useState(true);
@@ -18,8 +20,7 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [currentNews, setCurrentNews] = useState(0);
   const [imageError, setImageError] = useState(false);
-
-  const user = {};
+  const {user, logOut} = useAuth()
 
   // Key points to display in the breaking news system
   const newsItems = [
@@ -54,7 +55,7 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
   };
 
   return (
-    <div className="h-auto w-full flex items-center justify-between px-6 py-4 shadow-md bg-blue-500/70 backdrop-blur-md">
+    <div className="h-auto w-full flex items-center justify-between px-6 py-4 shadow-md bg-[#1B4D3E] backdrop-blur-md">
       {/* Logo and Toggle Button (Visible on all devices) */}
       <div className="flex items-center space-x-4">
         <motion.div
@@ -185,7 +186,7 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
                       Profile
                     </Link>
                     <button
-                      onClick={""}
+                      onClick={logOut}
                       className="w-full text-left text-sm text-gray-600  hover:bg-gray-100  p-2 rounded-lg"
                     >
                       Logout

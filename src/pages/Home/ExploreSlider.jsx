@@ -49,7 +49,7 @@ const ExploreSlider = () => {
         modules={[Navigation, Pagination]}
         spaceBetween={20}
         slidesPerView={3}
-        navigation
+        
         pagination={{ clickable: true }}
         breakpoints={{
           320: { slidesPerView: 1 },
@@ -61,7 +61,7 @@ const ExploreSlider = () => {
         {places.map((place, index) => (
           <SwiperSlide 
           key={index} 
-          className="bg-white p-4 rounded-lg shadow-lg min-h-[420px] flex flex-col"
+          className="bg-accent-light-100 p-4 rounded-lg shadow-lg min-h-[420px] flex flex-col"
         >
           <div className="relative h-2/3">
             <img 
@@ -83,7 +83,7 @@ const ExploreSlider = () => {
         ))}
       </Swiper>
       <div className="flex justify-center mt-6">
-        <button className="bg-black text-white px-6 py-2 rounded-lg">DISCOVER MORE</button>
+        <button className="bg-primary-light-800 text-white px-6 py-2 rounded-lg">DISCOVER MORE</button>
       </div>
     </div>
   );

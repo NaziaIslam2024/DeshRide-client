@@ -1,9 +1,132 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@theme {
+  --color-black: #13201d;
+  --color-primary: #1b4d3e;
+  --color-secondary: #a0ddce;
+  --color-text-light-50: #eef6f3;
+  --color-text-light-100: #ddeee7;
+  --color-text-light-200: #bbddcf;
+  --color-text-light-300: #99ccb8;
+  --color-text-light-400: #77bba0;
+  --color-text-light-500: #55aa88;
+  --color-text-light-600: #44886d;
+  --color-text-light-700: #336652;
+  --color-text-light-800: #224436;
+  --color-text-light-900: #11221b;
+  --color-text-light-950: #09110e;
 
-/* swiper related styles  */
+  --color-background-light-50: #edf7f5;
+  --color-background-light-100: #dbf0eb;
+  --color-background-light-200: #b8e0d6;
+  --color-background-light-300: #94d1c2;
+  --color-background-light-400: #70c2ad;
+  --color-background-light-500: #4db399;
+  --color-background-light-600: #3d8f7a;
+  --color-background-light-700: #2e6b5c;
+  --color-background-light-800: #1f473d;
+  --color-background-light-900: #0f241f;
+  --color-background-light-950: #08120f;
+
+  --color-primary-light-50: #ecf8f5;
+  --color-primary-light-100: #daf1eb;
+  --color-primary-light-200: #b4e4d6;
+  --color-primary-light-300: #8fd6c2;
+  --color-primary-light-400: #69c9ae;
+  --color-primary-light-500: #44bb99;
+  --color-primary-light-600: #36967b;
+  --color-primary-light-700: #29705c;
+  --color-primary-light-800: #1b4b3d;
+  --color-primary-light-900: #0e251f;
+  --color-primary-light-950: #07130f;
+
+  --color-secondary-light-50: #f9f3eb;
+  --color-secondary-light-100: #f3e7d8;
+  --color-secondary-light-200: #e7d0b1;
+  --color-secondary-light-300: #dbb88a;
+  --color-secondary-light-400: #cfa063;
+  --color-secondary-light-500: #c3893c;
+  --color-secondary-light-600: #9c6d30;
+  --color-secondary-light-700: #755224;
+  --color-secondary-light-800: #4e3718;
+  --color-secondary-light-900: #271b0c;
+  --color-secondary-light-950: #140e06;
+
+  --color-accent-light-50: #edf7ee;
+  --color-accent-light-100: #dcefdc;
+  --color-accent-light-200: #b8e0b9;
+  --color-accent-light-300: #95d097;
+  --color-accent-light-400: #71c174;
+  --color-accent-light-500: #4eb151;
+  --color-accent-light-600: #3e8e41;
+  --color-accent-light-700: #2f6a31;
+  --color-accent-light-800: #1f4720;
+  --color-accent-light-900: #102310;
+  --color-accent-light-950: #081208;
+
+  --color-text-dark-50: #09110e;
+  --color-text-dark-100: #11221b;
+  --color-text-dark-200: #224436;
+  --color-text-dark-300: #336652;
+  --color-text-dark-400: #44886d;
+  --color-text-dark-500: #55aa88;
+  --color-text-dark-600: #77bba0;
+  --color-text-dark-700: #99ccb8;
+  --color-text-dark-800: #bbddcf;
+  --color-text-dark-900: #ddeee7;
+  --color-text-dark-950: #eef6f3;
+
+  --color-background-dark-50: #0a100e;
+  --color-background-dark-100: #141f1c;
+  --color-background-dark-200: #283e39;
+  --color-background-dark-300: #3c5d55;
+  --color-background-dark-400: #507c71;
+  --color-background-dark-500: #639c8e;
+  --color-background-dark-600: #83afa4;
+  --color-background-dark-700: #a2c3bb;
+  --color-background-dark-800: #c1d7d2;
+  --color-background-dark-900: #e0ebe8;
+  --color-background-dark-950: #eff5f4;
+
+  --color-primary-dark-50: #061410;
+  --color-primary-dark-100: #0c2720;
+  --color-primary-dark-200: #174f40;
+  --color-primary-dark-300: #237660;
+  --color-primary-dark-400: #2f9d80;
+  --color-primary-dark-500: #3bc4a0;
+  --color-primary-dark-600: #62d0b3;
+  --color-primary-dark-700: #89dcc6;
+  --color-primary-dark-800: #b0e8d9;
+  --color-primary-dark-900: #d8f3ec;
+  --color-primary-dark-950: #ebf9f5;
+
+  --color-secondary-dark-50: #0b0f0d;
+  --color-secondary-dark-100: #151e1b;
+  --color-secondary-dark-200: #2b3b35;
+  --color-secondary-dark-300: #405950;
+  --color-secondary-dark-400: #56766b;
+  --color-secondary-dark-500: #6b9486;
+  --color-secondary-dark-600: #89a99e;
+  --color-secondary-dark-700: #a6bfb6;
+  --color-secondary-dark-800: #c4d4ce;
+  --color-secondary-dark-900: #e1eae7;
+  --color-secondary-dark-950: #f0f4f3;
+
+  --color-accent-dark-50: #091109;
+  --color-accent-dark-100: #122211;
+  --color-accent-dark-200: #244323;
+  --color-accent-dark-300: #366534;
+  --color-accent-dark-400: #498745;
+  --color-accent-dark-500: #5ba857;
+  --color-accent-dark-600: #7cba78;
+  --color-accent-dark-700: #9ccb9a;
+  --color-accent-dark-800: #bddcbc;
+  --color-accent-dark-900: #deeedd;
+  --color-accent-dark-950: #eff6ee;
+}
+
 .swiper-pagination-bullet-active {
-  background-color: green !important;
+  background-color: #755224 !important;
   width: 30px !important;
   height: 4px !important;
   border-radius: 4px !important;
@@ -47,7 +170,7 @@
 /* For Firefox */
 * {
   scrollbar-width: thin !important;
-  scrollbar-color: #ec0cec #ffe4e4 !important;
+  scrollbar-color: #1b4d3e #e4fdff !important;
 }
 
 /* scrollbar styles end */
@@ -181,17 +304,4 @@
   animation: shine 1.5s infinite ease-in-out;
 }
 
-/* dark mode toggle related styles  starts */
-@custom-variant dark (&:where(.dark, .dark *));
-/* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
-
-/* Add smooth transitions for theme changes */
-*,
-*::before,
-*::after {
-  transition-property: color, background-color, border-color,
-    text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 00ms !important;
-}
-/* dark mode toggle related styles  ends */
+/* !  CSS FOR ALL USERS PAGE */
