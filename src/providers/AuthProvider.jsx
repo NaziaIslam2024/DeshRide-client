@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-/* eslint-disable no-unused-vars */
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -10,6 +9,9 @@ import {
   signOut,
   updateProfile,
   sendPasswordResetEmail,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.init";
@@ -19,6 +21,7 @@ export const AuthContext = createContext();
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
+
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -48,9 +51,31 @@ const AuthProvider = ({ children }) => {
   };
 
   // Reset password
-  const resetPassword = (email) => {
-    return sendPasswordResetEmail(auth, email);
+  // const resetPassword = (email) => {
+  //   return sendPasswordResetEmail(auth, email);
+  // };
+  // ? reset password
+
+  const changePassword = async (email, oldPassword, newPassword) => {
+    // const auth = getAuth();
+    const user = auth.currentUser;
+
+    const credential = EmailAuthProvider.credential(email, oldPassword);
+
+    try {
+      // Step 1: Re-authenticate
+      await reauthenticateWithCredential(user, credential);
+
+      // Step 2: Update password
+      await updatePassword(user, newPassword);
+
+      console.log("✅ Password updated successfully!");
+    } catch (error) {
+      console.error("❌ Error changing password:", error.message);
+    }
   };
+
+  //   // ? reset password
 
   // Update user profile
   const updateUser = (updatedData) => {
@@ -62,22 +87,25 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
 
-      if (currentUser?.email) {
-        const user = { email: currentUser.email };
-        axiosPublic
-          .post("/jwt", user, { withCredentials: true })
-          .then((res) => {
-            console.log("login token", res.data);
-            setLoading(false);
-          });
-      } else {
-        axiosPublic
-          .post("/logout", {}, { withCredentials: true })
-          .then((res) => {
-            console.log("logout data : ", res.data);
-            setLoading(false);
-          });
-      }
+      console.log(currentUser);
+    
+
+      // if (currentUser?.email) {
+      //   const user = { email: currentUser.email };
+      //   axiosPublic
+      //     .post("/jwt", user, { withCredentials: true })
+      //     .then((res) => {
+      //       console.log("login token", res.data);
+      //       setLoading(false);
+      //     });
+      // } else {
+      //   axiosPublic
+      //     .post("/logout", {}, { withCredentials: true })
+      //     .then((res) => {
+      //       console.log("logout data : ", res.data);
+      //       setLoading(false);
+      //     });
+      // }
     });
 
     return () => unsubscribe();
@@ -92,7 +120,8 @@ const AuthProvider = ({ children }) => {
     updateUser,
     loading,
     signInWithGoogle,
-    resetPassword,
+    // resetPassword,
+    changePassword,
     setLoading,
   };
 
