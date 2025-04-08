@@ -29,8 +29,11 @@ const Dashboard = () => {
     if (user?.email) {
       const fetchUserData = async () => {
         try {
-          const response = await axiosPublic.get(`/users/getUser/${user.email}`);
-          setUserRole(response.data.role || 'consumer');
+          const response = await axiosPublic.get(
+            `/users/getUser/${user.email}`
+          );
+          console.log(response.data);
+          setUserRole(response.data.role || "consumer");
         } catch (err) {
           setError(err.message);
           console.error("Failed to fetch user data:", err);
@@ -41,8 +44,8 @@ const Dashboard = () => {
       fetchUserData();
     } else if (authChecked && !user) {
       // Only redirect if we've given Firebase time to check AND there's no user
-      
-      navigate('/');
+
+      navigate("/");
       setIsLoading(true);
     }
   }, [user, authChecked, axiosPublic, navigate]);
@@ -63,10 +66,10 @@ const Dashboard = () => {
   // Main dashboard render
   return (
     <div className="">
-      <TopBar 
-        toggleSidebar={toggleSidebar} 
-        isSidebarOpen={isSidebarOpen} 
-        userRole={userRole} 
+      <TopBar
+        toggleSidebar={toggleSidebar}
+        isSidebarOpen={isSidebarOpen}
+        userRole={userRole}
       />
       <div style={{ height: "calc(100vh - 100px)" }} className="flex">
         <div
@@ -74,9 +77,9 @@ const Dashboard = () => {
             isSidebarOpen ? "w-64" : "w-0 md:w-64"
           } bg-gray-800 text-white transition-all duration-300 flex flex-col justify-between overflow-hidden`}
         >
-          <Sidebar 
-            isSidebarOpen={isSidebarOpen} 
-            toggleSidebar={toggleSidebar} 
+          <Sidebar
+            isSidebarOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
             userRole={userRole}
           />
           <div className="p-4">
