@@ -53,14 +53,14 @@ export default function ProviderForm() {
       hasCar: hasCar || false,
       carUsage: hasCar ? carUsage : undefined,
     };
-  
+
     const name = data.fullName;
     const email = data.email;
     const password = data.pass;
     const userName = `${name.toLowerCase()}_${Date.now()}`;
-  
+
     const { pass, ...withoutPasswordData } = formData;
-    
+
     // Determine role based on car ownership and usage
     let role = "provider"; // default fallback
     if (hasCar === false) {
@@ -70,13 +70,13 @@ export default function ProviderForm() {
     } else if (hasCar === true && carUsage === "rent") {
       role = "providerOnly";
     }
-  
-    const providerData = { 
-      ...withoutPasswordData, 
-      userName, 
-      role 
+
+    const providerData = {
+      ...withoutPasswordData,
+      userName,
+      role,
     };
-  
+
     console.log(providerData);
 
     // create the profile (firebase & backend save data)
