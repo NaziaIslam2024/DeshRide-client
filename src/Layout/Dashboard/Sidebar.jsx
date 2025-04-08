@@ -13,6 +13,10 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
     { path: "my-profile", label: "My Profile", icon: <FaUser />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
 
 
+    // consumer
+    { path: "all-listed-cars", label: "Cars", icon: <FaCar />, roles: ['consumer'] },
+
+
     // ownerDriver
     { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['ownerDriver'] },
     
