@@ -55,6 +55,20 @@ const Navbar = () => {
           Dashboard
         </NavLink>
       )}
+
+{user && (
+        <NavLink
+          to="/workflow"
+          className={({ isActive }) =>
+            `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
+              isActive ? "underline underline-offset-8 text-primary-light-700" : "hover:underline underline-offset-8"
+            }`
+          }
+          onClick={() => mobile && setIsMenuOpen(false)}
+        >
+          Workflow
+        </NavLink>
+      )}
     </>
   );
 

@@ -15,6 +15,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
 
     // consumer
     { path: "all-listed-cars", label: "Cars", icon: <FaCar />, roles: ['consumer'] },
+    { path: "whatsapp", label: "Chat", icon: <FaCar />, roles: ['consumer'] },
 
 
     // ownerDriver
