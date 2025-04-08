@@ -20,6 +20,13 @@ const Login = () => {
   const [failedLoginAttempts, setFailedLoginAttempts] = useState(0)
   const [status , setStatus] = useState("unlocked")
   console.log(failedLoginAttempts)
+
+  //?
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  //?
+
   // Sign in function using email and password
   const handleLogin =async (e) =>  {
     e.preventDefault();
@@ -125,6 +132,40 @@ const Login = () => {
                 Login to your account
               </h2>
 
+              {/* //? */}
+              <div className="mb-4 text-center space-x-2">
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("consumer@deshrider.com");
+                    setPassword("consumer@123DeshRider");
+                  }}
+                >
+                  Consumer Login
+                </button>
+
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("car_investor_with_driver@deshrider.com");
+                    setPassword("car_investor_with_driver@123DeshRider");
+                  }}
+                >
+                  Driver Login
+                </button>
+
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("admin@deshrider.com");
+                    setPassword("admin@123DeshRider");
+                  }}
+                >
+                  Admin Login
+                </button>
+              </div>
+              {/* //? */}
+
               <form onSubmit={handleLogin} className="space-y-6">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -140,6 +181,9 @@ const Login = () => {
                     placeholder="Enter your email"
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
                     required
+                    //
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </motion.div>
 
@@ -158,6 +202,8 @@ const Login = () => {
                       placeholder="Enter your password"
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
                       required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <button
                       type="button"

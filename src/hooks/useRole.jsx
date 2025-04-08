@@ -20,7 +20,7 @@ const useRole = () => {
       return res.data;
     },
   });
-  const userRole = userData?.userRole;
+  const userRole = userData?.role;
 
   return [userRole, userData, userDataLoading, userRoleRefetch, error];
 };

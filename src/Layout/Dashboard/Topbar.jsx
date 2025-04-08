@@ -9,7 +9,7 @@ import {
   FaTimes,
 } from "react-icons/fa"; // Icons
 import { motion, AnimatePresence } from "framer-motion"; // For animations
-import { Link } from "react-router";
+import { Link,  } from "react-router";
 import logo from '../../assets/Images/logo/DeshRideLogo.png'
 import useAuth from "../../hooks/useAuth";
 
@@ -20,12 +20,8 @@ const TopBar = ({ toggleSidebar, isSidebarOpen }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [currentNews, setCurrentNews] = useState(0);
   const [imageError, setImageError] = useState(false);
-
   const {user, logOut} = useAuth()
 
-  if (!user){
-     return <Navigate to="/" />
-  }
   // Key points to display in the breaking news system
   const newsItems = [
     "🚀 New Ride Options Available Near You!",

@@ -60,10 +60,24 @@ export default function ProviderForm() {
     const userName = `${name.toLowerCase()}_${Date.now()}`;
 
     const { pass, ...withoutPasswordData } = formData;
-    const providerData = { ...withoutPasswordData, userName, role: "provider" };
+
+    // Determine role based on car ownership and usage
+    let role = "provider"; // default fallback
+    if (hasCar === false) {
+      role = "driver";
+    } else if (hasCar === true && carUsage === "drive") {
+      role = "ownerDriver";
+    } else if (hasCar === true && carUsage === "rent") {
+      role = "providerOnly";
+    }
+
+    const providerData = {
+      ...withoutPasswordData,
+      userName,
+      role,
+    };
 
     console.log(providerData);
-    // console.log(withoutPasswordData);
 
     // create the profile (firebase & backend save data)
     createNewUser(email, password)

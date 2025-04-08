@@ -22,9 +22,9 @@ const Home = () => {
   return (
     <div className="">
       <Banner></Banner>
-      <FloatingStar></FloatingStar>
+      {/* <FloatingStar></FloatingStar> */}
       <div className="container mx-auto">
-        <EidCountdown></EidCountdown>
+        {/* <EidCountdown></EidCountdown> */}
         <Services></Services>
         <CarCategories></CarCategories>
         <Statistics></Statistics>

@@ -8,17 +8,26 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
   // Define all possible navigation items
   const allNavItems = [
     // Common routes for all roles
-    { path: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt />, roles: ['admin', 'provider', 'consumer'] },
-    { path: "/", label: "Home", icon: <FaHome />, roles: ['admin', 'provider', 'consumer'] },
-    { path: "my-profile", label: "My Profile", icon: <FaUser />, roles: ['admin', 'provider', 'consumer'] },
+    { path: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
+    { path: "/", label: "Home", icon: <FaHome />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
+    { path: "my-profile", label: "My Profile", icon: <FaUser />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
+
+
+    // consumer
+    { path: "all-listed-cars", label: "Cars", icon: <FaCar />, roles: ['consumer'] },
+
+
+    // ownerDriver
+    { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['ownerDriver'] },
     
     // Provider-specific routes
-    { path: "vehicle", label: "My Vehicles", icon: <FaCar />, roles: ['provider'] },
-    { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['provider'] },
+    { path: "vehicle", label: "My Vehicles", icon: <FaCar />, roles: ['providerOnly'] },
+    { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['providerOnly'] },
     
     // Admin-specific routes
-    { path: "all-vehicle", label: "All Vehicles", icon: <FaCar />, roles: ['admin'] },
+    // { path: "all-vehicle", label: "All Vehicles", icon: <FaCar />, roles: ['admin'] },
     { path: "all-user", label: "All Users", icon: <FaUsers />, roles: ['admin'] },
+    { path: "all-cars", label: "All Cars", icon: <FaCar />, roles: ['admin'] },
   ];
 
   // Filter navigation items based on user role
@@ -43,8 +52,8 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
                 className={({ isActive }) =>
                   `flex items-center space-x-3 p-3 text-lg transition-all duration-200 ${
                     isActive
-                      ? "text-white border-white border-l-4 border-t-4 border-b-4 shimmer-border bg-lime-500 rounded-l-4xl font-bold custom-outward-curve"
-                      : "text-white font-bold hover:bg-white rounded-l-4xl hover:text-lime-500"
+                      ? "text-white border-white border-l-4 border-t-4 border-b-4 shimmer-border bg-emerald-500 rounded-l-4xl font-bold custom-outward-curve"
+                      : "text-white font-bold hover:bg-white rounded-l-4xl hover:text-emerald-500"
                   }`
                 }
               >
