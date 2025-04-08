@@ -1,20 +1,7 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import {
-  FaCar,
-  FaIdCard,
-  FaPhone,
-  FaHome,
-  FaUserShield,
-  FaTools,
-  FaShieldAlt,
-  FaUserTie,
-  FaUser,
-} from "react-icons/fa";
-import { GiSteeringWheel } from "react-icons/gi";
-import { MdDirectionsCar, MdEmergency } from "react-icons/md";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import useAuth from '../../../hooks/useAuth';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
 const MyProfile = () => {
   const { user, changePassword } = useAuth();
@@ -542,6 +529,18 @@ const MyProfile = () => {
         )}
         {/* // */}
       </div>
+      <div className="mt-10 w-full max-w-md">
+        {/* Here we pass the user's _id and role as props to the Message component */}
+        <Message userId={profileData._id} role={profileData.role} />
+      </div>
+      {profileData.role === 'admin' && (
+        <div className="mt-10 w-full max-w-md">
+
+          <AdminMessages></AdminMessages>
+        </div>
+      )}
+      {/* Admin Messages Section */}
+     
     </div>
   );
 };

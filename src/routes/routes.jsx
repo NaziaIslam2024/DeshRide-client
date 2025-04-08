@@ -15,6 +15,8 @@ import CarSelect from "../pages/Dashboard/CarProvider/CarSelect";
 import AllCars from "../pages/Dashboard/Admin/AllCars";
 import MyAddedCar from "../pages/Dashboard/CarProvider/MyAddedCar";
 import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
+import AllVehicles from "../pages/Dashboard/Admin/AllVehicles";
+import MyVehicles from "../pages/Dashboard/CarProvider/MyVehicles";
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +77,7 @@ export const router = createBrowserRouter([
         element: <CarSelect></CarSelect>
       },
       {
+
         path: 'all-cars',
         element: <AllCars></AllCars>
       },
@@ -82,6 +85,7 @@ export const router = createBrowserRouter([
       {
         path: 'all-listed-cars',
         element: <AllListedCars></AllListedCars>
+
       },
     ]
   },

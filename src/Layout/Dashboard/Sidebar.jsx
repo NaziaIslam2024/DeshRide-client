@@ -11,14 +11,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
     { path: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
     { path: "/", label: "Home", icon: <FaHome />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
     { path: "my-profile", label: "My Profile", icon: <FaUser />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
+    // Add this inside the allNavItems array
 
 
-    // consumer
-    { path: "all-listed-cars", label: "Cars", icon: <FaCar />, roles: ['consumer'] },
-
-
-    // ownerDriver
-    { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['ownerDriver'] },
     
     // Provider-specific routes
     { path: "vehicle", label: "My Vehicles", icon: <FaCar />, roles: ['providerOnly'] },
