@@ -51,6 +51,8 @@ const MyProfile = () => {
 
   // ?
 
+  // hi
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -71,7 +73,7 @@ const MyProfile = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-50 to-purple-50">
         <div className="animate-pulse flex flex-col items-center">
           <div className="h-32 w-32 bg-gray-300 rounded-full mb-4"></div>
           <div className="h-6 w-48 bg-gray-300 rounded mb-2"></div>
