@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import useAuth from '../../../hooks/useAuth'; // Import your auth hook
 
 const MyAddedCar = () => {
     const [cars, setCars] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { user } = useAuth(); // Get the current user
 
     useEffect(() => {
-        const fetchCars = async () => {
+        const fetchMyCars = async () => {
             try {
-                const response = await axios.get('http://localhost:5001/cars');
+                if (!user?.email) return;
+                
+                const response = await axios.get(`http://localhost:5001/cars/my-cars?ownerEmail=${user.email}`);
                 setCars(response.data.cars || []);
                 setLoading(false);
             } catch (err) {
@@ -19,11 +23,11 @@ const MyAddedCar = () => {
             }
         };
 
-        fetchCars();
-    }, []);
+        fetchMyCars();
+    }, [user?.email]); // Re-fetch when user email changes
 
     if (loading) {
-        return <div className="text-center py-8">Loading cars...</div>;
+        return <div className="text-center py-8">Loading your cars...</div>;
     }
 
     if (error) {
@@ -31,7 +35,12 @@ const MyAddedCar = () => {
     }
 
     if (cars.length === 0) {
-        return <div className="text-center py-8">No cars found</div>;
+        return (
+            <div className="text-center py-8">
+                <h1 className="text-3xl font-bold mb-4">My Added Cars</h1>
+                <p>You haven't added any cars yet.</p>
+            </div>
+        );
     }
 
     return (
@@ -67,6 +76,20 @@ const MyAddedCar = () => {
                                 <div>
                                     <p className="text-sm text-gray-600">Fuel</p>
                                     <p className="font-medium">{car.fuelType}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-600">Location</p>
+                                    <p className="font-medium">{car.carLocation}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-600">Status</p>
+                                    <p className={`font-medium ${
+                                        car.carStatus === 'Approved' ? 'text-green-500' :
+                                        car.carStatus === 'Rejected' ? 'text-red-500' :
+                                        'text-yellow-500'
+                                    }`}>
+                                        {car.carStatus}
+                                    </p>
                                 </div>
                             </div>
                             
