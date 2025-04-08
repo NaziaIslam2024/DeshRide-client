@@ -12,6 +12,9 @@ import ErrorPage from "../components/ErrorPage";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AddCar from "../pages/Dashboard/CarProvider/AddCar";
 import CarSelect from "../pages/Dashboard/CarProvider/CarSelect";
+import AllCars from "../pages/Dashboard/Admin/AllCars";
+import MyAddedCar from "../pages/Dashboard/CarProvider/MyAddedCar";
+import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
 import Message from "../pages/Message/message";
 
 export const router = createBrowserRouter([
@@ -54,7 +57,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'vehicle',
-        element: <VehicleList></VehicleList>
+        element: <MyAddedCar></MyAddedCar>
       },
       {
         path: 'my-profile',
@@ -73,8 +76,15 @@ export const router = createBrowserRouter([
         element: <CarSelect></CarSelect>
       },
       {
-        path: 'message',
-        element: <Message></Message>
+
+        path: 'all-cars',
+        element: <AllCars></AllCars>
+      },
+      // consumer
+      {
+        path: 'all-listed-cars',
+        element: <AllListedCars></AllListedCars>
+
       },
     ]
   },

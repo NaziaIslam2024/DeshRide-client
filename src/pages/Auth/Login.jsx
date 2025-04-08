@@ -2,12 +2,13 @@
 import { useContext, useState } from "react";
 import { GrGoogle } from "react-icons/gr";
 // import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../providers/AuthProvider";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import GoogleLogin from "./GoogleLogin";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
   const { signInUser, setUser, setLoading } = useContext(AuthContext);
@@ -15,16 +16,38 @@ const Login = () => {
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState(""); // State for error message
+  const axiosPublic = useAxiosPublic()
+  const [failedLoginAttempts, setFailedLoginAttempts] = useState(0)
+  const [status , setStatus] = useState("unlocked")
+  console.log(failedLoginAttempts)
+
+  //?
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  //?
 
   // Sign in function using email and password
-  const handleLogin = (e) => {
+  const handleLogin =async (e) =>  {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    // setLoginMail(email);
+      const response = await axiosPublic.get(`/users/getUser/${email}`)
+      if(response.data.status = "locked"){
+        setStatus("locked")
+      }
+      
+      if(localStorage.getItem('failed-attempts') > 3){
+        toast.error("You account has been locked", {
+          position: "top-left",
+          autoClose: 1500,
+          pauseOnHover: true,
+        }); // Success toast
+        await axiosPublic.patch(`/users/getUser/${email}`, { status: "locked"});
 
-    signInUser(email, password)
-      .then((result) => {
+      }
+      signInUser(email, password)
+      .then( async (result) => {
         const user = result.user;
         setUser(user);
         setLoading(false);
@@ -35,6 +58,7 @@ const Login = () => {
           autoClose: 1500,
           pauseOnHover: true,
         }); // Success toast
+        await axiosPublic.patch(`/users/getUser/${email}`, { status: "unlocked"});
 
         navigate(location?.state ? location.state : "/");
       })
@@ -46,8 +70,11 @@ const Login = () => {
           pauseOnHover: true,
         }); // Error toast
         console.error("ERROR", error.message);
+        setFailedLoginAttempts(prev => prev + 1)
+        localStorage.setItem("failed-attempts", failedLoginAttempts+1)
         e.target.password.value = "";
       });
+   
   };
 
   return (
@@ -105,6 +132,40 @@ const Login = () => {
                 Login to your account
               </h2>
 
+              {/* //? */}
+              <div className="mb-4 text-center space-x-2">
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("consumer@deshrider.com");
+                    setPassword("consumer@123DeshRider");
+                  }}
+                >
+                  Consumer Login
+                </button>
+
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("car_investor_with_driver@deshrider.com");
+                    setPassword("car_investor_with_driver@123DeshRider");
+                  }}
+                >
+                  Driver Login
+                </button>
+
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("admin@deshrider.com");
+                    setPassword("admin@123DeshRider");
+                  }}
+                >
+                  Admin Login
+                </button>
+              </div>
+              {/* //? */}
+
               <form onSubmit={handleLogin} className="space-y-6">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -120,6 +181,9 @@ const Login = () => {
                     placeholder="Enter your email"
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
                     required
+                    //
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </motion.div>
 
@@ -138,6 +202,8 @@ const Login = () => {
                       placeholder="Enter your password"
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
                       required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <button
                       type="button"
@@ -181,14 +247,24 @@ const Login = () => {
                   </a>
                 </div>
 
-                <motion.button
+                {
+                  status === "unlocked" ? <><motion.button
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                   className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition duration-200"
                   type="submit"
                 >
                   Sign in
-                </motion.button>
+                </motion.button></> : <>
+                <motion.button
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  className="w-full bg-gray-500 text-white py-3 rounded-lg font-medium  transition duration-200 border"
+               
+                >
+                  Sign in
+                </motion.button></>
+                }
 
                 <GoogleLogin setError={setError}></GoogleLogin>
               </form>
