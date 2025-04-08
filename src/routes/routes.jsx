@@ -15,7 +15,8 @@ import CarSelect from "../pages/Dashboard/CarProvider/CarSelect";
 import AllCars from "../pages/Dashboard/Admin/AllCars";
 import MyAddedCar from "../pages/Dashboard/CarProvider/MyAddedCar";
 import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
-import Message from "../pages/Message/message";
+import AllVehicles from "../pages/Dashboard/Admin/AllVehicles";
+import MyVehicles from "../pages/Dashboard/CarProvider/MyVehicles";
 
 export const router = createBrowserRouter([
   {
