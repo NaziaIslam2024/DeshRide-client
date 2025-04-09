@@ -1,269 +1,262 @@
 import React, { useState, useEffect } from 'react';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { FaTrashAlt } from 'react-icons/fa';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 const AllCars = () => {
-  const [cars, setCars] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('all');
-  const axiosPublic = useAxiosPublic();
+    const [cars, setCars] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(15);
 
-  useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const response = await axiosPublic.get('cars'); 
-        setCars(response.data.cars);
-      } catch (err) {
-        setError(err.message);
-        console.error('API Error:', err.response?.data || err.message);
-      } finally {
-        setLoading(false);
-      }
+    useEffect(() => {
+        const fetchAllCars = async () => {
+            try {
+                const response = await axios.get('http://localhost:5001/cars');
+                setCars(response.data.cars || []);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+                console.error('Error fetching cars:', err);
+            }
+        };
+        fetchAllCars();
+    }, []);
+
+    const handleStatusUpdate = async (carId, newStatus) => {
+        try {
+            await axios.put('http://localhost:5001/cars/update-status', {
+                carId,
+                status: newStatus
+            });
+            setCars(cars.map(car => 
+                car._id === carId ? { ...car, carStatus: newStatus } : car
+            ));
+            toast.success('Car status updated successfully!');
+        } catch (err) {
+            console.error('Error updating status:', err);
+            toast.error('Failed to update status');
+        }
     };
 
-    fetchCars();
-  }, [axiosPublic]);
+    const handleDeleteCar = async (carId) => {
+        // Use SweetAlert2 instead of window.confirm
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        });
 
-  // Get unique car types for filter tabs
-  const carTypes = ['all', ...new Set(cars.map(car => car.type))];
+        if (result.isConfirmed) {
+            try {
+                await axios.delete(`http://localhost:5001/cars/${carId}`);
+                setCars(cars.filter(car => car._id !== carId));
+                toast.success('Car deleted successfully!');
+                if (currentCars.length === 1 && currentPage > 1) {
+                    setCurrentPage(currentPage - 1);
+                }
+                // Show success confirmation
+                Swal.fire(
+                    'Deleted!',
+                    'The car has been deleted.',
+                    'success'
+                );
+            } catch (err) {
+                console.error('Error deleting car:', err);
+                toast.error('Failed to delete car');
+                Swal.fire(
+                    'Error!',
+                    'Failed to delete the car.',
+                    'error'
+                );
+            }
+        }
+    };
 
-  // Filter cars based on active tab
-  const filteredCars = activeTab === 'all' 
-    ? cars 
-    : cars.filter(car => car.type === activeTab);
+    // Pagination logic
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentCars = cars.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(cars.length / itemsPerPage);
 
-  if (loading) {
-    return (
-      <div className="flex flex-col justify-center items-center min-h-[80vh]">
-        <div className="w-20 h-20 border-4 border-gray-200 border-t-blue-600 border-r-blue-600 rounded-full animate-spin mb-4"></div>
-        <p className="text-gray-600 font-medium">Loading our premium collection...</p>
-      </div>
-    );
-  }
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (error) {
-    return (
-      <div className="flex flex-col justify-center items-center min-h-[80vh] bg-red-50 p-8 rounded-lg">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-red-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <h2 className="text-2xl font-bold text-red-700 mb-2">Error Loading Cars</h2>
-        <p className="text-red-600 mb-1">{error}</p>
-        <p className="text-gray-600">Please check the console for more details</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
-      <div className="text-center mb-16">
-        <h1 className="text-5xl font-extrabold text-gray-900 mb-4">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-            Premium Car Collection
-          </span>
-        </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Experience luxury and performance with our exclusive selection of premium vehicles
-        </p>
-      </div>
-      
-      {/* Filter Tabs */}
-      <div className="flex justify-center mb-12">
-        <div className="inline-flex items-center space-x-1 bg-gray-100 p-1 rounded-xl">
-          {carTypes.map(type => (
-            <button
-              key={type}
-              onClick={() => setActiveTab(type)}
-              className={`px-6 py-2 text-sm font-medium rounded-lg transition-all duration-200 
-                ${activeTab === type 
-                  ? 'bg-white text-blue-600 shadow-md' 
-                  : 'text-gray-600 hover:text-gray-900'}`}
-            >
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {filteredCars.length === 0 ? (
-        <div className="text-center py-16">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4h4m-4 4h4" />
-          </svg>
-          <p className="text-xl text-gray-500">
-            No vehicles available in this category at the moment.
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {filteredCars.map((car) => (
-            <CarCard key={car._id} car={car} />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
-const CarCard = ({ car }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  // Handle different image property names
-  const carImage = car.imageUrl || car.image;
-  
-  // Get badge color based on car type
-  const getBadgeColor = (type) => {
-    switch(type.toLowerCase()) {
-      case 'luxury': return 'bg-purple-600';
-      case 'suv': return 'bg-green-600';
-      case 'truck': return 'bg-blue-600';
-      case 'sedan': return 'bg-red-600';
-      case 'electric': return 'bg-teal-600';
-      default: return 'bg-gray-600';
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+            </div>
+        );
     }
-  };
-  
-  // Format price properly
-  const formattedPrice = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-  }).format(car.price);
 
-  return (
-    <div 
-      className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Car Image */}
-      <div className="relative h-64 overflow-hidden">
-        <img 
-          src={carImage} 
-          alt={`${car.name} ${car.model}`}
-          className={`w-full h-full object-cover transition-transform duration-700 ease-in-out ${isHovered ? 'scale-110' : 'scale-100'}`}
-          onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/600x400?text=Luxury+Vehicle';
-          }}
-        />
-        
-        {/* Type Badge */}
-        <div className={`absolute top-4 left-4 ${getBadgeColor(car.type)} text-white px-3 py-1 rounded-full text-sm font-bold tracking-wide`}>
-          {car.type}
-        </div>
-        
-        {/* Price Tag */}
-        <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-filter backdrop-blur-sm text-gray-900 px-4 py-2 rounded-md font-bold shadow-lg">
-          {formattedPrice}
-        </div>
-        
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
-        
-        {/* Car Name Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-          <h2 className="text-2xl font-bold tracking-tight line-clamp-1">
-            {car.name}
-          </h2>
-          <p className="text-sm opacity-80 font-medium">{car.model}</p>
-        </div>
-      </div>
+    if (error) {
+        return (
+            <div className="text-center py-12 text-red-600 font-semibold text-xl bg-red-100 rounded-lg mx-4 mt-4">
+                Error: {error}
+            </div>
+        );
+    }
 
-      {/* Car Details */}
-      <div className="p-6">
-        {/* Specs */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+    return (
+        <div className="px-6 py-10">
+            <div className="bg-white shadow-2xl rounded-xl overflow-hidden border border-gray-200">
+                <div className="overflow-x-auto">
+                    <table className="min-w-full">
+                        <thead className="bg-gradient-to-r from-gray-800 to-gray-700 text-white">
+                            <tr>
+                                <th className="py-4 px-6 text-left font-semibold">Image</th>
+                                <th className="py-4 px-6 text-left font-semibold">Name & Model</th>
+                                <th className="py-4 px-6 text-left font-semibold">Added By</th>
+                                <th className="py-4 px-6 text-left font-semibold">Price</th>
+                                <th className="py-4 px-6 text-left font-semibold">Location</th>
+                                <th className="py-4 px-6 text-left font-semibold">Status</th>
+                                <th className="py-4 px-6 text-left font-semibold">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {currentCars.map((car, index) => (
+                                <tr 
+                                    key={car._id} 
+                                    className={`${
+                                        index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                                    } hover:bg-gray-100 transition-all duration-200`}
+                                >
+                                    <td className="py-4 px-6">
+                                        <img 
+                                            src={car.imageUrl} 
+                                            alt={`${car.name} ${car.model}`} 
+                                            className="w-20 h-14 object-cover rounded-md shadow-sm border border-gray-200"
+                                        />
+                                    </td>
+                                    <td className="py-4 px-6 font-medium text-gray-800">
+                                        {car.name} {car.model}
+                                    </td>
+                                    <td className="py-4 px-6 text-gray-600">{car.addedBy}</td>
+                                    <td className="py-4 px-6 text-gray-800 font-medium">
+                                        ${car.price.toLocaleString()}/day
+                                    </td>
+                                    <td className="py-4 px-6 text-gray-600">{car.carLocation}</td>
+                                    <td className="py-4 px-6">
+                                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                                            car.carStatus === 'Approved' 
+                                                ? 'bg-green-100 text-green-800' 
+                                                : car.carStatus === 'Rejected' 
+                                                ? 'bg-red-100 text-red-800' 
+                                                : 'bg-yellow-100 text-yellow-800'
+                                        }`}>
+                                            <span className={`w-2 h-2 rounded-full mr-2 ${
+                                                car.carStatus === 'Approved' 
+                                                    ? 'bg-green-500' 
+                                                    : car.carStatus === 'Rejected' 
+                                                    ? 'bg-red-500' 
+                                                    : 'bg-yellow-500'
+                                            }`}></span>
+                                            {car.carStatus}
+                                        </span>
+                                    </td>
+                                    <td className="py-4 px-6">
+                                        <div className="flex space-x-3">
+                                            <button
+                                                onClick={() => handleStatusUpdate(car._id, 'Approved')}
+                                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                                    car.carStatus === 'Approved'
+                                                        ? 'bg-gray-300 cursor-not-allowed text-gray-600'
+                                                        : 'bg-green-600 hover:bg-green-700 text-white shadow-md hover:shadow-lg'
+                                                }`}
+                                                disabled={car.carStatus === 'Approved'}
+                                            >
+                                                Approve
+                                            </button>
+                                            <button
+                                                onClick={() => handleStatusUpdate(car._id, 'Rejected')}
+                                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                                    car.carStatus === 'Rejected'
+                                                        ? 'bg-gray-300 cursor-not-allowed text-gray-600'
+                                                        : 'bg-red-600 hover:bg-red-700 text-white shadow-md hover:shadow-lg'
+                                                }`}
+                                                disabled={car.carStatus === 'Rejected'}
+                                            >
+                                                Reject
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteCar(car._id)}
+                                                className="group px-4 py-2 rounded-lg text-sm font-medium bg-red-600 text-white hover:bg-red-700 transition-all duration-200 shadow-md hover:shadow-lg flex items-center"
+                                            >
+                                                <FaTrashAlt className="mr-2 group-hover:animate-pulse" />
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div>
-              <p className="text-xs text-gray-500">FUEL TYPE</p>
-              <p className="text-sm font-medium">{car.fuelType}</p>
+
+            <div className="mt-8 flex justify-between items-center px-4">
+                <div className="flex items-center space-x-3">
+                    <label className="text-sm font-medium text-gray-700">Items per page:</label>
+                    <select
+                        value={itemsPerPage}
+                        onChange={(e) => {
+                            setItemsPerPage(Number(e.target.value));
+                            setCurrentPage(1);
+                        }}
+                        className="border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={15}>15</option>
+                        <option value={20}>20</option>
+                        <option value={25}>25</option>
+                    </select>
+                </div>
+
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                    >
+                        Previous
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <button
+                            key={page}
+                            onClick={() => paginate(page)}
+                            className={`px-4 py-2 rounded-md ${
+                                currentPage === page 
+                                    ? 'bg-blue-600 text-white shadow-md' 
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            } transition-all duration-200`}
+                        >
+                            {page}
+                        </button>
+                    ))}
+                    <button
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="px-4 py-2 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                    >
+                        Next
+                    </button>
+                </div>
+
+                <div className="text-sm text-gray-600 font-medium">
+                    Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, cars.length)} of {cars.length} vehicles
+                </div>
             </div>
-          </div>
-          
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500">TRANSMISSION</p>
-              <p className="text-sm font-medium">{car.transmission}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500">SEATING</p>
-              <p className="text-sm font-medium">{car.seats} Seats</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500">REG. NO.</p>
-              <p className="text-sm font-medium truncate">{car.VehicleRegistrationNo || 'N/A'}</p>
-            </div>
-          </div>
         </div>
-        
-        {/* Features */}
-        {car.features && car.features.length > 0 && (
-          <div>
-            <h3 className="text-sm uppercase text-gray-500 font-medium mb-2">Features</h3>
-            <div className="flex flex-wrap gap-2">
-              {car.features.map((feature, index) => (
-                <span 
-                  key={index}
-                  className="bg-gray-100 text-gray-800 px-3 py-1 rounded-lg text-xs font-medium"
-                >
-                  {feature}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-        
-        {/* Action Button */}
-        <div className="mt-6">
-          <button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            View Details
-          </button>
-          
-          {/* Quick Actions */}
-          <div className="flex justify-between mt-4">
-            <button className="text-gray-600 hover:text-blue-600 text-sm font-medium flex items-center transition-colors duration-200">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              Book Test Drive
-            </button>
-            <button className="text-gray-600 hover:text-blue-600 text-sm font-medium flex items-center transition-colors duration-200">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-              Add to Favorites
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default AllCars;

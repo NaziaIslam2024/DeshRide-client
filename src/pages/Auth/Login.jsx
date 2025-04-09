@@ -127,7 +127,7 @@ const Login = () => {
                   className="btn btn-primary btn-sm"
                   onClick={() => {
                     setEmail("car_investor_with_driver@deshrider.com");
-                    setPassword("car_investor_with_driver@123DeshRider");
+                    setPassword("car_investor_with_driver");
                   }}
                 >
                   Driver Login
@@ -137,7 +137,7 @@ const Login = () => {
                   className="btn btn-primary btn-sm"
                   onClick={() => {
                     setEmail("admin@deshrider.com");
-                    setPassword("admin@123DeshRider");
+                    setPassword("123DeshRider");
                   }}
                 >
                   Admin Login

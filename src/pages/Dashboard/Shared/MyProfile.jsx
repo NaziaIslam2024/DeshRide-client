@@ -457,7 +457,7 @@ const MyProfile = () => {
 
         {/* // */}
         {/* Password Modal */}
-        {/* {showModal && (
+        {showModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
             <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
               <h2 className="text-2xl font-bold mb-6 text-center">
@@ -465,6 +465,7 @@ const MyProfile = () => {
               </h2>
 
               <form className="space-y-4" onSubmit={handleSubmit}>
+                {/* Email */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600">
                     Email
@@ -477,6 +478,7 @@ const MyProfile = () => {
                   />
                 </div>
 
+                {/* Old Password */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600">
                     Old Password
@@ -497,6 +499,7 @@ const MyProfile = () => {
                   </div>
                 </div>
 
+                {/* New Password */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600">
                     New Password
@@ -517,6 +520,7 @@ const MyProfile = () => {
                   </div>
                 </div>
 
+                {/* Buttons */}
                 <div className="flex justify-between mt-6">
                   <button
                     type="button"
@@ -535,7 +539,7 @@ const MyProfile = () => {
               </form>
             </div>
           </div>
-        )} */}
+        )}
         {/* // */}
       </div>
     </div>

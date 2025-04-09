@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { User, Mail, Phone, Lock, UserCheck, Eye, EyeOff } from "lucide-react";
+import { Mail, Phone, Lock, UserCheck, Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../providers/AuthProvider";
 import { useNavigate } from "react-router";
