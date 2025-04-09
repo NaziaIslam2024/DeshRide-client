@@ -10,6 +10,12 @@ import { toast } from "react-toastify";
 export default function ConsumerForm() {
   const [showPassword, setShowPassword] = useState(false);
   const consumerForm = useForm();
+  const {
+    watch,
+    formState: { errors },
+  } = consumerForm;
+  const password = watch("pass");
+
   const { createNewUser, setUser, updateUser } = useAuth();
   //   console.log(createNewUser);
 
@@ -124,27 +130,65 @@ export default function ConsumerForm() {
           className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
         />
       </div>
-      <div className="relative">
-        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-        <input
-          {...consumerForm.register("pass", {
-            required: "Password is required",
-          })}
-          type={showPassword ? "text" : "password"}
-          placeholder="Password"
-          className="w-full pl-10 pr-10 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
-        />
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-        >
-          {showPassword ? (
-            <EyeOff className="w-4 h-4" />
-          ) : (
-            <Eye className="w-4 h-4" />
+      {/* //  password field works  */}
+      <div className="flex gap-4">
+        <div className="relative flex-1 h-fit">
+          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            {...consumerForm.register("pass", {
+              required: "Password is required",
+            })}
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full pl-10 pr-10 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          >
+            {showPassword ? (
+              <EyeOff className="w-4 h-4" />
+            ) : (
+              <Eye className="w-4 h-4" />
+            )}
+          </button>
+        </div>
+
+        {/* // re-enter password field  */}
+        <div className="flex-1 ">
+          <div className="relative h-fit ">
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <input
+              {...consumerForm.register("confirmPass", {
+                required: "Please confirm your password",
+                validate: (value) =>
+                  value === consumerForm.getValues("pass") ||
+                  "Passwords do not match",
+              })}
+              type={showPassword ? "text" : "password"}
+              placeholder="Re-enter Password"
+              className="w-full pl-10 pr-10 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              {showPassword ? (
+                <EyeOff className="w-4 h-4" />
+              ) : (
+                <Eye className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+          {errors.confirmPass && (
+            <p className="text-sm text-red-500 mt-1 ">
+              {errors.confirmPass.message}
+            </p>
           )}
-        </button>
+        </div>
       </div>
       <motion.button
         type="submit"
