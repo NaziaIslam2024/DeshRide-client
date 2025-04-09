@@ -68,6 +68,7 @@ const Banner = () => {
                   className="font-bold text-4xl text-right"
                   dangerouslySetInnerHTML={{ __html: slide.title }}
                 ></h2>
+                <button class="btn btn-primary">Primary Button</button>
               </div>
             </div>
             {/* <img className="h-[400px] w-full" src={slide.image} /> */}
@@ -75,7 +76,7 @@ const Banner = () => {
         ))}
       </Swiper>
       {/* search card design  */}
-      <div className="p-2 w-[315px] sm:w-md xl:w-xl absolute left-[0px] md:left-[30px] top-[260px] 2xl:left-[400px] z-20  ">
+      {/* <div className="p-2 w-[315px] sm:w-md xl:w-xl absolute left-[0px] md:left-[30px] top-[260px] 2xl:left-[400px] z-20  ">
         <div className="flex">
           <div className="flex w-1/2 justify-center gap-2 items-center bg-white py-3 px-8 rounded-t-xl mr-2 ">
             <img src={taxi} alt="" className="w-5 h-5" />
@@ -96,7 +97,7 @@ const Banner = () => {
             <Link>Find my current location</Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
