@@ -12,7 +12,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
     { path: "/", label: "Home", icon: <FaHome />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
     { path: "my-profile", label: "My Profile", icon: <FaUser />, roles: ['admin', 'providerOnly', 'consumer', 'driver', 'ownerDriver'] },
     // Add this inside the allNavItems array
-
+    
+    //Consumer specifice routes
+    { path: "all-listed-cars", label: "Rent a car", icon: <FaCar />, roles: ['consumer'] },
 
     
     // Provider-specific routes
