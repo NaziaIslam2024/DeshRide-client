@@ -279,8 +279,8 @@ const Login = () => {
           </motion.div>
         </motion.div>
       </div>
-      {/* //* Modal for the reset password  */}
 
+      {/* //* Modal for the reset password  */}
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box flex flex-col items-center">
           <h3 className="font-bold text-lg">Reset Your Password</h3>
@@ -335,8 +335,6 @@ const Login = () => {
           </div>
         </div>
       </dialog>
-
-      {/* //?  */}
     </>
   );
 };
