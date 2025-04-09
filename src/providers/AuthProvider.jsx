@@ -22,7 +22,6 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,11 +50,11 @@ const AuthProvider = ({ children }) => {
   };
 
   // Reset password
-  // const resetPassword = (email) => {
-  //   return sendPasswordResetEmail(auth, email);
-  // };
-  // ? reset password
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
 
+  // todo: reset password [this will work only if the user is logged in]
   const changePassword = async (email, oldPassword, newPassword) => {
     // const auth = getAuth();
     const user = auth.currentUser;
@@ -75,8 +74,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  //   // ? reset password
-
   // Update user profile
   const updateUser = (updatedData) => {
     return updateProfile(auth.currentUser, updatedData);
@@ -88,7 +85,6 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
 
       console.log(currentUser);
-    
 
       // if (currentUser?.email) {
       //   const user = { email: currentUser.email };
@@ -120,7 +116,7 @@ const AuthProvider = ({ children }) => {
     updateUser,
     loading,
     signInWithGoogle,
-    // resetPassword,
+    resetPassword,
     changePassword,
     setLoading,
   };
