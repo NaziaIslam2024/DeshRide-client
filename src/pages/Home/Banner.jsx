@@ -68,6 +68,7 @@ const Banner = () => {
                   className="font-bold text-4xl text-right"
                   dangerouslySetInnerHTML={{ __html: slide.title }}
                 ></h2>
+                <button class="btn btn-primary">Primary Button</button>
               </div>
             </div>
             {/* <img className="h-[400px] w-full" src={slide.image} /> */}

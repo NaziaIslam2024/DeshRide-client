@@ -11,20 +11,23 @@ import Host from "./Host";
 import FAQ from "./FAQ";
 import Testimonial from "./Testimonial";
 import ShowUserLocation from "./ShowUserLocation";
+
 import Gallery from "./Gallery";
 import Services from "./Services";
 import Statistics from "./Statistics";
 import WhyChooseUs from "./WhyChooseUs";
 import EidCountdown from "./Eid/EidCountdown";
 import FloatingStar from "./Eid/FloatingStar";
+// import { PricingCard, CheckIcon } from "./PricingCard";
 
 const Home = () => {
   return (
     <div className="">
       <Banner></Banner>
-      <FloatingStar></FloatingStar>
+    {/* <PricingCard></PricingCard> */}
+      {/* <FloatingStar></FloatingStar> */}
       <div className="container mx-auto">
-        <EidCountdown></EidCountdown>
+        {/* <EidCountdown></EidCountdown> */}
         <Services></Services>
         <CarCategories></CarCategories>
         <Statistics></Statistics>

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+/* @import 'material-tailwind/css/material-tailwind.css'; */
 @theme {
   --color-black: #13201d;
   --color-primary: #1b4d3e;
