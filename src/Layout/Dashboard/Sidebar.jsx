@@ -16,6 +16,15 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = 'consumer' }) => {
     //Consumer specifice routes
     { path: "all-listed-cars", label: "Rent a car", icon: <FaCar />, roles: ['consumer'] },
 
+
+// consumer
+    { path: "all-listed-cars", label: "Cars", icon: <FaCar />, roles: ['consumer'] },
+    { path: "whatsapp", label: "Chat", icon: <FaCar />, roles: ['consumer'] },
+
+
+    // ownerDriver
+    { path: "add-car", label: "Add Car", icon: <FaPlusCircle />, roles: ['ownerDriver'] },
+
     
     // Provider-specific routes
     { path: "vehicle", label: "My Vehicles", icon: <FaCar />, roles: ['providerOnly'] },

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import { FaHome, FaIdCard, FaPhone, FaShieldAlt, FaTools, FaUser } from 'react-icons/fa';
 
 const MyProfile = () => {
   const { user, changePassword } = useAuth();
@@ -239,7 +240,7 @@ const MyProfile = () => {
 
               <div className="flex items-start">
                 <div className="bg-red-100 p-3 rounded-full mr-4">
-                  <MdEmergency className="text-red-600 text-xl" />
+                  {/* <MdEmergency className="text-red-600 text-xl" /> */}
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">
@@ -531,17 +532,7 @@ const MyProfile = () => {
         )}
         {/* // */}
       </div>
-      <div className="mt-10 w-full max-w-md">
-        {/* Here we pass the user's _id and role as props to the Message component */}
-        <Message userId={profileData._id} role={profileData.role} />
-      </div>
-      {profileData.role === 'admin' && (
-        <div className="mt-10 w-full max-w-md">
-
-          <AdminMessages></AdminMessages>
-        </div>
-      )}
-      {/* Admin Messages Section */}
+     
      
     </div>
   );
