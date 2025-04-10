@@ -1,21 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useRentCar } from "../../providers/RentACarProvider";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 const RentModal = ({ car, onClose }) => {
   //
   const {
+    selectedCar,
+    setSelectedCar,
+    showRentModal,
     setShowRentModal,
     rentMessage,
     setRentMessage,
+
     handleRentRequest,
     setCar,
+
+    dateRange,
+    setDateRange,
+    startDate,
+    endDate,
   } = useRentCar();
   useEffect(() => {
     setCar(car);
   }, [car, setCar]);
   //
+
+  // //?
+  // const [dateRange, setDateRange] = useState([null, null]);
+  // const [startDate, endDate] = dateRange;
+  // //?
 
   return (
     <motion.div
@@ -59,26 +76,49 @@ const RentModal = ({ car, onClose }) => {
               // value={rentMessage}
               onChange={(e) => setRentMessage(e.target.value)}
               placeholder="Enter your rental request details..."
-              className="w-full h-32 p-2 rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E] resize-none"
+              className="w-full h-24 p-2 rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E] resize-none"
             />
           </div>
-          <div className="flex gap-4 mt-6">
-            <button
-              onClick={() => {
-                handleRentRequest(rentMessage);
-                setShowRentModal(false);
+          {/* //? */}
+          <div className="relative">
+            <DatePicker
+              selectsRange
+              startDate={startDate}
+              endDate={endDate}
+              onChange={(update) => {
+                setDateRange(update);
               }}
-              className="flex-1 bg-[#00A63E] text-white py-3 px-4 rounded-lg hover:bg-[#00A63E]/90 transition-colors font-medium"
-            >
-              Confirm Request
-            </button>
-            <button
-              onClick={onClose}
-              className="flex-1 border border-gray-300 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors font-medium"
-            >
-              Cancel
-            </button>
+              isClearable={true}
+              placeholderText="Pick your date"
+              className="w-full p-2 pl-10  border-gray-300 shadow-sm rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <FaRegCalendarAlt className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500 pointer-events-none" />
           </div>
+
+          {startDate && endDate && (
+            <p className="text-left text-sm text-gray-700">
+              📅 <strong>{startDate.toDateString()}</strong> to{" "}
+              <strong>{endDate.toDateString()}</strong>
+            </p>
+          )}
+        </div>
+        {/* //? */}
+        <div className="flex gap-4 mt-6">
+          <button
+            onClick={() => {
+              handleRentRequest(rentMessage);
+              setShowRentModal(false);
+            }}
+            className="flex-1 bg-[#00A63E] text-white py-3 px-4 rounded-lg hover:bg-[#00A63E]/90 transition-colors font-medium"
+          >
+            Confirm Request
+          </button>
+          <button
+            onClick={onClose}
+            className="flex-1 border border-gray-300 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+          >
+            Cancel
+          </button>
         </div>
       </motion.div>
     </motion.div>
