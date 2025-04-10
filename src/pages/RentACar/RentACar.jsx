@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Car, Filter, MapPin, Users, Sliders, X } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import useCars from "../../hooks/useCars";
 
 function RentACar() {
@@ -10,72 +10,19 @@ function RentACar() {
   const [selectedCar, setSelectedCar] = useState(null);
   const [showRentModal, setShowRentModal] = useState(false);
   const [rentMessage, setRentMessage] = useState("");
+  // const [cars, setCars] = useState([]);
 
   //?
+
+  // const location = useLocation();
+  // const { pathname } = location;
+  // console.log(pathname);
   const [carData] = useCars();
+  const [cars, setCars] = useState(null);
 
-  const cars = [
-    {
-      id: 1,
-      name: "Tesla Model 3",
-      type: "Electric",
-      price: 150,
-      location: "New York",
-      seats: 5,
-      features: ["Autopilot", "Premium Sound", "360 Camera"],
-      image:
-        "https://images.unsplash.com/photo-1536700503339-1e4b06520771?auto=format&fit=crop&q=80&w=2000",
-      ownerName: "John Smith",
-      transmission: "Automatic",
-      fuelType: "Electric",
-      modelYear: "2023",
-      mileage: "15,000",
-      ownerEmail: "john.smith@example.com",
-      description:
-        "Experience the future of driving with this fully electric Tesla Model 3. Features include enhanced autopilot, premium sound system, and full self-driving capability.",
-    },
-    {
-      id: 2,
-      name: "Mercedes-Benz S-Class",
-      type: "Luxury",
-      price: 300,
-      location: "Los Angeles",
-      seats: 5,
-      features: ["Massage Seats", "Night Vision", "Burmester Sound"],
-      image:
-        "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=2000",
-      ownerName: "Sarah Johnson",
-      transmission: "Automatic",
-      fuelType: "Petrol",
-      modelYear: "2023",
-      mileage: "8,000",
-      ownerEmail: "sarah.j@example.com",
-      description:
-        "Luxury meets performance in this Mercedes-Benz S-Class. Enjoy premium features like massage seats and Burmester surround sound system.",
-    },
-    {
-      id: 3,
-      name: "Range Rover Sport",
-      type: "SUV",
-      price: 250,
-      location: "Miami",
-      seats: 7,
-      features: ["Off-road Mode", "Panoramic Roof", "Air Suspension"],
-      image:
-        "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&q=80&w=2000",
-      ownerName: "Michael Brown",
-      transmission: "Automatic",
-      fuelType: "Diesel",
-      modelYear: "2022",
-      mileage: "20,000",
-      ownerEmail: "m.brown@example.com",
-      description:
-        "Conquer any terrain with this powerful Range Rover Sport. Perfect for both city driving and off-road adventures.",
-    },
-  ];
-
-  // Repeat the cars array 4 times to show more cars
-  const extendedCars = [...cars, ...cars, ...cars, ...cars];
+  useEffect(() => {
+    setCars(carData?.cars);
+  }, [carData]);
 
   // filter section
   const FilterSection = () => (
@@ -196,13 +143,13 @@ function RentACar() {
         <div className="space-y-4">
           <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
             <img
-              src={car.image}
-              alt={car.name}
+              src={car?.imageUrl}
+              alt={car?.name}
               className="w-20 h-20 object-cover rounded-lg"
             />
             <div>
-              <h3 className="font-semibold text-gray-900">{car.name}</h3>
-              <p className="text-[#00A63E] font-semibold">${car.price}/day</p>
+              <h3 className="font-semibold text-gray-900">{car?.name}</h3>
+              <p className="text-[#00A63E] font-semibold">${car?.price}/day</p>
             </div>
           </div>
           <div className="space-y-2">
@@ -245,7 +192,7 @@ function RentACar() {
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white shadow-sm"
+        className="bg-white shadow-sm mt-16"
       >
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
@@ -304,9 +251,9 @@ function RentACar() {
           {/* Car Grid */}
           <div className="lg:col-span-3">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {extendedCars.map((car, index) => (
+              {cars?.map((car, index) => (
                 <motion.div
-                  key={`${car.id}-${index}`}
+                  key={`${car._id}-${index}`}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   whileHover={{ scale: 1.02 }}
@@ -315,37 +262,39 @@ function RentACar() {
                 >
                   <div className="relative h-48">
                     <img
-                      src={car.image}
-                      alt={car.name}
+                      src={car?.imageUrl}
+                      alt={car?.name}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-semibold text-gray-900">
-                      ${car.price}/day
+                      ${car?.price}/day
                     </div>
                   </div>
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <h3 className="text-xl font-semibold text-gray-900">
-                          {car.name}
+                          {car?.name}
                         </h3>
-                        <p className="text-gray-600">{car.type}</p>
+                        <p className="text-gray-600">{car?.fuelType}</p>
                       </div>
                       <div className="flex items-center gap-1 text-gray-600">
                         <MapPin size={16} />
-                        <span className="text-sm">{car.location}</span>
+                        <span className="text-sm">
+                          {car?.location || "Anywhere"}
+                        </span>
                       </div>
                     </div>
                     <div className="flex items-center gap-4 mb-4">
                       <div className="flex items-center gap-1">
                         <Users size={16} className="text-gray-600" />
                         <span className="text-sm text-gray-600">
-                          {car.seats} seats
+                          {car?.seats} seats
                         </span>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {car.features.map((feature, featureIndex) => (
+                      {car?.features?.map((feature, featureIndex) => (
                         <span
                           key={featureIndex}
                           className="px-3 py-1 bg-[#00A63E]/10 text-[#00A63E] rounded-full text-sm"
@@ -366,7 +315,7 @@ function RentACar() {
                         Rent Now
                       </button>
                       <Link
-                        to={`/rent-car/${car.id}`}
+                        to={`/rent-car/${car?._id}`}
                         className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 transition-colors"
                       >
                         Details
