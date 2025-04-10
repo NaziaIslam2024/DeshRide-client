@@ -1,20 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import {
-  FaCar,
-  FaIdCard,
-  FaPhone,
-  FaHome,
-  FaUserShield,
-  FaTools,
-  FaShieldAlt,
-  FaUserTie,
-  FaUser,
-} from "react-icons/fa";
-import { GiSteeringWheel } from "react-icons/gi";
-import { MdDirectionsCar, MdEmergency } from "react-icons/md";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import useAuth from '../../../hooks/useAuth';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import { FaHome, FaIdCard, FaPhone, FaShieldAlt, FaTools, FaUser } from 'react-icons/fa';
 
 const MyProfile = () => {
   const { user, changePassword } = useAuth();
@@ -51,6 +39,8 @@ const MyProfile = () => {
 
   // ?
 
+  // hi
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -71,7 +61,7 @@ const MyProfile = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-50 to-purple-50">
         <div className="animate-pulse flex flex-col items-center">
           <div className="h-32 w-32 bg-gray-300 rounded-full mb-4"></div>
           <div className="h-6 w-48 bg-gray-300 rounded mb-2"></div>
@@ -250,7 +240,7 @@ const MyProfile = () => {
 
               <div className="flex items-start">
                 <div className="bg-red-100 p-3 rounded-full mr-4">
-                  <MdEmergency className="text-red-600 text-xl" />
+                  {/* <MdEmergency className="text-red-600 text-xl" /> */}
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">
@@ -542,6 +532,8 @@ const MyProfile = () => {
         )}
         {/* // */}
       </div>
+     
+     
     </div>
   );
 };
