@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router";
 import {
   ArrowLeft,
@@ -12,9 +12,11 @@ import {
   X,
   MessageCircle,
 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 // Mock data - in a real app, this would come from your backend
-const rentalRequests = [
+const rentalRequests2 = [
   {
     id: 1,
     vehicleName: "Tesla Model 3",
@@ -62,8 +64,33 @@ const rentalRequests = [
 
 function RentalCarDetails() {
   const { id } = useParams();
+  // console.log(id);
   const navigate = useNavigate();
-  const request = rentalRequests.find((r) => r.id === Number(id));
+  const request = rentalRequests2.find((r) => r.id === Number(id));
+
+  // ?
+  const [rentalRequests, setRentalRequests] = useState([]);
+  const axiosPublic = useAxiosPublic();
+
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["rentalRequests", id],
+    queryFn: async () => {
+      const response = await axiosPublic.get(
+        `/car-rental/get-car-rental/${id}`
+      );
+      setRentalRequests(response.data);
+      console.log(response.data);
+      return response.data;
+    },
+    enabled: !!id,
+    onSuccess: (data) => {
+      console.log("Rental requests fetched successfully:", data);
+    },
+    onError: (error) => {
+      console.error("Error fetching rental requests:", error);
+    },
+  });
+  // console.log(data);
 
   const handleAccept = () => {
     console.log("Accepted request:", id);
@@ -76,11 +103,11 @@ function RentalCarDetails() {
   };
 
   const handleChat = () => {
-    console.log("Opening chat with:", request.requesterUsername);
+    console.log("Opening chat with:", request?.requesterUsername);
     // Add your chat logic here
   };
 
-  if (!request) {
+  if (!rentalRequests) {
     return (
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-3xl mx-auto text-center">
@@ -111,7 +138,7 @@ function RentalCarDetails() {
           </button>
 
           <div className="flex gap-3">
-            {request.rentStatus === "pending" && (
+            {rentalRequests?.rentStatus === "pending" && (
               <>
                 <button
                   onClick={handleAccept}
@@ -143,15 +170,15 @@ function RentalCarDetails() {
           {/* Vehicle Image */}
           <div className="relative h-64 w-full">
             <img
-              src={request.imageUrl}
-              alt={request.vehicleName}
+              src={rentalRequests?.imageUrl}
+              alt={rentalRequests?.name}
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
               <h1 className="text-3xl font-bold text-white">
-                {request.vehicleName}
+                {rentalRequests?.name || "Unknown Vehicle"}
               </h1>
-              <p className="text-white/90">{request.model}</p>
+              <p className="text-white/90">{rentalRequests?.model}</p>
             </div>
           </div>
 
@@ -160,15 +187,15 @@ function RentalCarDetails() {
             <div className="mb-6">
               <span
                 className={`px-3 py-1 text-sm font-semibold rounded-full ${
-                  request.rentStatus === "pending"
+                  rentalRequests?.rentStatus === "pending"
                     ? "bg-yellow-100 text-yellow-800"
-                    : request.rentStatus === "ongoing"
+                    : rentalRequests?.rentStatus === "ongoing"
                     ? "bg-green-100 text-green-800"
                     : "bg-gray-100 text-gray-800"
                 }`}
               >
-                {request.rentStatus.charAt(0).toUpperCase() +
-                  request.rentStatus.slice(1)}
+                {rentalRequests?.rentStatus.charAt(0).toUpperCase() +
+                  rentalRequests?.rentStatus.slice(1)}
               </span>
             </div>
 
@@ -181,20 +208,26 @@ function RentalCarDetails() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center">
                     <Car className="w-5 h-5 text-gray-400 mr-2" />
-                    <span className="text-gray-600">{request.type}</span>
+                    <span className="text-gray-600">
+                      {rentalRequests?.type || "Unknown Type"}
+                    </span>
                   </div>
                   <div className="flex items-center">
                     <Users className="w-5 h-5 text-gray-400 mr-2" />
-                    <span className="text-gray-600">{request.seats} seats</span>
+                    <span className="text-gray-600">
+                      {rentalRequests?.seats} seats
+                    </span>
                   </div>
                   <div className="flex items-center">
                     <Fuel className="w-5 h-5 text-gray-400 mr-2" />
-                    <span className="text-gray-600">{request.fuelType}</span>
+                    <span className="text-gray-600">
+                      {rentalRequests?.fuelType}
+                    </span>
                   </div>
                   <div className="flex items-center">
                     <DollarSign className="w-5 h-5 text-gray-400 mr-2" />
                     <span className="text-gray-600">
-                      ${request.rentPerDay}/day
+                      ${rentalRequests?.price}/day
                     </span>
                   </div>
                 </div>
@@ -208,18 +241,21 @@ function RentalCarDetails() {
                   <div className="flex items-center">
                     <Calendar className="w-5 h-5 text-gray-400 mr-2" />
                     <span className="text-gray-600">
-                      {request.startDate} to {request.endDate}
+                      {rentalRequests?.dateRange[0]} to{" "}
+                      {rentalRequests?.dateRange[1]}
                     </span>
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-5 h-5 text-gray-400 mr-2" />
                     <span className="text-gray-600">
-                      {request.rentDuration} days
+                      {rentalRequests?.dateRange[0] -
+                        rentalRequests?.dateRange[1]}{" "}
+                      days
                     </span>
                   </div>
                   <div className="mt-2 p-3 bg-green-50 rounded-md">
                     <span className="text-green-700 font-semibold">
-                      Total Amount: ${request.totalMoney}
+                      Total Amount: ${rentalRequests?.totalMoney}
                     </span>
                   </div>
                 </div>
@@ -234,19 +270,27 @@ function RentalCarDetails() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Name</p>
-                  <p className="text-gray-900">{request.requesterName}</p>
+                  <p className="text-gray-900">
+                    {rentalRequests?.requesterName}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Username</p>
-                  <p className="text-gray-900">{request.requesterUsername}</p>
+                  <p className="text-gray-900">
+                    {rentalRequests?.requesterUserName}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
-                  <p className="text-gray-900">{request.requesterEmail}</p>
+                  <p className="text-gray-900">
+                    {rentalRequests?.requesterEmail}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Phone</p>
-                  <p className="text-gray-900">{request.requesterPhone}</p>
+                  <p className="text-gray-900">
+                    {rentalRequests?.requesterPhone}
+                  </p>
                 </div>
               </div>
             </div>
@@ -257,7 +301,7 @@ function RentalCarDetails() {
                 Rental Message
               </h2>
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-gray-700">{request.rentMessage}</p>
+                <p className="text-gray-700">{rentalRequests?.rentMessage}</p>
               </div>
             </div>
           </div>
