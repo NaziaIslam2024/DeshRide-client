@@ -17,6 +17,7 @@ import MyAddedCar from "../pages/Dashboard/CarProvider/MyAddedCar";
 import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
 import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
+import MyCarStatus from "../pages/Dashboard/CarProvider/MyCarStatus";
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +89,12 @@ export const router = createBrowserRouter([
         path: "all-cars",
         element: <AllCars></AllCars>,
       },
+      // provider
+      {
+        path: "my-car-status",
+        element: <MyCarStatus></MyCarStatus>,
+      },
+
       // consumer
       {
         path: "all-listed-cars",

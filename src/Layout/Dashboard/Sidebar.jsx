@@ -36,7 +36,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
 
     //Consumer specifice routes
     {
-      path: "all-listed-cars",
+      path: "/rent-a-car",
       label: "Rent a car",
       icon: <FaCar />,
       roles: ["consumer"],
@@ -64,6 +64,12 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
       icon: <FaCar />,
       roles: ["ownerDriver"],
     },
+    {
+      path: "my-car-status",
+      label: "My Car Status",
+      icon: <FaCar />,
+      roles: ["ownerDriver"],
+    },
 
     // Provider-specific routes
     {
@@ -78,6 +84,13 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
       icon: <FaPlusCircle />,
       roles: ["providerOnly"],
     },
+    {
+      path: "my-car-status",
+      label: "My Car Status",
+      icon: <FaCar />,
+      roles: ["providerOnly"],
+    },
+
 
     // Admin-specific routes
     // { path: "all-vehicle", label: "All Vehicles", icon: <FaCar />, roles: ['admin'] },

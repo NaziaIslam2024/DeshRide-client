@@ -105,6 +105,7 @@ const AddCar = () => {
                 <option value="Truck">Truck</option>
                 <option value="Sports">Sports</option>
                 <option value="Luxury">Luxury</option>
+                <option value="CNG">CNG</option>
               </select>
               {errors.type && <span className="text-red-500 text-sm mt-1">{errors.type.message}</span>}
             </div>
@@ -137,7 +138,7 @@ const AddCar = () => {
             </div>
             <div className="form-control">
               <label className="label"><span className="label-text font-medium">Number of Seats</span></label>
-              <input type="number" {...register("seats", { required: "Seats is required", min: { value: 2, message: "Minimum 2 seats" }, max: { value: 8, message: "Maximum 8 seats" } })} placeholder="4" className="input input-bordered w-full" />
+              <input type="number" {...register("seats", { required: "Seats is required", min: { value: 2, message: "Minimum 2 seats" }, max: { value: 57, message: "Maximum 57 seats" } })} placeholder="4" className="input input-bordered w-full" />
               {errors.seats && <span className="text-red-500 text-sm mt-1">{errors.seats.message}</span>}
             </div>
             <div className="form-control">
