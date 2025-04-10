@@ -29,6 +29,7 @@ export const RentACarProvider = ({ children }) => {
       requesterEmail,
       requesterUserName,
       requesterPhone,
+      rentStatus: "pending",
     };
     console.log(rentRequestData);
 
