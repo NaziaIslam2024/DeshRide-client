@@ -61,7 +61,6 @@ const rentalRequests = [
 ];
 
 function RentalCarDetails() {
-  console.log("hello");
   const { id } = useParams();
   const navigate = useNavigate();
   const request = rentalRequests.find((r) => r.id === Number(id));
