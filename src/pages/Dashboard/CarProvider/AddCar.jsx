@@ -106,6 +106,10 @@ const AddCar = () => {
                 <option value="Sports">Sports</option>
                 <option value="Luxury">Luxury</option>
                 <option value="CNG">CNG</option>
+                <option value="Ambulance">Ambulance</option>
+                <option value="Bus">Bus</option>
+                <option value="MiniBus">Mini Bus</option>
+                <option value="HIACE">HIACE</option>
               </select>
               {errors.type && <span className="text-red-500 text-sm mt-1">{errors.type.message}</span>}
             </div>
