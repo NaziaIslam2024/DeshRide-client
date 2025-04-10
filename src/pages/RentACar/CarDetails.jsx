@@ -1,31 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Calendar, User, Mail, Gauge, Fuel } from "lucide-react";
-
-const car = {
-  id: 1,
-  name: "Tesla Model 3",
-  type: "Electric",
-  price: 150,
-  location: "New York",
-  seats: 5,
-  features: ["Autopilot", "Premium Sound", "360 Camera"],
-  image:
-    "https://images.unsplash.com/photo-1536700503339-1e4b06520771?auto=format&fit=crop&q=80&w=2000",
-  ownerName: "John Smith",
-  transmission: "Automatic",
-  fuelType: "Electric",
-  modelYear: "2023",
-  mileage: "15,000",
-  ownerEmail: "john.smith@example.com",
-  description:
-    "Experience the future of driving with this fully electric Tesla Model 3. Features include enhanced autopilot, premium sound system, and full self-driving capability.",
-};
+import { MapPin, Calendar, User, Mail, Gauge, Fuel, Undo2 } from "lucide-react";
+import useCars from "../../hooks/useCars";
+import { Link, useParams } from "react-router";
 
 const CarDetails = () => {
   //?
+  const [car, setCar] = useState(null);
+  const { carId } = useParams();
+  const [carData] = useCars(carId);
 
-  console.log(car);
+  useEffect(() => {
+    setCar(carData?.car);
+  }, [carData]);
+  console.log(carData?.car);
+
   //?
   return (
     <motion.div
@@ -37,10 +26,16 @@ const CarDetails = () => {
         <div className="bg-white rounded-xl shadow-xl overflow-hidden">
           <div className="h-96 relative">
             <img
-              src={car?.image}
+              src={car?.imageUrl}
               alt={car?.name}
               className="w-full h-full object-cover"
             />
+
+            <Link to={-1}>
+              <p className="absolute top-4 left-4 bg-white rounded-full p-2 shadow-md  hover:bg-gray-100 transition-colors btn">
+                <Undo2 />
+              </p>
+            </Link>
           </div>
           <div className="p-8">
             <div className="flex justify-between items-start mb-6">
@@ -55,11 +50,11 @@ const CarDetails = () => {
               <div className="flex flex-col items-end">
                 <div className="flex items-center gap-2 text-gray-600 mb-2">
                   <MapPin size={20} />
-                  <span>{car?.location}</span>
+                  <span>{car?.location || "Anywhere"}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <Calendar size={20} />
-                  <span>{car?.modelYear}</span>
+                  <span>{car?.model}</span>
                 </div>
               </div>
             </div>
@@ -70,9 +65,7 @@ const CarDetails = () => {
                   <User size={20} className="text-gray-600" />
                   <div>
                     <p className="text-sm text-gray-600">Owner</p>
-                    <p className="font-medium text-gray-900">
-                      {car?.ownerName}
-                    </p>
+                    <p className="font-medium text-gray-900">{car?.addedBy}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -92,7 +85,7 @@ const CarDetails = () => {
                   <div>
                     <p className="text-sm text-gray-600">Mileage</p>
                     <p className="font-medium text-gray-900">
-                      {car?.mileage} miles
+                      {car?.mileage || "00"} miles
                     </p>
                   </div>
                 </div>
