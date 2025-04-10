@@ -10,7 +10,7 @@ import {
 import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
-  console.log(userRole);
+  // console.log(userRole);
   // Define all possible navigation items
   const allNavItems = [
     // Common routes for all roles
@@ -36,7 +36,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
 
     //Consumer specifice routes
     {
-      path: "all-listed-cars",
+      path: "/rent-a-car",
       label: "Rent a car",
       icon: <FaCar />,
       roles: ["consumer"],
@@ -64,6 +64,12 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
       icon: <FaCar />,
       roles: ["ownerDriver"],
     },
+    {
+      path: "my-rentals",
+      label: "My Rentals",
+      icon: <FaCar />,
+      roles: ["ownerDriver"],
+    },
 
     // Provider-specific routes
     {
@@ -76,6 +82,12 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
       path: "add-car",
       label: "Add Car",
       icon: <FaPlusCircle />,
+      roles: ["providerOnly"],
+    },
+    {
+      path: "my-car-status",
+      label: "My Car Status",
+      icon: <FaCar />,
       roles: ["providerOnly"],
     },
 

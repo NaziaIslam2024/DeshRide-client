@@ -19,6 +19,9 @@ import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
 import Whatsapp from "../pages/Dashboard/Consumer/Whatsapp";
 import WorkflowAnimation from "../components/Shared/WorkflowAnimation";
+import MyRentalCars from "../pages/Dashboard/CarProvider/MyRentalCars";
+import RentalCarDetails from "../pages/Dashboard/CarProvider/RentalCarDetails";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -93,6 +96,16 @@ export const router = createBrowserRouter([
         path: "all-cars",
         element: <AllCars></AllCars>,
       },
+      // provider
+      {
+        path: "my-rentals",
+        element: <MyRentalCars></MyRentalCars>,
+      },
+      {
+        path: "car-details/:id",
+        element: <RentalCarDetails />,
+      },
+
       // consumer
       {
         path: "all-listed-cars",
