@@ -8,7 +8,7 @@ const axiosPublic = axios.create({
   // baseURL: "https://deshride-server.onrender.com/",
 
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   withCredentials: true,
 });
