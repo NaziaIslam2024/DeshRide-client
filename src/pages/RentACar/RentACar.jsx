@@ -9,7 +9,6 @@ import RentModal from "./RentModal";
 function RentACar() {
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [rentMessage, setRentMessage] = useState("");
   // const [cars, setCars] = useState([]);
 
   //?
