@@ -17,6 +17,7 @@ import MyAddedCar from "../pages/Dashboard/CarProvider/MyAddedCar";
 import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
 import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
+import EditProfile from "../pages/Dashboard/Shared/EditProfile";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: "my-profile",
         element: <MyProfile></MyProfile>,
+      },
+      {
+        path: "edit-profile",
+        element: <EditProfile></EditProfile>
       },
       {
         path: "all-user",
