@@ -11,13 +11,13 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <RentACarProvider>
-        <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RentACarProvider>
           <RouterProvider router={router} />
-        </QueryClientProvider>
-        <ToastContainer />
-      </RentACarProvider>
-    </AuthProvider>
+          <ToastContainer />
+        </RentACarProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>
 );
