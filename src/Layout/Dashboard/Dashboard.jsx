@@ -32,7 +32,7 @@ const Dashboard = () => {
           const response = await axiosPublic.get(
             `/users/getUser/${user.email}`
           );
-          console.log(response.data);
+          // console.log(response.data);
           setUserRole(response.data.role || "consumer");
         } catch (err) {
           setError(err.message);

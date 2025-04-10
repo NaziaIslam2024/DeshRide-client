@@ -10,7 +10,7 @@ import {
 import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
-  console.log(userRole);
+  // console.log(userRole);
   // Define all possible navigation items
   const allNavItems = [
     // Common routes for all roles
