@@ -9,17 +9,16 @@ import RentModal from "./RentModal";
 function RentACar() {
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  // const [cars, setCars] = useState([]);
+  const [carType, setCarType] = useState("All Types");
+  const [location, setLocation] = useState("All Locations");
+  const [seats, setSeats] = useState("Any");
+  const [feature, setFeature] = useState("All Features");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
-  //?
   const { selectedCar, setSelectedCar, showRentModal, setShowRentModal } =
     useRentCar();
 
-  //?
-
-  // const location = useLocation();
-  // const { pathname } = location;
-  // console.log(pathname);
   const [carData] = useCars();
   const [cars, setCars] = useState(null);
 
@@ -27,7 +26,44 @@ function RentACar() {
     setCars(carData?.cars);
   }, [carData]);
 
-  // filter section
+  // Extract unique values for filters
+  const uniqueCarTypes = [...new Set(cars?.map((car) => car.type))].sort();
+  const uniqueLocations = [
+    ...new Set(cars?.map((car) => car.carLocation)),
+  ].sort();
+  const uniqueSeats = [...new Set(cars?.map((car) => car.seats))].sort(
+    (a, b) => a - b
+  );
+  const uniqueFeatures = [
+    ...new Set(cars?.flatMap((car) => car.features)),
+  ].sort();
+
+  // Filter cars based on selected criteria
+  const filteredCars = cars?.filter((car) => {
+    if (car.price < priceRange[0] || car.price > priceRange[1]) return false;
+    if (carType !== "All Types" && car.type !== carType) return false;
+    if (location !== "All Locations" && car.carLocation !== location)
+      return false;
+    if (seats !== "Any" && car.seats !== parseInt(seats)) return false;
+    if (feature !== "All Features" && !car.features.includes(feature))
+      return false;
+    return true;
+  });
+
+  // Pagination calculations  calculations
+  const totalPages = Math.ceil((filteredCars?.length || 0) / itemsPerPage);
+  const paginatedCars = filteredCars?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Pagination handlers
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // FilterSection component
   const FilterSection = () => (
     <motion.div
       initial={{ opacity: 0 }}
@@ -48,11 +84,17 @@ function RentACar() {
             <Car size={16} />
             Car Type
           </label>
-          <select className="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E]">
+          <select
+            value={carType}
+            onChange={(e) => setCarType(e.target.value)}
+            className="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E]"
+          >
             <option>All Types</option>
-            <option>Electric</option>
-            <option>Luxury</option>
-            <option>SUV</option>
+            {uniqueCarTypes?.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -61,11 +103,17 @@ function RentACar() {
             <MapPin size={16} />
             Location
           </label>
-          <select className="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E]">
+          <select
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E]"
+          >
             <option>All Locations</option>
-            <option>New York</option>
-            <option>Los Angeles</option>
-            <option>Miami</option>
+            {uniqueLocations?.map((loc) => (
+              <option key={loc} value={loc}>
+                {loc}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -74,12 +122,17 @@ function RentACar() {
             <Users size={16} />
             Seats
           </label>
-          <select className="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E]">
+          <select
+            value={seats}
+            onChange={(e) => setSeats(e.target.value)}
+            className="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E]"
+          >
             <option>Any</option>
-            <option>2</option>
-            <option>4</option>
-            <option>5</option>
-            <option>7</option>
+            {uniqueSeats?.map((seatCount) => (
+              <option key={seatCount} value={seatCount}>
+                {seatCount}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -88,11 +141,17 @@ function RentACar() {
             <Filter size={16} />
             Features
           </label>
-          <select className="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E]">
+          <select
+            value={feature}
+            onChange={(e) => setFeature(e.target.value)}
+            className="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E]"
+          >
             <option>All Features</option>
-            <option>Autopilot</option>
-            <option>Premium Sound</option>
-            <option>Massage Seats</option>
+            {uniqueFeatures?.map((feat) => (
+              <option key={feat} value={feat}>
+                {feat}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -101,22 +160,101 @@ function RentACar() {
             <Sliders size={16} />
             Price Range ($/day)
           </label>
-          <input
-            type="range"
-            min="0"
-            max="1000"
-            value={priceRange[1]}
-            onChange={(e) =>
-              setPriceRange([priceRange[0], parseInt(e.target.value)])
-            }
-            className="w-full accent-[#00A63E]"
-          />
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm text-gray-600">
+                Min Price: ${priceRange[0]}
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                value={priceRange[0]}
+                onChange={(e) => {
+                  const newMin = parseInt(e.target.value);
+                  setPriceRange([newMin, Math.max(newMin, priceRange[1])]);
+                }}
+                className="w-full accent-[#00A63E]"
+              />
+            </div>
+            <div>
+              <label className="text-sm text-gray-600">
+                Max Price: ${priceRange[1]}
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                value={priceRange[1]}
+                onChange={(e) => {
+                  const newMax = parseInt(e.target.value);
+                  setPriceRange([Math.min(newMax, priceRange[0]), newMax]);
+                }}
+                className="w-full accent-[#00A63E]"
+              />
+            </div>
+          </div>
           <div className="flex justify-between text-sm text-gray-600">
             <span>${priceRange[0]}</span>
             <span>${priceRange[1]}</span>
           </div>
         </div>
       </div>
+    </motion.div>
+  );
+
+  // Pagination Component
+  const Pagination = () => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="flex items-center justify-between mt-8 w-full"
+    >
+      {/* Left: Items per page */}
+      <div className="flex items-center gap-2 text-sm text-gray-600">
+        <span>Items per page:</span>
+        <select
+          value={itemsPerPage}
+          onChange={(e) => {
+            setItemsPerPage(parseInt(e.target.value));
+            setCurrentPage(1);
+          }}
+          className="rounded-lg border-gray-300 shadow-sm focus:border-[#00A63E] focus:ring-[#00A63E] p-1"
+        >
+          {[6, 12, 18, 24].map((num) => (
+            <option key={num} value={num}>
+              {num}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Center: Pagination buttons */}
+      <div className="flex items-center gap-2">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <motion.button
+            key={page}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => handlePageChange(page)}
+            className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
+              currentPage === page
+                ? "bg-[#00A63E] text-white shadow-lg"
+                : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+            }`}
+          >
+            {page}
+          </motion.button>
+        ))}
+      </div>
+
+      {/* Right: Showing range */}
+      <p className="text-sm text-gray-500">
+        Showing {(currentPage - 1) * itemsPerPage + 1} -{" "}
+        {Math.min(currentPage * itemsPerPage, filteredCars?.length || 0)} of{" "}
+        {filteredCars?.length || 0} cars
+      </p>
     </motion.div>
   );
 
@@ -164,7 +302,6 @@ function RentACar() {
           </motion.div>
         )}
 
-        {/* Rent Modal */}
         {showRentModal && selectedCar && (
           <RentModal
             car={selectedCar}
@@ -186,7 +323,7 @@ function RentACar() {
           {/* Car Grid */}
           <div className="lg:col-span-3">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {cars?.map((car, index) => (
+              {paginatedCars?.map((car, index) => (
                 <motion.div
                   key={`${car._id}-${index}`}
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -216,7 +353,7 @@ function RentACar() {
                       <div className="flex items-center gap-1 text-gray-600">
                         <MapPin size={16} />
                         <span className="text-sm">
-                          {car?.location || "Anywhere"}
+                          {car?.carLocation || "Anywhere"}
                         </span>
                       </div>
                     </div>
@@ -229,14 +366,16 @@ function RentACar() {
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {car?.features?.map((feature, featureIndex) => (
-                        <span
-                          key={featureIndex}
-                          className="px-3 py-1 bg-[#00A63E]/10 text-[#00A63E] rounded-full text-sm"
-                        >
-                          {feature}
-                        </span>
-                      ))}
+                      {car?.features
+                        ?.slice(0, 4)
+                        .map((feature, featureIndex) => (
+                          <span
+                            key={featureIndex}
+                            className="px-3 py-1 bg-[#00A63E]/10 text-[#00A63E] rounded-full text-sm"
+                          >
+                            {feature}
+                          </span>
+                        ))}
                     </div>
                     <div className="flex gap-4">
                       <button
@@ -244,7 +383,6 @@ function RentACar() {
                           setSelectedCar(car);
                           setShowRentModal(true);
                         }}
-                        // to="/rent"
                         className="flex-1 bg-[#00A63E] text-white py-2 px-4 rounded-lg hover:bg-[#00A63E]/90 transition-colors"
                       >
                         Rent Now
@@ -260,6 +398,8 @@ function RentACar() {
                 </motion.div>
               ))}
             </div>
+            {/* Add Pagination */}
+            {filteredCars?.length > 0 && <Pagination />}
           </div>
         </div>
       </div>
