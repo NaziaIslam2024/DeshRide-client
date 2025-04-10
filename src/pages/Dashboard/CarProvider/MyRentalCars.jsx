@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { Check, X, Car, Info } from "lucide-react";
 
 // Mock data for demonstration
@@ -50,7 +50,6 @@ const rentalRequests = [
 ];
 
 function MyRentalCars() {
-  const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState("all");
 
   const handleAccept = (_id) => {
