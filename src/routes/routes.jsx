@@ -92,7 +92,7 @@ export const router = createBrowserRouter([
       },
       // provider
       {
-        path: "my-car-status",
+        path: "my-rentals",
         element: <MyRentalCars></MyRentalCars>,
       },
       {
