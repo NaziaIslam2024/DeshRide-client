@@ -10,11 +10,38 @@ import { Eye, EyeOff } from "lucide-react";
 import GoogleLogin from "./GoogleLogin";
 
 const Login = () => {
-  const { signInUser, setUser, setLoading } = useContext(AuthContext);
+  const { signInUser, setUser, setLoading, resetPassword } =
+    useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState(""); // State for error message
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // password reset
+  const handlePasswordReset = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+
+    // password reset function here
+    resetPassword(email)
+      .then(() => {
+        toast.success("Password reset email sent!", {
+          position: "top-left",
+          autoClose: 1500,
+          pauseOnHover: true,
+        });
+      })
+      .catch((error) => {
+        console.error("Error sending password reset email:", error);
+        toast.error("Failed to send password reset email.", {
+          position: "top-left",
+          autoClose: 1500,
+          pauseOnHover: true,
+        });
+      });
+  };
 
   // Sign in function using email and password
   const handleLogin = (e) => {
@@ -49,7 +76,6 @@ const Login = () => {
         e.target.password.value = "";
       });
   };
-  // Hello
 
   return (
     <>
@@ -106,6 +132,40 @@ const Login = () => {
                 Login to your account
               </h2>
 
+              {/* //? */}
+              <div className="mb-4 text-center space-x-2">
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("consumer@deshrider.com");
+                    setPassword("consumer@123DeshRider");
+                  }}
+                >
+                  Consumer Login
+                </button>
+
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("car_investor_with_driver@deshrider.com");
+                    setPassword("car_investor_with_driver");
+                  }}
+                >
+                  Driver Login
+                </button>
+
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setEmail("admin@deshrider.com");
+                    setPassword("123DeshRider");
+                  }}
+                >
+                  Admin Login
+                </button>
+              </div>
+              {/* //? */}
+
               <form onSubmit={handleLogin} className="space-y-6">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -121,6 +181,9 @@ const Login = () => {
                     placeholder="Enter your email"
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
                     required
+                    //
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </motion.div>
 
@@ -139,6 +202,8 @@ const Login = () => {
                       placeholder="Enter your password"
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
                       required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <button
                       type="button"
@@ -174,12 +239,14 @@ const Login = () => {
                       Remember me
                     </span>
                   </label>
-                  <a
-                    href="/reset-password"
-                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                  <p
+                    onClick={() =>
+                      document.getElementById("my_modal_1").showModal()
+                    }
+                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
                   >
                     Forgot password?
-                  </a>
+                  </p>
                 </div>
 
                 <motion.button
@@ -212,6 +279,64 @@ const Login = () => {
           </motion.div>
         </motion.div>
       </div>
+      {/* //* Modal for the reset password  */}
+
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box flex flex-col items-center">
+          <h3 className="font-bold text-lg">Reset Your Password</h3>
+          {/*  */}
+          <form
+            className="join mt-6 flex justify-center items-center"
+            onSubmit={handlePasswordReset}
+          >
+            <div>
+              <label className="input validator join-item">
+                <svg
+                  className="h-[1em] opacity-50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2.5"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                  </g>
+                </svg>
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="mail@site.com"
+                  required
+                />
+              </label>
+              <div className="validator-hint hidden">
+                Enter valid email address
+              </div>
+            </div>
+            <button
+              className="btn btn-neutral join-item"
+              // onSubmit={(e) => handlePasswordReset(e)}
+              type="submit"
+            >
+              Reset
+            </button>
+          </form>
+          {/*  */}
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+      {/* //?  */}
     </>
   );
 };
