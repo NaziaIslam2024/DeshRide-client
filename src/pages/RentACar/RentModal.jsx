@@ -53,7 +53,7 @@ const RentModal = ({ car, onClose }) => {
           </div>
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
-              Message to Owner
+              Message to Owner (give your location)
             </label>
             <textarea
               // value={rentMessage}

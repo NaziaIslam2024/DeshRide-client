@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import useRole from "../hooks/useRole";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const RentCarContext = createContext();
 
@@ -11,13 +12,35 @@ export const RentACarProvider = ({ children }) => {
   const [rentMessage, setRentMessage] = useState("");
   //   const
   const [userRole, userData] = useRole();
-  console.log(userData);
+  const axiosPublic = useAxiosPublic();
 
   //?
   const [car, setCar] = useState(null);
-  const handleRentRequest = (message) => {
-    console.log(message);
-    console.log(car);
+  const handleRentRequest = async (message) => {
+    const requesterName = userData?.fullName;
+    const requesterEmail = userData?.email;
+    const requesterUserName = userData?.userName;
+    const requesterPhone = userData?.phoneNumber;
+
+    const rentRequestData = {
+      ...car,
+      rentMessage: message,
+      requesterName,
+      requesterEmail,
+      requesterUserName,
+      requesterPhone,
+    };
+    console.log(rentRequestData);
+
+    // Send rentRequestData to the server
+    const res = await axiosPublic.post(
+      "/car-rental/add-car-rental",
+      rentRequestData
+    );
+
+    console.log(res.data);
+
+    // Reset the car state after sending the request
   };
   //?
 
