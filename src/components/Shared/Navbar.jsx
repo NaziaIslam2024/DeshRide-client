@@ -3,11 +3,14 @@ import { NavLink, Link } from "react-router-dom"; // Changed Link to NavLink for
 import { AuthContext } from "../../providers/AuthProvider";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userRole, userData, userDataLoading] = useRole();
+  // console.log(userRole);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,19 +26,44 @@ const Navbar = () => {
       <NavLink
         to="/"
         className={({ isActive }) =>
-          `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
-            isActive ? "underline underline-offset-8 text-primary-light-700" : "hover:underline underline-offset-8"
+          `${
+            mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"
+          } rounded-lg transition-colors ${
+            isActive
+              ? "underline underline-offset-8 text-primary-light-700"
+              : "hover:underline underline-offset-8"
           }`
         }
         onClick={() => mobile && setIsMenuOpen(false)}
       >
         Home
       </NavLink>
+      {userRole === "consumer" && (
+        <NavLink
+          to="/rent-a-car"
+          className={({ isActive }) =>
+            `${
+              mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"
+            } rounded-lg transition-colors ${
+              isActive
+                ? "underline underline-offset-8 text-primary-light-700"
+                : "hover:underline underline-offset-8"
+            }`
+          }
+          onClick={() => mobile && setIsMenuOpen(false)}
+        >
+          Rent A Car
+        </NavLink>
+      )}
       <NavLink
         to="/about"
         className={({ isActive }) =>
-          `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
-            isActive ? "underline underline-offset-8 text-primary-light-700" : "hover:underline underline-offset-8"
+          `${
+            mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"
+          } rounded-lg transition-colors ${
+            isActive
+              ? "underline underline-offset-8 text-primary-light-700"
+              : "hover:underline underline-offset-8"
           }`
         }
         onClick={() => mobile && setIsMenuOpen(false)}
@@ -46,8 +74,12 @@ const Navbar = () => {
         <NavLink
           to="/dashboard"
           className={({ isActive }) =>
-            `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
-              isActive ? "underline underline-offset-8 text-primary-light-700" : "hover:underline underline-offset-8"
+            `${
+              mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"
+            } rounded-lg transition-colors ${
+              isActive
+                ? "underline underline-offset-8 text-primary-light-700"
+                : "hover:underline underline-offset-8"
             }`
           }
           onClick={() => mobile && setIsMenuOpen(false)}
@@ -56,12 +88,16 @@ const Navbar = () => {
         </NavLink>
       )}
 
-{user && (
+      {user && (
         <NavLink
           to="/workflow"
           className={({ isActive }) =>
-            `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
-              isActive ? "underline underline-offset-8 text-primary-light-700" : "hover:underline underline-offset-8"
+            `${
+              mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"
+            } rounded-lg transition-colors ${
+              isActive
+                ? "underline underline-offset-8 text-primary-light-700"
+                : "hover:underline underline-offset-8"
             }`
           }
           onClick={() => mobile && setIsMenuOpen(false)}
@@ -82,7 +118,11 @@ const Navbar = () => {
             logOut();
             mobile && setIsMenuOpen(false);
           }}
-          className={`${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5 bg-primary-light-500 text-white"} hover:bg-primary-light-700 hover:text-white rounded-lg transition-colors`}
+          className={`${
+            mobile
+              ? "block py-3 px-4"
+              : "text-sm font-semibold py-2 px-5 bg-primary-light-500 text-white"
+          } hover:bg-primary-light-700 hover:text-white rounded-lg transition-colors`}
         >
           Logout
         </Link>
@@ -91,8 +131,12 @@ const Navbar = () => {
           <NavLink
             to="/login"
             className={({ isActive }) =>
-              `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
-                isActive ? "bg-primary-light-500 text-white" : "hover:bg-primary-light-500 hover:text-white"
+              `${
+                mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"
+              } rounded-lg transition-colors ${
+                isActive
+                  ? "bg-primary-light-500 text-white"
+                  : "hover:bg-primary-light-500 hover:text-white"
               }`
             }
             onClick={() => mobile && setIsMenuOpen(false)}
@@ -102,8 +146,12 @@ const Navbar = () => {
           <NavLink
             to="/register"
             className={({ isActive }) =>
-              `${mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"} rounded-lg transition-colors ${
-                isActive ? "bg-primary-light-500 text-white" : "hover:bg-primary-light-500 hover:text-white"
+              `${
+                mobile ? "block py-3 px-4" : "text-sm font-semibold py-2 px-5"
+              } rounded-lg transition-colors ${
+                isActive
+                  ? "bg-primary-light-500 text-white"
+                  : "hover:bg-primary-light-500 hover:text-white"
               }`
             }
             onClick={() => mobile && setIsMenuOpen(false)}
@@ -118,7 +166,9 @@ const Navbar = () => {
   return (
     <header
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background-light-400 backdrop-blur-md shadow-sm" : "bg-background-light-500"
+        isScrolled
+          ? "bg-background-light-100/90 backdrop-blur-md shadow-sm"
+          : "bg-background-light-100"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -137,7 +187,10 @@ const Navbar = () => {
                   <FaBars className="h-5 w-5 transition-transform duration-300" />
                 )}
               </button>
-              <Link to="/" className=" flex justify-center items-center text-xl">
+              <Link
+                to="/"
+                className=" flex justify-center items-center text-xl"
+              >
                 <img
                   src="https://i.ibb.co.com/chGxPSCm/Copy-of-Desh-Ride-logo.png"
                   alt="Desh Ride Logo"
