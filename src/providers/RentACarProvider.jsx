@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import useRole from "../hooks/useRole";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import { toast } from "react-toastify";
 
 const RentCarContext = createContext();
 
@@ -13,6 +14,13 @@ export const RentACarProvider = ({ children }) => {
   //   const
   const [userRole, userData] = useRole();
   const axiosPublic = useAxiosPublic();
+
+  //?
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
+  console.log(dateRange);
+  console.log(startDate);
+  //?
 
   //?
   const [car, setCar] = useState(null);
@@ -30,6 +38,7 @@ export const RentACarProvider = ({ children }) => {
       requesterUserName,
       requesterPhone,
       rentStatus: "pending",
+      dateRange,
     };
     console.log(rentRequestData);
 
@@ -40,6 +49,11 @@ export const RentACarProvider = ({ children }) => {
     );
 
     console.log(res.data);
+    if (res.data.message === "Car rental added successfully") {
+      toast.success("Car rental request sent successfully!", {
+        position: "top-left",
+      });
+    }
 
     // Reset the car state after sending the request
   };
@@ -57,6 +71,11 @@ export const RentACarProvider = ({ children }) => {
 
         handleRentRequest,
         setCar,
+
+        dateRange,
+        setDateRange,
+        startDate,
+        endDate,
       }}
     >
       {children}
