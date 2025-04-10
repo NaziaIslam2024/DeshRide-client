@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Calendar, User, Mail, Gauge, Fuel, Undo2 } from "lucide-react";
+import {
+  MapPin,
+  Calendar,
+  User,
+  Mail,
+  Gauge,
+  Fuel,
+  Undo2,
+  X,
+} from "lucide-react";
 import useCars from "../../hooks/useCars";
 import { Link, useParams } from "react-router";
+import { useRentCar } from "../../providers/RentACarProvider";
+import RentModal from "./RentModal";
 
 const CarDetails = () => {
   //?
@@ -13,7 +24,11 @@ const CarDetails = () => {
   useEffect(() => {
     setCar(carData?.car);
   }, [carData]);
-  console.log(carData?.car);
+  // console.log(carData?.car);
+
+  const { selectedCar, setSelectedCar, showRentModal, setShowRentModal } =
+    useRentCar();
+  const [rentMessage, setRentMessage] = useState("");
 
   //?
   return (
@@ -127,7 +142,6 @@ const CarDetails = () => {
             <div className="flex gap-4">
               <button
                 onClick={() => {
-                  setShowCarDetails(false);
                   setShowRentModal(true);
                 }}
                 className="flex-1 bg-[#00A63E] text-white py-3 px-6 rounded-lg hover:bg-[#00A63E]/90 transition-colors font-medium"
@@ -138,6 +152,14 @@ const CarDetails = () => {
           </div>
         </div>
       </div>
+      {showRentModal && car && (
+        <RentModal
+          car={car}
+          onClose={() => setShowRentModal(false)}
+          rentMessage={rentMessage}
+          setRentMessage={setRentMessage}
+        />
+      )}
     </motion.div>
   );
 };
