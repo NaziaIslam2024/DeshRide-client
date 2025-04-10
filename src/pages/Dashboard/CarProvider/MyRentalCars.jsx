@@ -4,6 +4,7 @@ import { Check, X, Car, Info } from "lucide-react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useRole from "../../../hooks/useRole";
 import { useQuery } from "@tanstack/react-query";
+// import useRentalCarDetails from "../../../hooks/useRentalCarDetails";
 
 // Mock data for demonstration
 // const rentalRequests = [
@@ -56,6 +57,7 @@ function MyRentalCars() {
   const [statusFilter, setStatusFilter] = useState("all");
 
   //? functions for fetching the data
+
   const axiosPublic = useAxiosPublic();
   const [, userData] = useRole();
   const ownerEmail = userData?.email;
@@ -72,15 +74,11 @@ function MyRentalCars() {
 
   const [rentalRequests, setRentalRequests] = useState([]);
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ["rentalRequests", ownerEmail], // Query key
+    queryKey: ["rentalRequests", ownerEmail],
     queryFn: async () => {
-      if (!ownerEmail) {
-        throw new Error("Owner email is not available");
-      }
       const response = await axiosPublic.get(
         `/car-rental/get-car-rentals/${ownerEmail}`
       );
-      console.log(data);
       setRentalRequests(response.data);
       return response.data;
     },
