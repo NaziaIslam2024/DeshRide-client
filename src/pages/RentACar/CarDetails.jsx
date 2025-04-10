@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { motion } from "framer-motion";
 import { MapPin, Calendar, User, Mail, Gauge, Fuel } from "lucide-react";
@@ -26,6 +27,25 @@ const CarDetails = () => {
   //?
 
   console.log(car);
+=======
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { MapPin, Calendar, User, Mail, Gauge, Fuel, Undo2 } from "lucide-react";
+import useCars from "../../hooks/useCars";
+import { Link, useParams } from "react-router";
+
+const CarDetails = () => {
+  //?
+  const [car, setCar] = useState(null);
+  const { carId } = useParams();
+  const [carData] = useCars(carId);
+
+  useEffect(() => {
+    setCar(carData?.car);
+  }, [carData]);
+  console.log(carData?.car);
+
+>>>>>>> dfce984514fc940dfeeaf2a1cd3be50093705e5f
   //?
   return (
     <motion.div
@@ -37,10 +57,23 @@ const CarDetails = () => {
         <div className="bg-white rounded-xl shadow-xl overflow-hidden">
           <div className="h-96 relative">
             <img
+<<<<<<< HEAD
               src={car?.image}
               alt={car?.name}
               className="w-full h-full object-cover"
             />
+=======
+              src={car?.imageUrl}
+              alt={car?.name}
+              className="w-full h-full object-cover"
+            />
+
+            <Link to={-1}>
+              <p className="absolute top-4 left-4 bg-white rounded-full p-2 shadow-md  hover:bg-gray-100 transition-colors btn">
+                <Undo2 />
+              </p>
+            </Link>
+>>>>>>> dfce984514fc940dfeeaf2a1cd3be50093705e5f
           </div>
           <div className="p-8">
             <div className="flex justify-between items-start mb-6">
@@ -55,11 +88,19 @@ const CarDetails = () => {
               <div className="flex flex-col items-end">
                 <div className="flex items-center gap-2 text-gray-600 mb-2">
                   <MapPin size={20} />
+<<<<<<< HEAD
                   <span>{car?.location}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <Calendar size={20} />
                   <span>{car?.modelYear}</span>
+=======
+                  <span>{car?.location || "Anywhere"}</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-600">
+                  <Calendar size={20} />
+                  <span>{car?.model}</span>
+>>>>>>> dfce984514fc940dfeeaf2a1cd3be50093705e5f
                 </div>
               </div>
             </div>
@@ -70,9 +111,13 @@ const CarDetails = () => {
                   <User size={20} className="text-gray-600" />
                   <div>
                     <p className="text-sm text-gray-600">Owner</p>
+<<<<<<< HEAD
                     <p className="font-medium text-gray-900">
                       {car?.ownerName}
                     </p>
+=======
+                    <p className="font-medium text-gray-900">{car?.addedBy}</p>
+>>>>>>> dfce984514fc940dfeeaf2a1cd3be50093705e5f
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -92,7 +137,11 @@ const CarDetails = () => {
                   <div>
                     <p className="text-sm text-gray-600">Mileage</p>
                     <p className="font-medium text-gray-900">
+<<<<<<< HEAD
                       {car?.mileage} miles
+=======
+                      {car?.mileage || "00"} miles
+>>>>>>> dfce984514fc940dfeeaf2a1cd3be50093705e5f
                     </p>
                   </div>
                 </div>
