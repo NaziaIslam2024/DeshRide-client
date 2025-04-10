@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import useRole from "../hooks/useRole";
 
 const RentCarContext = createContext();
 
@@ -9,6 +10,8 @@ export const RentACarProvider = ({ children }) => {
   const [showRentModal, setShowRentModal] = useState(false);
   const [rentMessage, setRentMessage] = useState("");
   //   const
+  const [userRole, userData] = useRole();
+  console.log(userData);
 
   //?
   const [car, setCar] = useState(null);
