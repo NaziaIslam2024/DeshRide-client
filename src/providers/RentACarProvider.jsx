@@ -15,14 +15,11 @@ export const RentACarProvider = ({ children }) => {
   const [userRole, userData] = useRole();
   const axiosPublic = useAxiosPublic();
 
-  //?
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
-  console.log(dateRange);
-  console.log(startDate);
-  //?
+  // console.log(dateRange);
+  // console.log(startDate);
 
-  //?
   const [car, setCar] = useState(null);
   const handleRentRequest = async (message) => {
     const requesterName = userData?.fullName;
