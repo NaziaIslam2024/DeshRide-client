@@ -24,6 +24,7 @@ import AdvertiseCars from "../pages/Dashboard/Admin/AdvertiseCars";
 import MyRentalCars from "../pages/Dashboard/CarProvider/MyRentalCars";
 import RentalCarDetails from "../pages/Dashboard/CarProvider/RentalCarDetails";
 import MyRentStatus from "../pages/Dashboard/Consumer/MyRentStatus";
+import MyRentDetails from "../pages/Dashboard/Consumer/MyRentDetails";
 
 export const router = createBrowserRouter([
   {
@@ -61,9 +62,9 @@ export const router = createBrowserRouter([
         element: <PrivacyPolicy></PrivacyPolicy>,
       },
       {
-        path: 'workflow',
-        element: <WorkflowAnimation></WorkflowAnimation>
-      }
+        path: "workflow",
+        element: <WorkflowAnimation></WorkflowAnimation>,
+      },
     ],
   },
 
@@ -85,7 +86,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "edit-profile",
-        element: <EditProfile></EditProfile>
+        element: <EditProfile></EditProfile>,
       },
       {
         path: "all-user",
@@ -125,8 +126,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-rent-status",
-        element: <MyRentStatus></MyRentStatus>
-       
+        element: <MyRentStatus></MyRentStatus>,
+      },
+      {
+        path: "my-rents/:id",
+        element: <MyRentDetails></MyRentDetails>,
       },
       {
         path: "whatsapp",
