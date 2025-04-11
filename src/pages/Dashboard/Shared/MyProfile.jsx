@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FaHome, FaIdCard, FaPhone, FaShieldAlt, FaTools, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router';
-import React, { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import {
   FaCar,
-  FaIdCard,
+  FaIdCard ,
   FaPhone,
   FaHome,
   FaUserShield,
