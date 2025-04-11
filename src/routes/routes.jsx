@@ -19,6 +19,8 @@ import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
 import MyCarStatus from "../pages/Dashboard/CarProvider/MyCarStatus";
 import AdvertiseCars from "../pages/Dashboard/Admin/AdvertiseCars";
+import MyRentalCars from "../pages/Dashboard/CarProvider/MyRentalCars";
+import RentalCarDetails from "../pages/Dashboard/CarProvider/RentalCarDetails";
 
 export const router = createBrowserRouter([
   {
@@ -97,8 +99,12 @@ export const router = createBrowserRouter([
       },
       // provider
       {
-        path: "my-car-status",
-        element: <MyCarStatus></MyCarStatus>,
+        path: "my-rentals",
+        element: <MyRentalCars></MyRentalCars>,
+      },
+      {
+        path: "car-details/:id",
+        element: <RentalCarDetails />,
       },
 
       // consumer
