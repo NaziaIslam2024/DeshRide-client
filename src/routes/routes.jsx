@@ -18,6 +18,8 @@ import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
 import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
 import EditProfile from "../pages/Dashboard/Shared/EditProfile";
+import Whatsapp from "../pages/Dashboard/Consumer/Whatsapp";
+import WorkflowAnimation from "../components/Shared/WorkflowAnimation";
 import AdvertiseCars from "../pages/Dashboard/Admin/AdvertiseCars";
 import MyRentalCars from "../pages/Dashboard/CarProvider/MyRentalCars";
 import RentalCarDetails from "../pages/Dashboard/CarProvider/RentalCarDetails";
