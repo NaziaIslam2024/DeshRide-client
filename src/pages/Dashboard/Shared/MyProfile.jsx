@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import {
   FaCar,
-  FaIdCard,
+  FaIdCard ,
   FaPhone,
   FaHome,
   FaUserShield,
@@ -396,9 +396,9 @@ const MyProfile = () => {
 
         {/* Action Buttons */}
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all transform hover:-translate-y-1">
+          <Link to={"/Dashboard/edit-profile"} className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all transform hover:-translate-y-1">
             Edit Profile
-          </button>
+          </Link>
 
           {profileData.role === "provider" && (
             <button className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all transform hover:-translate-y-1">
