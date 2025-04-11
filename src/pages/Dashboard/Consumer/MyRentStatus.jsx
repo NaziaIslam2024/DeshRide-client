@@ -4,6 +4,7 @@ import useRole from "../../../hooks/useRole";
 import { Car, Check, CreditCard, Info, RefreshCcw, X } from "lucide-react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 const MyRentStatus = () => {
   const [statusFilter, setStatusFilter] = useState("all");
@@ -11,16 +12,21 @@ const MyRentStatus = () => {
 
   const handleCancel = async (_id) => {
     console.log(_id);
-    // try {
-    //   const response = await axiosPublic.delete(
-    //     `/car-rental/delete-car/${requestId}`
-    //   );
-    //   if (response.status === 200) {
-    //     refetch();
-    //   }
-    // } catch (error) {
-    //   console.error("Error canceling the request:", error);
-    // }
+
+    const rentRequestData = {
+      rentStatus: "cancelled",
+    };
+
+    const res = await axiosPublic.put(
+      `/car-rental/update-car-rental/${_id}`,
+      rentRequestData
+    );
+    console.log(res.data);
+    if (res.data) {
+      toast.success("Car rental request accepted successfully!", {
+        position: "top-left",
+      });
+    }
   };
 
   //?
@@ -69,6 +75,7 @@ const MyRentStatus = () => {
               <option value="pending">Pending</option>
               <option value="ongoing">Ongoing</option>
               <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
             </select>
           </div>
         </div>
