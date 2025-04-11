@@ -17,6 +17,7 @@ import MyAddedCar from "../pages/Dashboard/CarProvider/MyAddedCar";
 import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
 import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
+import EditProfile from "../pages/Dashboard/Shared/EditProfile";
 import Whatsapp from "../pages/Dashboard/Consumer/Whatsapp";
 import WorkflowAnimation from "../components/Shared/WorkflowAnimation";
 import AdvertiseCars from "../pages/Dashboard/Admin/AdvertiseCars";
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "my-profile",
         element: <MyProfile></MyProfile>,
+      },
+      {
+        path: "edit-profile",
+        element: <EditProfile></EditProfile>
       },
       {
         path: "all-user",
