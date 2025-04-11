@@ -831,8 +831,8 @@ const WorkflowAnimation = () => {
                 onChange={e => setSortCriteria(e.target.value)}
                 className="border p-1 rounded"
               >
-                <option value="nameAsc">Name Ascending</option>
-                <option value="nameDesc">Name Descending</option>
+                <option value="nameAsc">Price Ascending</option>
+                <option value="nameDesc">Price Descending</option>
               </select>
             </div>
             <h3 className="font-medium mb-2">Available Cars</h3>
