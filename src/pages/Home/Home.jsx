@@ -18,6 +18,7 @@ import Statistics from "./Statistics";
 import WhyChooseUs from "./WhyChooseUs";
 import EidCountdown from "./Eid/EidCountdown";
 import FloatingStar from "./Eid/FloatingStar";
+import TrendingCars from "./TrendingCars";
 // import { PricingCard, CheckIcon } from "./PricingCard";
 
 const Home = () => {
@@ -29,6 +30,7 @@ const Home = () => {
       <div className="container mx-auto">
         {/* <EidCountdown></EidCountdown> */}
         <Services></Services>
+        <TrendingCars></TrendingCars>
         <CarCategories></CarCategories>
         <Statistics></Statistics>
         <TrendingOffers></TrendingOffers>

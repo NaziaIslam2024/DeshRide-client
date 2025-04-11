@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router";
 import {
   ArrowLeft,
@@ -11,76 +11,70 @@ import {
   Check,
   X,
   MessageCircle,
+  RefreshCcw,
 } from "lucide-react";
-
-// Mock data - in a real app, this would come from your backend
-const rentalRequests = [
-  {
-    id: 1,
-    vehicleName: "Tesla Model 3",
-    model: "2024",
-    rentPerDay: 75,
-    type: "Sedan",
-    fuelType: "Electric",
-    seats: 5,
-    imageUrl:
-      "https://images.unsplash.com/photo-1619767886558-efdc259b6e09?auto=format&fit=crop&q=80&w=1200",
-    rentMessage:
-      "I would like to rent this car for my business trip. I will take good care of it.",
-    requesterName: "John Doe",
-    requesterEmail: "john@example.com",
-    requesterUsername: "johndoe",
-    requesterPhone: "+1 234 567 8900",
-    rentStatus: "pending",
-    rentDuration: 5,
-    totalMoney: 375,
-    startDate: "2024-03-20",
-    endDate: "2024-03-25",
-  },
-  {
-    id: 2,
-    vehicleName: "BMW X5",
-    model: "2023",
-    rentPerDay: 95,
-    type: "SUV",
-    fuelType: "Hybrid",
-    seats: 7,
-    imageUrl:
-      "https://images.unsplash.com/photo-1656468014942-fc3f9895f131?auto=format&fit=crop&q=80&w=1200",
-    rentMessage: "Need this for a family vacation. We are 5 people.",
-    requesterName: "Jane Smith",
-    requesterEmail: "jane@example.com",
-    requesterUsername: "janesmith",
-    requesterPhone: "+1 234 567 8901",
-    rentStatus: "ongoing",
-    rentDuration: 3,
-    totalMoney: 285,
-    startDate: "2024-03-22",
-    endDate: "2024-03-24",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useRentCar } from "../../../providers/RentACarProvider";
 
 function RentalCarDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const request = rentalRequests.find((r) => r.id === Number(id));
+  const {
+    selectedCar,
+    setSelectedCar,
+    showRentModal,
+    setShowRentModal,
+    rentMessage,
+    setRentMessage,
 
-  const handleAccept = () => {
-    console.log("Accepted request:", id);
-    // Add your accept logic here
-  };
+    handleRentRequest,
+    setCar,
 
-  const handleReject = () => {
-    console.log("Rejected request:", id);
-    // Add your reject logic here
-  };
+    dateRange,
+    setDateRange,
+    startDate,
+    endDate,
+
+    //
+    handleAccept,
+    handleReject,
+  } = useRentCar();
+
+  // find the data by id, and show
+  const [rentalRequests, setRentalRequests] = useState(null);
+  const axiosPublic = useAxiosPublic();
+
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ["rentalRequests", id],
+    queryFn: async () => {
+      const response = await axiosPublic.get(
+        `/car-rental/get-car-rental/${id}`
+      );
+      setRentalRequests(response.data);
+      // console.log(response.data);
+      return response.data;
+    },
+    enabled: !!id,
+    onSuccess: (data) => {
+      console.log("Rental requests fetched successfully:", data);
+    },
+    onError: (error) => {
+      console.error("Error fetching rental requests:", error);
+    },
+  });
+  useEffect(() => {
+    if (data) {
+      setRentalRequests(data);
+    }
+  }, [data]);
 
   const handleChat = () => {
-    console.log("Opening chat with:", request.requesterUsername);
+    console.log("Opening chat with:", request?.requesterUsername);
     // Add your chat logic here
   };
 
-  if (!request) {
+  if (!rentalRequests) {
     return (
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-3xl mx-auto text-center">
@@ -111,23 +105,29 @@ function RentalCarDetails() {
           </button>
 
           <div className="flex gap-3">
-            {request.rentStatus === "pending" && (
+            {rentalRequests?.rentStatus === "pending" && (
               <>
                 <button
-                  onClick={handleAccept}
+                  onClick={() => handleAccept(rentalRequests?._id)}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   <Check className="w-4 h-4 mr-2" />
                   Accept Request
                 </button>
                 <button
-                  onClick={handleReject}
+                  onClick={() => handleReject(rentalRequests?._id)}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   <X className="w-4 h-4 mr-2" />
                   Reject Request
                 </button>
               </>
+            )}
+            {rentalRequests?.rentStatus === "ongoing" && (
+              <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <RefreshCcw className="w-4 h-4 mr-2" />
+                Ongoing
+              </button>
             )}
             <button
               onClick={handleChat}
@@ -143,15 +143,15 @@ function RentalCarDetails() {
           {/* Vehicle Image */}
           <div className="relative h-64 w-full">
             <img
-              src={request.imageUrl}
-              alt={request.vehicleName}
+              src={rentalRequests?.imageUrl}
+              alt={rentalRequests?.name}
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
               <h1 className="text-3xl font-bold text-white">
-                {request.vehicleName}
+                {rentalRequests?.name || "Unknown Vehicle"}
               </h1>
-              <p className="text-white/90">{request.model}</p>
+              <p className="text-white/90">{rentalRequests?.model}</p>
             </div>
           </div>
 
@@ -159,16 +159,15 @@ function RentalCarDetails() {
             {/* Status Badge */}
             <div className="mb-6">
               <span
-                className={`px-3 py-1 text-sm font-semibold rounded-full ${
-                  request.rentStatus === "pending"
+                className={`px-3 py-1 text-sm font-semibold rounded-full capitalize ${
+                  rentalRequests?.rentStatus === "pending"
                     ? "bg-yellow-100 text-yellow-800"
-                    : request.rentStatus === "ongoing"
+                    : rentalRequests?.rentStatus === "ongoing"
                     ? "bg-green-100 text-green-800"
                     : "bg-gray-100 text-gray-800"
                 }`}
               >
-                {request.rentStatus.charAt(0).toUpperCase() +
-                  request.rentStatus.slice(1)}
+                {rentalRequests?.rentStatus}
               </span>
             </div>
 
@@ -181,20 +180,26 @@ function RentalCarDetails() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center">
                     <Car className="w-5 h-5 text-gray-400 mr-2" />
-                    <span className="text-gray-600">{request.type}</span>
+                    <span className="text-gray-600">
+                      {rentalRequests?.type || "Unknown Type"}
+                    </span>
                   </div>
                   <div className="flex items-center">
                     <Users className="w-5 h-5 text-gray-400 mr-2" />
-                    <span className="text-gray-600">{request.seats} seats</span>
+                    <span className="text-gray-600">
+                      {rentalRequests?.seats} seats
+                    </span>
                   </div>
                   <div className="flex items-center">
                     <Fuel className="w-5 h-5 text-gray-400 mr-2" />
-                    <span className="text-gray-600">{request.fuelType}</span>
+                    <span className="text-gray-600">
+                      {rentalRequests?.fuelType}
+                    </span>
                   </div>
                   <div className="flex items-center">
                     <DollarSign className="w-5 h-5 text-gray-400 mr-2" />
                     <span className="text-gray-600">
-                      ${request.rentPerDay}/day
+                      ${rentalRequests?.price}/day
                     </span>
                   </div>
                 </div>
@@ -208,18 +213,66 @@ function RentalCarDetails() {
                   <div className="flex items-center">
                     <Calendar className="w-5 h-5 text-gray-400 mr-2" />
                     <span className="text-gray-600">
-                      {request.startDate} to {request.endDate}
+                      {(() => {
+                        const [start, end] = rentalRequests?.dateRange || [];
+
+                        const formatDate = (dateStr) => {
+                          if (!dateStr) return "";
+                          const date = new Date(dateStr);
+                          const day = String(date.getDate()).padStart(2, "0");
+                          const month = date.toLocaleString("default", {
+                            month: "short",
+                          }); // Apr
+                          const year = date.getFullYear(); // 2025
+                          return `${day} ${month}, ${year}`;
+                        };
+
+                        return `${formatDate(start)} to ${formatDate(end)}`;
+                      })()}
                     </span>
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-5 h-5 text-gray-400 mr-2" />
                     <span className="text-gray-600">
-                      {request.rentDuration} days
+                      {(() => {
+                        const [start, end] = rentalRequests?.dateRange || [];
+                        if (!start || !end) return "0 days";
+
+                        const startDate = new Date(start);
+                        const endDate = new Date(end);
+                        const diffTime = endDate - startDate;
+                        const diffDays = Math.ceil(
+                          diffTime / (1000 * 60 * 60 * 24)
+                        );
+
+                        return `${diffDays} days`;
+                      })()}
                     </span>
                   </div>
                   <div className="mt-2 p-3 bg-green-50 rounded-md">
                     <span className="text-green-700 font-semibold">
-                      Total Amount: ${request.totalMoney}
+                      Total :{" "}
+                      {(() => {
+                        const [start, end] = rentalRequests?.dateRange || [];
+                        const pricePerDay = rentalRequests?.price || 0;
+
+                        if (start && end && pricePerDay) {
+                          const startDate = new Date(start);
+                          const endDate = new Date(end);
+                          const diffTime = Math.abs(endDate - startDate);
+                          const diffDays = Math.ceil(
+                            diffTime / (1000 * 60 * 60 * 24)
+                          );
+                          const total = diffDays * pricePerDay;
+                          return `$${total}`;
+                        }
+
+                        return "$0";
+                      })()}
+                    </span>
+                    {/* //todo: need to make it dynamic */}
+                    <span className="text-green-700 font-semibold ml-5">
+                      (Unpaid)
                     </span>
                   </div>
                 </div>
@@ -234,19 +287,27 @@ function RentalCarDetails() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Name</p>
-                  <p className="text-gray-900">{request.requesterName}</p>
+                  <p className="text-gray-900">
+                    {rentalRequests?.requesterName}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Username</p>
-                  <p className="text-gray-900">{request.requesterUsername}</p>
+                  <p className="text-gray-900">
+                    {rentalRequests?.requesterUserName}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
-                  <p className="text-gray-900">{request.requesterEmail}</p>
+                  <p className="text-gray-900">
+                    {rentalRequests?.requesterEmail}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Phone</p>
-                  <p className="text-gray-900">{request.requesterPhone}</p>
+                  <p className="text-gray-900">
+                    {rentalRequests?.requesterPhone}
+                  </p>
                 </div>
               </div>
             </div>
@@ -257,7 +318,7 @@ function RentalCarDetails() {
                 Rental Message
               </h2>
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-gray-700">{request.rentMessage}</p>
+                <p className="text-gray-700">{rentalRequests?.rentMessage}</p>
               </div>
             </div>
           </div>

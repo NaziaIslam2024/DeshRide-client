@@ -16,6 +16,7 @@ export const RentACarProvider = ({ children }) => {
   const axiosPublic = useAxiosPublic();
 
   const [dateRange, setDateRange] = useState([null, null]);
+
   const [startDate, endDate] = dateRange;
   // console.log(dateRange);
   // console.log(startDate);
@@ -37,7 +38,6 @@ export const RentACarProvider = ({ children }) => {
       rentStatus: "pending",
       dateRange,
     };
-    console.log(rentRequestData);
 
     // Send rentRequestData to the server
     const res = await axiosPublic.post(
@@ -54,7 +54,57 @@ export const RentACarProvider = ({ children }) => {
 
     // Reset the car state after sending the request
   };
-  //?
+
+  //* rent car request data handle here
+  const handleAccept = async (_id) => {
+    const rentRequestData = {
+      rentStatus: "ongoing",
+    };
+
+    try {
+      const res = await axiosPublic.put(
+        `/car-rental/update-car-rental/${_id}`,
+        rentRequestData
+      );
+
+      console.log(res.data);
+
+      if (res.data) {
+        toast.success("Car rental request accepted successfully!", {
+          position: "top-left",
+        });
+      }
+    } catch (error) {
+      console.error("Error accepting rental:", error);
+      toast.error("Something went wrong!");
+    }
+  };
+
+  const handleReject = async (_id) => {
+    const rentRequestData = {
+      rentStatus: "rejected",
+    };
+
+    // send data
+    try {
+      const res = await axiosPublic.put(
+        `/car-rental/update-car-rental/${_id}`,
+        rentRequestData
+      );
+
+      console.log(res.data);
+
+      if (res.data) {
+        toast.success("Car rental request Rejected successfully!", {
+          position: "top-left",
+        });
+      }
+    } catch (error) {
+      console.error("Error rejecting rental:", error);
+      toast.error("Something went wrong!");
+    }
+  };
+  //*
 
   return (
     <RentCarContext.Provider
@@ -73,6 +123,10 @@ export const RentACarProvider = ({ children }) => {
         setDateRange,
         startDate,
         endDate,
+
+        //
+        handleAccept,
+        handleReject,
       }}
     >
       {children}

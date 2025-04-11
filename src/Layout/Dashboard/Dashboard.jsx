@@ -12,43 +12,49 @@ const Dashboard = () => {
   const { user, logOut } = useAuth();
   const [userRole, setUserRole] = useState(null);
   const [error, setError] = useState(null);
-  const [authChecked, setAuthChecked] = useState(false); // New state to track auth check
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Set a timeout to give Firebase time to check auth state
-    const timer = setTimeout(() => {
-      setAuthChecked(true);
-    }, 500); // 500ms should be enough time for Firebase to initialize
+    let isMounted = true; // Prevent state updates on unmounted component
 
-    return () => clearTimeout(timer);
-  }, []);
+    const checkAuthAndFetchData = async () => {
+      // Delay to give Firebase time to initialize auth state
+      const authTimer = setTimeout(async () => {
+        if (!isMounted) return;
 
-  useEffect(() => {
-    if (user?.email) {
-      const fetchUserData = async () => {
-        try {
-          const response = await axiosPublic.get(
-            `/users/getUser/${user.email}`
-          );
-          // console.log(response.data);
-          setUserRole(response.data.role || "consumer");
-        } catch (err) {
-          setError(err.message);
-          console.error("Failed to fetch user data:", err);
-        } finally {
+        // If no user, navigate to home
+        if (!user?.email) {
           setIsLoading(false);
+          // navigate("/");
+          return;
         }
-      };
-      fetchUserData();
-    } else if (authChecked && !user) {
-      // Only redirect if we've given Firebase time to check AND there's no user
 
-      navigate("/");
-      setIsLoading(true);
-    }
-  }, [user, authChecked, axiosPublic, navigate]);
+        // If user exists, fetch user data
+        try {
+          const response = await axiosPublic.get(`/users/getUser/${user.email}`);
+          if (isMounted) {
+            setUserRole(response.data.role || "consumer");
+            setIsLoading(false);
+          }
+        } catch (err) {
+          if (isMounted) {
+            setError(err.message);
+            console.error("Failed to fetch user data:", err);
+            setIsLoading(false);
+          }
+        }
+      }, 500); // 500ms delay to ensure Firebase auth is ready
+
+      return () => clearTimeout(authTimer);
+    };
+
+    checkAuthAndFetchData();
+
+    return () => {
+      isMounted = false; // Cleanup to prevent memory leaks
+    };
+  }, [user, axiosPublic, navigate]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -63,7 +69,7 @@ const Dashboard = () => {
     );
   }
 
-  // Main dashboard render
+  // Main dashboard render (only reached if not redirected)
   return (
     <div className="">
       <TopBar

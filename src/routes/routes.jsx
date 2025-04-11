@@ -4,7 +4,7 @@ import Home from "../pages/Home/Home";
 import Dashboard from "../Layout/Dashboard/Dashboard";
 import Login from "../pages/Auth/Login";
 import Registration from "../pages/Auth/Registration";
-import VehicleList from "../pages/Dashboard/Admin/VehicleList";
+
 import About from "../pages/About/About";
 import PrivacyPolicy from "../pages/privacy&policy/PrivacyPolicy";
 import MyProfile from "../pages/Dashboard/Shared/MyProfile";
@@ -19,6 +19,7 @@ import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
 import Whatsapp from "../pages/Dashboard/Consumer/Whatsapp";
 import WorkflowAnimation from "../components/Shared/WorkflowAnimation";
+import AdvertiseCars from "../pages/Dashboard/Admin/AdvertiseCars";
 import MyRentalCars from "../pages/Dashboard/CarProvider/MyRentalCars";
 import RentalCarDetails from "../pages/Dashboard/CarProvider/RentalCarDetails";
 
@@ -95,6 +96,11 @@ export const router = createBrowserRouter([
       {
         path: "all-cars",
         element: <AllCars></AllCars>,
+      },
+      // Admin
+      {
+        path: "adv-cars",
+        element: <AdvertiseCars></AdvertiseCars>,
       },
       // provider
       {
