@@ -4,7 +4,7 @@ import Home from "../pages/Home/Home";
 import Dashboard from "../Layout/Dashboard/Dashboard";
 import Login from "../pages/Auth/Login";
 import Registration from "../pages/Auth/Registration";
-import VehicleList from "../pages/Dashboard/Admin/VehicleList";
+
 import About from "../pages/About/About";
 import PrivacyPolicy from "../pages/privacy&policy/PrivacyPolicy";
 import MyProfile from "../pages/Dashboard/Shared/MyProfile";
@@ -17,7 +17,7 @@ import MyAddedCar from "../pages/Dashboard/CarProvider/MyAddedCar";
 import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
 import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
-import MyCarStatus from "../pages/Dashboard/CarProvider/MyCarStatus";
+
 import AdvertiseCars from "../pages/Dashboard/Admin/AdvertiseCars";
 import MyRentalCars from "../pages/Dashboard/CarProvider/MyRentalCars";
 import RentalCarDetails from "../pages/Dashboard/CarProvider/RentalCarDetails";
