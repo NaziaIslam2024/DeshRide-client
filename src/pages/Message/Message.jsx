@@ -1,10 +1,8 @@
-
-
 // export default Message;
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5001"); // Connect to the server
+const socket = io("https://desh-ride-server.vercel.app"); // Connect to the server
 
 const Message = ({ userId, role }) => {
   const [messages, setMessages] = useState([]);
@@ -27,20 +25,20 @@ const Message = ({ userId, role }) => {
     socket.on("receiveMessage", (message) => {
       // Show only admin replies for consumers
       if (role === "consumer" && message.sender !== "admin") return;
-  
+
       setMessages((prevMessages) => [...prevMessages, message]);
     });
-  
+
     return () => socket.off("receiveMessage");
   }, [userId, role]);
-  
+
   const sendMessage = () => {
     if (newMessage.trim()) {
       // Build the message payload including the userId from props
       const messagePayload = {
-        sender: role,   // Should be "consumer" or "admin"
+        sender: role, // Should be "consumer" or "admin"
         text: newMessage,
-        userId,         // userId comes from the prop passed when rendering the component
+        userId, // userId comes from the prop passed when rendering the component
       };
 
       // Log the payload for debugging
