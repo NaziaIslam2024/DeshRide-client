@@ -16,6 +16,7 @@ export const RentACarProvider = ({ children }) => {
   const axiosPublic = useAxiosPublic();
 
   const [dateRange, setDateRange] = useState([null, null]);
+
   const [startDate, endDate] = dateRange;
   // console.log(dateRange);
   // console.log(startDate);
@@ -103,7 +104,7 @@ export const RentACarProvider = ({ children }) => {
       toast.error("Something went wrong!");
     }
   };
-  //?
+  //*
 
   return (
     <RentCarContext.Provider
