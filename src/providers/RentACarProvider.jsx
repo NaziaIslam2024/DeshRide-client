@@ -105,9 +105,106 @@ export const RentACarProvider = ({ children }) => {
     }
   };
 
-  // !
   const [showChatModal, setShowChatModal] = useState(false);
   // console.log(showChatModal);
+
+  // chat modal
+  const [chatData, setChatData] = useState({
+    rentalRequestId: "123456",
+    requesterName: "Requester",
+    requesterEmail: "",
+    providerName: "Provider",
+    providerEmail: "",
+    image: "https://img.icons8.com/?size=100&id=108294&format=png&color=000000",
+    messages: [
+      { id: 1, sender: "user", message: "Hey, how are you?", time: "2:30 PM" },
+      {
+        id: 2,
+        sender: "other",
+        message: "I'm doing great! Thanks for asking.",
+        time: "2:31 PM",
+      },
+      {
+        id: 3,
+        sender: "user",
+        message: "That's good to hear! What are you up to?",
+        time: "2:31 PM",
+      },
+      {
+        id: 4,
+        sender: "other",
+        message: "Just working on some projects. How about you?",
+        time: "2:32 PM",
+      },
+      {
+        id: 5,
+        sender: "user",
+        message: "Same here! Working on a new website design.",
+        time: "2:33 PM",
+      },
+      {
+        id: 6,
+        sender: "other",
+        message: "That sounds interesting! What kind of website is it?",
+        time: "2:34 PM",
+      },
+      {
+        id: 7,
+        sender: "user",
+        message:
+          "It's a social media platform, kind of like Facebook but for a specific niche.",
+        time: "2:35 PM",
+      },
+      {
+        id: 8,
+        sender: "other",
+        message: "Wow, that's cool! Would love to see it when it's done.",
+        time: "2:36 PM",
+      },
+      {
+        id: 9,
+        sender: "user",
+        message: "Sure, I'll show you once it's ready!",
+        time: "2:36 PM",
+      },
+      {
+        id: 10,
+        sender: "other",
+        message: "Looking forward to it! 😊",
+        time: "2:37 PM",
+      },
+      {
+        id: 11,
+        sender: "user",
+        message: "By the way, are you free this weekend?",
+        time: "2:38 PM",
+      },
+      {
+        id: 12,
+        sender: "other",
+        message: "Yes, I should be! What do you have in mind?",
+        time: "2:39 PM",
+      },
+      {
+        id: 13,
+        sender: "user",
+        message: "There's this new coffee shop downtown, want to check it out?",
+        time: "2:40 PM",
+      },
+      {
+        id: 14,
+        sender: "other",
+        message: "That sounds perfect! What time were you thinking?",
+        time: "2:41 PM",
+      },
+      {
+        id: 15,
+        sender: "user",
+        message: "How are you Mehedi?",
+        time: "2:42 PM",
+      },
+    ],
+  });
 
   //*
 
@@ -134,6 +231,9 @@ export const RentACarProvider = ({ children }) => {
         handleReject,
         showChatModal,
         setShowChatModal,
+
+        // chat
+        chatData,
       }}
     >
       {children}
