@@ -17,6 +17,7 @@
     "@tanstack/react-query-devtools": "^5.72.2",
     "axios": "^1.8.2",
     "date-fns": "^4.1.0",
+    "emailjs-com": "^3.2.0",
     "firebase": "^11.4.0",
     "framer-motion": "^12.6.3",
     "leaflet": "^1.9.4",

@@ -17,6 +17,8 @@ import MyAddedCar from "../pages/Dashboard/CarProvider/MyAddedCar";
 import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
 import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
+import Whatsapp from "../pages/Dashboard/Consumer/Whatsapp";
+import WorkflowAnimation from "../components/Shared/WorkflowAnimation";
 import AdvertiseCars from "../pages/Dashboard/Admin/AdvertiseCars";
 import MyRentalCars from "../pages/Dashboard/CarProvider/MyRentalCars";
 import RentalCarDetails from "../pages/Dashboard/CarProvider/RentalCarDetails";
@@ -56,6 +58,10 @@ export const router = createBrowserRouter([
         path: "privacy&policy",
         element: <PrivacyPolicy></PrivacyPolicy>,
       },
+      {
+        path: 'workflow',
+        element: <WorkflowAnimation></WorkflowAnimation>
+      }
     ],
   },
 
@@ -110,6 +116,10 @@ export const router = createBrowserRouter([
       {
         path: "all-listed-cars",
         element: <AllListedCars></AllListedCars>,
+      },
+      {
+        path: "whatsapp",
+        element: <Whatsapp></Whatsapp>,
       },
     ],
   },
