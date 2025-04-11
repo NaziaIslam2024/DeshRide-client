@@ -26,7 +26,7 @@ const Dashboard = () => {
         // If no user, navigate to home
         if (!user?.email) {
           setIsLoading(false);
-          navigate("/");
+          // navigate("/");
           return;
         }
 
