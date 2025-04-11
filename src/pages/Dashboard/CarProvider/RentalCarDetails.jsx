@@ -16,6 +16,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useRentCar } from "../../../providers/RentACarProvider";
+import ChatModalWithRenter from "./ChatModalWithRenter";
 
 function RentalCarDetails() {
   const { id } = useParams();
@@ -39,7 +40,10 @@ function RentalCarDetails() {
     //
     handleAccept,
     handleReject,
+    showChatModal,
+    setShowChatModal,
   } = useRentCar();
+  const [showChat, setShowChat] = useState(false);
 
   // find the data by id, and show
   const [rentalRequests, setRentalRequests] = useState(null);
@@ -81,7 +85,7 @@ function RentalCarDetails() {
           <h1 className="text-2xl font-bold text-gray-900">
             Rental request not found
           </h1>
-          <Link to={-1}>
+          <Link to="/dashboard/my-rentals">
             <button className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to list
@@ -93,11 +97,11 @@ function RentalCarDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gray-50 p-8 relative">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate(-1)}
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 shadow-sm"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -130,7 +134,7 @@ function RentalCarDetails() {
               </button>
             )}
             <button
-              onClick={handleChat}
+              onClick={() => setShowChat(!showChat)}
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               <MessageCircle className="w-4 h-4 mr-2" />
@@ -324,6 +328,8 @@ function RentalCarDetails() {
           </div>
         </div>
       </div>
+      {/* Chat Modal */}
+      {showChat && <ChatModalWithRenter onClose={() => setShowChat(false)} />}
     </div>
   );
 }

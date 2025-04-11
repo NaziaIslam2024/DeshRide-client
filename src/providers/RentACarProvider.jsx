@@ -104,6 +104,11 @@ export const RentACarProvider = ({ children }) => {
       toast.error("Something went wrong!");
     }
   };
+
+  // !
+  const [showChatModal, setShowChatModal] = useState(false);
+  console.log(showChatModal);
+
   //*
 
   return (
@@ -127,6 +132,8 @@ export const RentACarProvider = ({ children }) => {
         //
         handleAccept,
         handleReject,
+        showChatModal,
+        setShowChatModal,
       }}
     >
       {children}
