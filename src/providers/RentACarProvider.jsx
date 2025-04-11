@@ -56,22 +56,52 @@ export const RentACarProvider = ({ children }) => {
 
   //* rent car request data handle here
   const handleAccept = async (_id) => {
-    console.log(_id);
+    const rentRequestData = {
+      rentStatus: "ongoing",
+    };
 
-    // find the data by id in backend and change the status to accepted
+    try {
+      const res = await axiosPublic.put(
+        `/car-rental/update-car-rental/${_id}`,
+        rentRequestData
+      );
 
-    const res = await axiosPublic.put(`/car-rental/update-car-rental/${_id}`);
-    console.log(res.data);
-    if (res.data.message === "Car rental updated successfully") {
-      toast.success("Car rental request accepted successfully!", {
-        position: "top-left",
-      });
+      console.log(res.data);
+
+      if (res.data) {
+        toast.success("Car rental request accepted successfully!", {
+          position: "top-left",
+        });
+      }
+    } catch (error) {
+      console.error("Error accepting rental:", error);
+      toast.error("Something went wrong!");
     }
   };
 
-  const handleReject = (_id) => {
-    console.log(_id);
-    // Add your reject logic here
+  const handleReject = async (_id) => {
+    const rentRequestData = {
+      rentStatus: "rejected",
+    };
+
+    // send data
+    try {
+      const res = await axiosPublic.put(
+        `/car-rental/update-car-rental/${_id}`,
+        rentRequestData
+      );
+
+      console.log(res.data);
+
+      if (res.data) {
+        toast.success("Car rental request Rejected successfully!", {
+          position: "top-left",
+        });
+      }
+    } catch (error) {
+      console.error("Error rejecting rental:", error);
+      toast.error("Something went wrong!");
+    }
   };
   //?
 

@@ -60,7 +60,6 @@ function MyRentalCars() {
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-      // console.log("Refetched at", new Date().toLocaleTimeString());
     }, 1000);
 
     return () => clearInterval(interval);
