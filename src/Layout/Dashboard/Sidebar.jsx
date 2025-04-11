@@ -101,6 +101,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
       roles: ["admin"],
     },
     { path: "all-cars", label: "All Cars", icon: <FaCar />, roles: ["admin"] },
+    { path: "adv-cars", label: "Advertise Cars", icon: <FaCar />, roles: ["admin"] },
   ];
 
   // Filter navigation items based on user role
