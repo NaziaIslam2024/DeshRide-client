@@ -88,7 +88,7 @@ const Navbar = () => {
         </NavLink>
       )}
 
-      {user && (
+     
         <NavLink
           to="/workflow"
           className={({ isActive }) =>
@@ -104,7 +104,7 @@ const Navbar = () => {
         >
           Workflow
         </NavLink>
-      )}
+     
     </>
   );
 

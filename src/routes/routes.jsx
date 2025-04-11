@@ -59,6 +59,10 @@ export const router = createBrowserRouter([
         path: "privacy&policy",
         element: <PrivacyPolicy></PrivacyPolicy>,
       },
+      {
+        path: 'workflow',
+        element: <WorkflowAnimation></WorkflowAnimation>
+      }
     ],
   },
 
@@ -117,6 +121,10 @@ export const router = createBrowserRouter([
       {
         path: "all-listed-cars",
         element: <AllListedCars></AllListedCars>,
+      },
+      {
+        path: "whatsapp",
+        element: <Whatsapp></Whatsapp>,
       },
     ],
   },
