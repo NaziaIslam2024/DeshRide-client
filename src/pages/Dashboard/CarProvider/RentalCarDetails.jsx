@@ -11,13 +11,35 @@ import {
   Check,
   X,
   MessageCircle,
+  RefreshCcw,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useRentCar } from "../../../providers/RentACarProvider";
 
 function RentalCarDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const {
+    selectedCar,
+    setSelectedCar,
+    showRentModal,
+    setShowRentModal,
+    rentMessage,
+    setRentMessage,
+
+    handleRentRequest,
+    setCar,
+
+    dateRange,
+    setDateRange,
+    startDate,
+    endDate,
+
+    //
+    handleAccept,
+    handleReject,
+  } = useRentCar();
 
   // find the data by id, and show
   const [rentalRequests, setRentalRequests] = useState(null);
@@ -46,16 +68,6 @@ function RentalCarDetails() {
       setRentalRequests(data);
     }
   }, [data]);
-
-  const handleAccept = () => {
-    console.log("Accepted request:", id);
-    // Add your accept logic here
-  };
-
-  const handleReject = () => {
-    console.log("Rejected request:", id);
-    // Add your reject logic here
-  };
 
   const handleChat = () => {
     console.log("Opening chat with:", request?.requesterUsername);
@@ -96,20 +108,26 @@ function RentalCarDetails() {
             {rentalRequests?.rentStatus === "pending" && (
               <>
                 <button
-                  onClick={handleAccept}
+                  onClick={() => handleAccept(rentalRequests?._id)}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   <Check className="w-4 h-4 mr-2" />
                   Accept Request
                 </button>
                 <button
-                  onClick={handleReject}
+                  onClick={() => handleReject(rentalRequests?._id)}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   <X className="w-4 h-4 mr-2" />
                   Reject Request
                 </button>
               </>
+            )}
+            {rentalRequests?.rentStatus === "ongoing" && (
+              <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <RefreshCcw className="w-4 h-4 mr-2" />
+                Ongoing
+              </button>
             )}
             <button
               onClick={handleChat}
@@ -140,8 +158,8 @@ function RentalCarDetails() {
           <div className="p-6">
             {/* Status Badge */}
             <div className="mb-6">
-              {/* <span
-                className={`px-3 py-1 text-sm font-semibold rounded-full ${
+              <span
+                className={`px-3 py-1 text-sm font-semibold rounded-full capitalize ${
                   rentalRequests?.rentStatus === "pending"
                     ? "bg-yellow-100 text-yellow-800"
                     : rentalRequests?.rentStatus === "ongoing"
@@ -149,9 +167,8 @@ function RentalCarDetails() {
                     : "bg-gray-100 text-gray-800"
                 }`}
               >
-                {rentalRequests?.rentStatus.charAt(0).toUpperCase() +
-                  rentalRequests?.rentStatus.slice(1)}
-              </span> */}
+                {rentalRequests?.rentStatus}
+              </span>
             </div>
 
             {/* Vehicle Details */}
@@ -195,22 +212,67 @@ function RentalCarDetails() {
                 <div className="space-y-2">
                   <div className="flex items-center">
                     <Calendar className="w-5 h-5 text-gray-400 mr-2" />
-                    {/* <span className="text-gray-600">
-                      {rentalRequests?.dateRange[0]} to{" "}
-                      {rentalRequests?.dateRange[1]}
-                    </span> */}
+                    <span className="text-gray-600">
+                      {(() => {
+                        const [start, end] = rentalRequests?.dateRange || [];
+
+                        const formatDate = (dateStr) => {
+                          if (!dateStr) return "";
+                          const date = new Date(dateStr);
+                          const day = String(date.getDate()).padStart(2, "0");
+                          const month = date.toLocaleString("default", {
+                            month: "short",
+                          }); // Apr
+                          const year = date.getFullYear(); // 2025
+                          return `${day} ${month}, ${year}`;
+                        };
+
+                        return `${formatDate(start)} to ${formatDate(end)}`;
+                      })()}
+                    </span>
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-5 h-5 text-gray-400 mr-2" />
-                    {/* <span className="text-gray-600">
-                      {rentalRequests?.dateRange[0] -
-                        rentalRequests?.dateRange[1]}{" "}
-                      days
-                    </span> */}
+                    <span className="text-gray-600">
+                      {(() => {
+                        const [start, end] = rentalRequests?.dateRange || [];
+                        if (!start || !end) return "0 days";
+
+                        const startDate = new Date(start);
+                        const endDate = new Date(end);
+                        const diffTime = endDate - startDate;
+                        const diffDays = Math.ceil(
+                          diffTime / (1000 * 60 * 60 * 24)
+                        );
+
+                        return `${diffDays} days`;
+                      })()}
+                    </span>
                   </div>
                   <div className="mt-2 p-3 bg-green-50 rounded-md">
                     <span className="text-green-700 font-semibold">
-                      Total Amount: ${rentalRequests?.totalMoney}
+                      Total :{" "}
+                      {(() => {
+                        const [start, end] = rentalRequests?.dateRange || [];
+                        const pricePerDay = rentalRequests?.price || 0;
+
+                        if (start && end && pricePerDay) {
+                          const startDate = new Date(start);
+                          const endDate = new Date(end);
+                          const diffTime = Math.abs(endDate - startDate);
+                          const diffDays = Math.ceil(
+                            diffTime / (1000 * 60 * 60 * 24)
+                          );
+                          const total = diffDays * pricePerDay;
+                          return `$${total}`;
+                        }
+
+                        return "$0";
+                      })()}
+                    </span>
+                    {/* //todo: need to make it dynamic */}
+                    <span className="text-green-700 font-semibold ml-5">
+                      (Unpaid)
                     </span>
                   </div>
                 </div>

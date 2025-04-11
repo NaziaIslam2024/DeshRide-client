@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { Check, X, Car, Info } from "lucide-react";
+import { Check, X, Car, Info, RefreshCcw } from "lucide-react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useRole from "../../../hooks/useRole";
 import { useQuery } from "@tanstack/react-query";
@@ -9,8 +9,6 @@ import { useRentCar } from "../../../providers/RentACarProvider";
 
 function MyRentalCars() {
   const [statusFilter, setStatusFilter] = useState("all");
-
-  //? functions for fetching the data
 
   const axiosPublic = useAxiosPublic();
   const [, userData] = useRole();
@@ -55,19 +53,19 @@ function MyRentalCars() {
       console.error("Error fetching rental requests:", error);
     },
   });
+  // console.log(data[0]?.dateRange);
 
   // useEffect for updating the data
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch();
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     refetch();
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  //?
 
   const filteredRequests =
     statusFilter === "all"
@@ -153,11 +151,19 @@ function MyRentalCars() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {request?.rentDuration || "5"} days
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        {request?.startDate || "02/05/25"} -{" "}
-                        {request?.endDate || "02/05/25"}
+                        {(() => {
+                          const [start, end] = request?.dateRange || [];
+                          if (start && end) {
+                            const startDate = new Date(start);
+                            const endDate = new Date(end);
+                            const diffTime = Math.abs(endDate - startDate);
+                            const diffDays = Math.ceil(
+                              diffTime / (1000 * 60 * 60 * 24)
+                            );
+                            return `${diffDays} days`;
+                          }
+                          return "Duration unknown";
+                        })()}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -176,8 +182,25 @@ function MyRentalCars() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">
-                        ${request?.money || "total"}
+                        {(() => {
+                          const [start, end] = request?.dateRange || [];
+                          const pricePerDay = request?.price || 0;
+
+                          if (start && end && pricePerDay) {
+                            const startDate = new Date(start);
+                            const endDate = new Date(end);
+                            const diffTime = Math.abs(endDate - startDate);
+                            const diffDays = Math.ceil(
+                              diffTime / (1000 * 60 * 60 * 24)
+                            );
+                            const total = diffDays * pricePerDay;
+                            return `$${total}`;
+                          }
+
+                          return "$0";
+                        })()}
                       </div>
+
                       <div className="text-xs text-gray-500">
                         (${request?.price}/day)
                       </div>
@@ -201,6 +224,12 @@ function MyRentalCars() {
                               Reject
                             </button>
                           </>
+                        )}
+                        {request?.rentStatus === "ongoing" && (
+                          <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <RefreshCcw className="w-4 h-4 mr-2" />
+                            Ongoing
+                          </button>
                         )}
                         <Link to={`/dashboard/car-details/${request?._id}`}>
                           <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
