@@ -50,6 +50,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, userRole = "consumer" }) => {
       roles: ["consumer"],
     },
     { path: "whatsapp", label: "Chat", icon: <FaCar />, roles: ["consumer"] },
+    { path: "my-rent-status", label: "My Rent", icon: <FaCar />, roles: ["consumer"] },
 
     // ownerDriver
     {
