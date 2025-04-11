@@ -23,6 +23,7 @@ import WorkflowAnimation from "../components/Shared/WorkflowAnimation";
 import AdvertiseCars from "../pages/Dashboard/Admin/AdvertiseCars";
 import MyRentalCars from "../pages/Dashboard/CarProvider/MyRentalCars";
 import RentalCarDetails from "../pages/Dashboard/CarProvider/RentalCarDetails";
+import MyRentStatus from "../pages/Dashboard/Consumer/MyRentStatus";
 
 export const router = createBrowserRouter([
   {
@@ -121,6 +122,11 @@ export const router = createBrowserRouter([
       {
         path: "all-listed-cars",
         element: <AllListedCars></AllListedCars>,
+      },
+      {
+        path: "my-rent-status",
+        element: <MyRentStatus></MyRentStatus>
+       
       },
       {
         path: "whatsapp",
