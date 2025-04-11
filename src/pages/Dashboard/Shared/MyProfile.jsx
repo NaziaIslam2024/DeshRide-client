@@ -1,46 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import useAuth from '../../../hooks/useAuth';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import { FaHome, FaIdCard, FaPhone, FaShieldAlt, FaTools, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router';
+import React, { useEffect, useState } from "react";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import {
+  FaCar,
+  FaIdCard,
+  FaPhone,
+  FaHome,
+  FaUserShield,
+  FaTools,
+  FaShieldAlt,
+  FaUserTie,
+  FaUser,
+} from "react-icons/fa";
+import { GiSteeringWheel } from "react-icons/gi";
+import { MdDirectionsCar, MdEmergency } from "react-icons/md";
 
 const MyProfile = () => {
-  const { user, changePassword } = useAuth();
+  const { user } = useAuth();
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const axiosPublic = useAxiosPublic();
-
-  // ?
-  const [showModal, setShowModal] = useState(false);
-  // const { changePassword } = useAuth();
-  const [showOldPassword, setShowOldPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-
-  //
-  //
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const oldPassword = e.target.oldPassword.value;
-    const newPassword = e.target.newPassword.value;
-
-    // Call the change password function
-    changePassword(email, oldPassword, newPassword)
-      .then(() => {
-        // alert("Password changed successfully!");
-        setShowModal(false);
-      })
-      .catch((error) => {
-        console.error("Error changing password:", error);
-        // alert("Failed to change password. Please try again.");
-      });
-  };
-
-  // ?
-
-  // hi
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -62,7 +45,7 @@ const MyProfile = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-50 to-purple-50">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
         <div className="animate-pulse flex flex-col items-center">
           <div className="h-32 w-32 bg-gray-300 rounded-full mb-4"></div>
           <div className="h-6 w-48 bg-gray-300 rounded mb-2"></div>
@@ -241,7 +224,7 @@ const MyProfile = () => {
 
               <div className="flex items-start">
                 <div className="bg-red-100 p-3 rounded-full mr-4">
-                  {/* <MdEmergency className="text-red-600 text-xl" /> */}
+                  <MdEmergency className="text-red-600 text-xl" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">
@@ -419,13 +402,6 @@ const MyProfile = () => {
             Edit Profile
           </Link>
 
-          <button
-            className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all transform hover:-translate-y-1"
-            onClick={() => setShowModal(true)}
-          >
-            Change Password
-          </button>
-
           {profileData.role === "provider" && (
             <button className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all transform hover:-translate-y-1">
               Manage Services
@@ -445,96 +421,7 @@ const MyProfile = () => {
             </button>
           )}
         </div>
-
-        {/* // */}
-        {/* Password Modal */}
-        {showModal && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-            <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
-              <h2 className="text-2xl font-bold mb-6 text-center">
-                Change Password
-              </h2>
-
-              <form className="space-y-4" onSubmit={handleSubmit}>
-                {/* Email */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-600">
-                    Email
-                  </label>
-                  <input
-                    name="email"
-                    type="email"
-                    className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    placeholder="Enter your email"
-                  />
-                </div>
-
-                {/* Old Password */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-600">
-                    Old Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      name="oldPassword"
-                      type={showOldPassword ? "text" : "password"}
-                      className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
-                      placeholder="Enter old password"
-                    />
-                    <span
-                      className="absolute right-3 top-4 cursor-pointer text-gray-500"
-                      onClick={() => setShowOldPassword((prev) => !prev)}
-                    >
-                      {showOldPassword ? "🙈" : "👁️"}
-                    </span>
-                  </div>
-                </div>
-
-                {/* New Password */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-600">
-                    New Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      name="newPassword"
-                      type={showNewPassword ? "text" : "password"}
-                      className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                      placeholder="Enter new password"
-                    />
-                    <span
-                      className="absolute right-3 top-4 cursor-pointer text-gray-500"
-                      onClick={() => setShowNewPassword((prev) => !prev)}
-                    >
-                      {showNewPassword ? "🙈" : "👁️"}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Buttons */}
-                <div className="flex justify-between mt-6">
-                  <button
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                    className="px-5 py-2 rounded-lg bg-gray-300 hover:bg-gray-400"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-5 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-        {/* // */}
       </div>
-     
-     
     </div>
   );
 };

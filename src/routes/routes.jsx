@@ -4,7 +4,7 @@ import Home from "../pages/Home/Home";
 import Dashboard from "../Layout/Dashboard/Dashboard";
 import Login from "../pages/Auth/Login";
 import Registration from "../pages/Auth/Registration";
-import VehicleList from "../pages/Dashboard/Admin/VehicleList";
+
 import About from "../pages/About/About";
 import PrivacyPolicy from "../pages/privacy&policy/PrivacyPolicy";
 import MyProfile from "../pages/Dashboard/Shared/MyProfile";
@@ -18,6 +18,9 @@ import AllListedCars from "../pages/Dashboard/Consumer/AllListedCars";
 import RentACar from "../pages/RentACar/RentACar";
 import CarDetails from "../pages/RentACar/CarDetails";
 import EditProfile from "../pages/Dashboard/Shared/EditProfile";
+import AdvertiseCars from "../pages/Dashboard/Admin/AdvertiseCars";
+import MyRentalCars from "../pages/Dashboard/CarProvider/MyRentalCars";
+import RentalCarDetails from "../pages/Dashboard/CarProvider/RentalCarDetails";
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +96,21 @@ export const router = createBrowserRouter([
         path: "all-cars",
         element: <AllCars></AllCars>,
       },
+      // Admin
+      {
+        path: "adv-cars",
+        element: <AdvertiseCars></AdvertiseCars>,
+      },
+      // provider
+      {
+        path: "my-rentals",
+        element: <MyRentalCars></MyRentalCars>,
+      },
+      {
+        path: "car-details/:id",
+        element: <RentalCarDetails />,
+      },
+
       // consumer
       {
         path: "all-listed-cars",
