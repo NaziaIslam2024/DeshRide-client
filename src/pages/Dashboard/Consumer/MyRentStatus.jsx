@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import useRole from "../../../hooks/useRole";
-import { Car, Check, Info, RefreshCcw, X } from "lucide-react";
+import { Car, Check, CreditCard, Info, RefreshCcw, X } from "lucide-react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { Link } from "react-router";
 
@@ -170,7 +170,7 @@ const MyRentStatus = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex gap-2">
-                        {request?.rentStatus === "pending" && (
+                        {/* {request?.rentStatus === "pending" && (
                           <>
                             <button
                               onClick={() => handleAccept(request?._id)}
@@ -193,13 +193,17 @@ const MyRentStatus = () => {
                             <RefreshCcw className="w-4 h-4 mr-2" />
                             Ongoing
                           </button>
-                        )}
-                        <Link to={`/dashboard/car-details/${request?._id}`}>
+                        )} */}
+                        <Link to={`/dashboard/my-rents/${request?._id}`}>
                           <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <Info className="w-4 h-4 mr-1" />
                             Details
                           </button>
                         </Link>
+                        <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                          <CreditCard className="w-4 h-4 mr-1" />
+                          Pay Now
+                        </button>
                       </div>
                     </td>
                   </tr>
