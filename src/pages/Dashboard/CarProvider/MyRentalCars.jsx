@@ -1,57 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Check, X, Car, Info } from "lucide-react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useRole from "../../../hooks/useRole";
 import { useQuery } from "@tanstack/react-query";
+import { useRentCar } from "../../../providers/RentACarProvider";
 // import useRentalCarDetails from "../../../hooks/useRentalCarDetails";
-
-// Mock data for demonstration
-// const rentalRequests = [
-//   {
-//     _id: 1,
-//     vehicleName: "Tesla Model 3",
-//     model: "2024",
-//     rentPerDay: 75,
-//     type: "Sedan",
-//     fuelType: "Electric",
-//     seats: 5,
-//     imageUrl:
-//       "https://images.unsplash.com/photo-1619767886558-efdc259b6e09?auto=format&fit=crop&q=80&w=1200",
-//     rentMessage:
-//       "I would like to rent this car for my business trip. I will take good care of it.",
-//     requesterName: "John Doe",
-//     requesterEmail: "john@example.com",
-//     requesterUsername: "johndoe",
-//     requesterPhone: "+1 234 567 8900",
-//     rentStatus: "pending",
-//     rentDuration: 5,
-//     totalMoney: 375,
-//     startDate: "2024-03-20",
-//     endDate: "2024-03-25",
-//   },
-//   {
-//     _id: 2,
-//     vehicleName: "BMW X5",
-//     model: "2023",
-//     rentPerDay: 95,
-//     type: "SUV",
-//     fuelType: "Hybrid",
-//     seats: 7,
-//     imageUrl:
-//       "https://images.unsplash.com/photo-1656468014942-fc3f9895f131?auto=format&fit=crop&q=80&w=1200",
-//     rentMessage: "Need this for a family vacation. We are 5 people.",
-//     requesterName: "Jane Smith",
-//     requesterEmail: "jane@example.com",
-//     requesterUsername: "janesmith",
-//     requesterPhone: "+1 234 567 8901",
-//     rentStatus: "ongoing",
-//     rentDuration: 3,
-//     totalMoney: 285,
-//     startDate: "2024-03-22",
-//     endDate: "2024-03-24",
-//   },
-// ];
 
 function MyRentalCars() {
   const [statusFilter, setStatusFilter] = useState("all");
@@ -62,15 +16,26 @@ function MyRentalCars() {
   const [, userData] = useRole();
   const ownerEmail = userData?.email;
 
-  const handleAccept = (_id) => {
-    console.log("Accepted request:", _id);
-    // Add your accept logic here
-  };
+  const {
+    selectedCar,
+    setSelectedCar,
+    showRentModal,
+    setShowRentModal,
+    rentMessage,
+    setRentMessage,
 
-  const handleReject = (_id) => {
-    console.log("Rejected request:", _id);
-    // Add your reject logic here
-  };
+    handleRentRequest,
+    setCar,
+
+    dateRange,
+    setDateRange,
+    startDate,
+    endDate,
+
+    //
+    handleAccept,
+    handleReject,
+  } = useRentCar();
 
   const [rentalRequests, setRentalRequests] = useState([]);
   const { data, error, isLoading, refetch } = useQuery({
@@ -90,6 +55,16 @@ function MyRentalCars() {
       console.error("Error fetching rental requests:", error);
     },
   });
+
+  // useEffect for updating the data
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+      // console.log("Refetched at", new Date().toLocaleTimeString());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;

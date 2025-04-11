@@ -37,7 +37,6 @@ export const RentACarProvider = ({ children }) => {
       rentStatus: "pending",
       dateRange,
     };
-    console.log(rentRequestData);
 
     // Send rentRequestData to the server
     const res = await axiosPublic.post(
@@ -53,6 +52,26 @@ export const RentACarProvider = ({ children }) => {
     }
 
     // Reset the car state after sending the request
+  };
+
+  //* rent car request data handle here
+  const handleAccept = async (_id) => {
+    console.log(_id);
+
+    // find the data by id in backend and change the status to accepted
+
+    const res = await axiosPublic.put(`/car-rental/update-car-rental/${_id}`);
+    console.log(res.data);
+    if (res.data.message === "Car rental updated successfully") {
+      toast.success("Car rental request accepted successfully!", {
+        position: "top-left",
+      });
+    }
+  };
+
+  const handleReject = (_id) => {
+    console.log(_id);
+    // Add your reject logic here
   };
   //?
 
@@ -73,6 +92,10 @@ export const RentACarProvider = ({ children }) => {
         setDateRange,
         startDate,
         endDate,
+
+        //
+        handleAccept,
+        handleReject,
       }}
     >
       {children}

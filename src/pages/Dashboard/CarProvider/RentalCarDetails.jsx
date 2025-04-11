@@ -15,61 +15,12 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
-// Mock data - in a real app, this would come from your backend
-const rentalRequests2 = [
-  {
-    id: 1,
-    vehicleName: "Tesla Model 3",
-    model: "2024",
-    rentPerDay: 75,
-    type: "Sedan",
-    fuelType: "Electric",
-    seats: 5,
-    imageUrl:
-      "https://images.unsplash.com/photo-1619767886558-efdc259b6e09?auto=format&fit=crop&q=80&w=1200",
-    rentMessage:
-      "I would like to rent this car for my business trip. I will take good care of it.",
-    requesterName: "John Doe",
-    requesterEmail: "john@example.com",
-    requesterUsername: "johndoe",
-    requesterPhone: "+1 234 567 8900",
-    rentStatus: "pending",
-    rentDuration: 5,
-    totalMoney: 375,
-    startDate: "2024-03-20",
-    endDate: "2024-03-25",
-  },
-  {
-    id: 2,
-    vehicleName: "BMW X5",
-    model: "2023",
-    rentPerDay: 95,
-    type: "SUV",
-    fuelType: "Hybrid",
-    seats: 7,
-    imageUrl:
-      "https://images.unsplash.com/photo-1656468014942-fc3f9895f131?auto=format&fit=crop&q=80&w=1200",
-    rentMessage: "Need this for a family vacation. We are 5 people.",
-    requesterName: "Jane Smith",
-    requesterEmail: "jane@example.com",
-    requesterUsername: "janesmith",
-    requesterPhone: "+1 234 567 8901",
-    rentStatus: "ongoing",
-    rentDuration: 3,
-    totalMoney: 285,
-    startDate: "2024-03-22",
-    endDate: "2024-03-24",
-  },
-];
-
 function RentalCarDetails() {
   const { id } = useParams();
-  // console.log(id);
   const navigate = useNavigate();
-  const request = rentalRequests2.find((r) => r.id === Number(id));
 
-  // ?
-  const [rentalRequests, setRentalRequests] = useState([]);
+  // find the data by id, and show
+  const [rentalRequests, setRentalRequests] = useState(null);
   const axiosPublic = useAxiosPublic();
 
   const { data, error, isLoading, refetch } = useQuery({
@@ -79,7 +30,7 @@ function RentalCarDetails() {
         `/car-rental/get-car-rental/${id}`
       );
       setRentalRequests(response.data);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     },
     enabled: !!id,
@@ -90,7 +41,11 @@ function RentalCarDetails() {
       console.error("Error fetching rental requests:", error);
     },
   });
-  // console.log(data);
+  useEffect(() => {
+    if (data) {
+      setRentalRequests(data);
+    }
+  }, [data]);
 
   const handleAccept = () => {
     console.log("Accepted request:", id);
@@ -185,7 +140,7 @@ function RentalCarDetails() {
           <div className="p-6">
             {/* Status Badge */}
             <div className="mb-6">
-              <span
+              {/* <span
                 className={`px-3 py-1 text-sm font-semibold rounded-full ${
                   rentalRequests?.rentStatus === "pending"
                     ? "bg-yellow-100 text-yellow-800"
@@ -196,7 +151,7 @@ function RentalCarDetails() {
               >
                 {rentalRequests?.rentStatus.charAt(0).toUpperCase() +
                   rentalRequests?.rentStatus.slice(1)}
-              </span>
+              </span> */}
             </div>
 
             {/* Vehicle Details */}
@@ -240,18 +195,18 @@ function RentalCarDetails() {
                 <div className="space-y-2">
                   <div className="flex items-center">
                     <Calendar className="w-5 h-5 text-gray-400 mr-2" />
-                    <span className="text-gray-600">
+                    {/* <span className="text-gray-600">
                       {rentalRequests?.dateRange[0]} to{" "}
                       {rentalRequests?.dateRange[1]}
-                    </span>
+                    </span> */}
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-5 h-5 text-gray-400 mr-2" />
-                    <span className="text-gray-600">
+                    {/* <span className="text-gray-600">
                       {rentalRequests?.dateRange[0] -
                         rentalRequests?.dateRange[1]}{" "}
                       days
-                    </span>
+                    </span> */}
                   </div>
                   <div className="mt-2 p-3 bg-green-50 rounded-md">
                     <span className="text-green-700 font-semibold">
