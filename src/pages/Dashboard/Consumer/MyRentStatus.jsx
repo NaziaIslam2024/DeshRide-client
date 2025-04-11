@@ -9,6 +9,20 @@ const MyRentStatus = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const axiosPublic = useAxiosPublic();
 
+  const handleCancel = async (_id) => {
+    console.log(_id);
+    // try {
+    //   const response = await axiosPublic.delete(
+    //     `/car-rental/delete-car/${requestId}`
+    //   );
+    //   if (response.status === 200) {
+    //     refetch();
+    //   }
+    // } catch (error) {
+    //   console.error("Error canceling the request:", error);
+    // }
+  };
+
   //?
   const [, userData] = useRole();
   const requesterEmail = userData?.email;
@@ -170,40 +184,29 @@ const MyRentStatus = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex gap-2">
-                        {/* {request?.rentStatus === "pending" && (
-                          <>
-                            <button
-                              onClick={() => handleAccept(request?._id)}
-                              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                            >
-                              <Check className="w-4 h-4 mr-1" />
-                              Accept
-                            </button>
-                            <button
-                              onClick={() => handleReject(request?._id)}
-                              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                            >
-                              <X className="w-4 h-4 mr-1" />
-                              Reject
-                            </button>
-                          </>
-                        )}
-                        {request?.rentStatus === "ongoing" && (
-                          <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            <RefreshCcw className="w-4 h-4 mr-2" />
-                            Ongoing
-                          </button>
-                        )} */}
                         <Link to={`/dashboard/my-rents/${request?._id}`}>
                           <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <Info className="w-4 h-4 mr-1" />
                             Details
                           </button>
                         </Link>
-                        <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                          <CreditCard className="w-4 h-4 mr-1" />
-                          Pay Now
-                        </button>
+                        {request?.rentStatus === "pending" && (
+                          <>
+                            <button
+                              onClick={() => handleCancel(request?._id)}
+                              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                            >
+                              <X className="w-4 h-4 mr-1" />
+                              Cancel
+                            </button>
+                          </>
+                        )}
+                        {request?.rentStatus === "ongoing" && (
+                          <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <CreditCard className="w-4 h-4 mr-1" />
+                            Pay Now
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
