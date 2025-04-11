@@ -107,7 +107,7 @@ export const RentACarProvider = ({ children }) => {
 
   // !
   const [showChatModal, setShowChatModal] = useState(false);
-  console.log(showChatModal);
+  // console.log(showChatModal);
 
   //*
 
