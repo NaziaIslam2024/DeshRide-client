@@ -112,7 +112,9 @@ export const RentACarProvider = ({ children }) => {
   const [chatData, setChatData] = useState({
     rentalRequestId: "123456",
     requesterName: "Requester",
+    requesterEmail: "",
     providerName: "Provider",
+    providerEmail: "",
     image: "https://img.icons8.com/?size=100&id=108294&format=png&color=000000",
     messages: [
       { id: 1, sender: "user", message: "Hey, how are you?", time: "2:30 PM" },

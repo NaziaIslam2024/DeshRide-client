@@ -209,11 +209,66 @@ const MyRentStatus = () => {
                           </>
                         )}
                         {request?.rentStatus === "ongoing" && (
-                          <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                          <button
+                            onClick={() =>
+                              document.getElementById("my_modal_1").showModal()
+                            }
+                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          >
                             <CreditCard className="w-4 h-4 mr-1" />
                             Pay Now
                           </button>
                         )}
+                        {/* //todo: payment dialogue  */}
+                        <dialog id="my_modal_1" className="modal">
+                          <div className="modal-box">
+                            <div className="p-6 bg-white rounded-2xl max-w-md w-full text-left">
+                              <h3 className="font-bold text-xl text-gray-800">
+                                Choose Payment Method
+                              </h3>
+                              <p className="py-3 text-gray-600">
+                                Select your preferred payment gateway below:
+                              </p>
+
+                              <div className="flex flex-col gap-3">
+                                <label className="flex items-center p-3 border rounded-lg cursor-pointer hover:border-green-900 transition">
+                                  <input
+                                    type="radio"
+                                    name="payment"
+                                    value="stripe"
+                                    className="radio text-green-700 mr-3"
+                                  />
+                                  <span className="text-gray-800 font-medium">
+                                    Stripe
+                                  </span>
+                                </label>
+
+                                <label className="flex items-center p-3 border rounded-lg cursor-pointer hover:border-green-900 transition">
+                                  <input
+                                    type="radio"
+                                    name="payment"
+                                    value="sslcommerz"
+                                    className="radio  text-green-700 mr-3"
+                                  />
+                                  <span className="text-gray-800 font-medium">
+                                    SSLCOMMERZ
+                                  </span>
+                                </label>
+                              </div>
+
+                              <div className="modal-action mt-5 flex justify-between items-center">
+                                <form method="dialog">
+                                  <button className="btn btn-outline">
+                                    Close
+                                  </button>
+                                </form>
+                                <button className="btn bg-green-700 text-white px-6">
+                                  Pay Now
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </dialog>
                       </div>
                     </td>
                   </tr>
