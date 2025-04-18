@@ -3,11 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../providers/AuthProvider";
 
 const axiosSecure = axios.create({
-  baseURL: "https://desh-ride-server.vercel.app",
-  // baseURL: "https://deshride-server.onrender.com/",
-  // baseURL: "https://assetflow-livid.vercel.app",
-
-  // baseURL: "https://deshride-server.onrender.com/",
+  // baseURL: "https://desh-ride-server.vercel.app",
+  baseURL: "http://localhost:5001",
 });
 const useAxiosSecure = () => {
   const navigate = useNavigate();
