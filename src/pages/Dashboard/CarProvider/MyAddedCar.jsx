@@ -14,7 +14,7 @@ const MyAddedCar = () => {
       try {
         if (!user?.email) return;
         const response = await axios.get(
-          `https://desh-ride-server.vercel.app/cars/my-cars?ownerEmail=${user.email}`
+          `http://localhost:5001/cars/my-cars?ownerEmail=${user.email}`
         );
         setCars(response.data.cars || []);
         setLoading(false);

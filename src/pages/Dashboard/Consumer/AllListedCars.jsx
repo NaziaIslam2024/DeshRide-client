@@ -28,7 +28,8 @@ const AllListedCars = () => {
     const fetchApprovedCars = async () => {
       try {
         const response = await axios.get(
-          "https://desh-ride-server.vercel.app/cars"
+          // "http://localhost:5001/cars"
+          "http://localhost:5001/cars"
         );
 
         const approvedCars = response.data.cars.filter(
