@@ -27,7 +27,8 @@ const TrendingCars = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         const response = await axios.get(
-          "https://desh-ride-server.vercel.app/cars"
+          // "http://localhost:5001/cars"
+          "http://localhost:5001/cars"
         );
         const activeCars = (response.data.cars || [])
           .filter((car) => car.advertiseStatus === "Active")

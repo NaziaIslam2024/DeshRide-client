@@ -14,9 +14,7 @@ const AllCars = () => {
   useEffect(() => {
     const fetchAllCars = async () => {
       try {
-        const response = await axios.get(
-          "https://desh-ride-server.vercel.app/cars"
-        );
+        const response = await axios.get("http://localhost:5001/cars");
         setCars(response.data.cars || []);
         setLoading(false);
       } catch (err) {
@@ -30,13 +28,10 @@ const AllCars = () => {
 
   const handleStatusUpdate = async (carId, newStatus) => {
     try {
-      await axios.put(
-        "https://desh-ride-server.vercel.app/cars/update-status",
-        {
-          carId,
-          status: newStatus,
-        }
-      );
+      await axios.put("http://localhost:5001/cars/update-status", {
+        carId,
+        status: newStatus,
+      });
       setCars(
         cars.map((car) =>
           car._id === carId ? { ...car, carStatus: newStatus } : car
@@ -64,7 +59,8 @@ const AllCars = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`https://desh-ride-server.vercel.app/cars/${carId}`);
+        // await axios.delete(`http://localhost:5001/cars/${carId}`);
+        await axios.delete(`http://localhost:5001/cars/${carId}`);
         setCars(cars.filter((car) => car._id !== carId));
         toast.success("Car deleted successfully!");
         if (currentCars.length === 1 && currentPage > 1) {

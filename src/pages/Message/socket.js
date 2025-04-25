@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
 
-const socket = io("https://desh-ride-server.vercel.app", {
+// const socket = io("http://localhost:5001", {
+const socket = io("http://localhost:5001", {
   transports: ["websocket"],
   withCredentials: true,
 });
