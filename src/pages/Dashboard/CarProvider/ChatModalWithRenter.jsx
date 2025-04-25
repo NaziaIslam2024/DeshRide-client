@@ -109,7 +109,7 @@ function ChatModalWithRenter({ id, onClose }) {
   const [isMinimized, setIsMinimized] = useState(false);
   const messagesEndRef = useRef(null);
   const [userRole, userData] = useRole();
-  const useAxiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -140,8 +140,8 @@ function ChatModalWithRenter({ id, onClose }) {
       };
       console.log(newMessage);
       // send the message to the server
-      const res = useAxiosPublic.post(`/chat/${id}/message`, newMessage);
-      console.log(res);
+      // const res = axiosPublic.post(`/chat/${id}/message`, newMessage);
+      // console.log(res);
 
       setMessage("");
     }
