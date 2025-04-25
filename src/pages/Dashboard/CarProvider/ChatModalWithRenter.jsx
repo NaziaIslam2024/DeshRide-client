@@ -1,100 +1,115 @@
 import React, { useState, useRef, useEffect } from "react";
-import { X, Minus, Phone, Video, Image, Smile, ThumbsUp } from "lucide-react";
+import { X, Minus, Phone, Video, Image, Smile, Send } from "lucide-react";
+import useRole from "../../../hooks/useRole";
+import { format } from "date-fns"; // Import date-fns for formatting
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
-// Fake chat data
+// Fake chat data with timestamps
 const chatData = [
-  { id: 1, sender: "user", message: "Hey, how are you?", time: "2:30 PM" },
+  {
+    id: 1,
+    sender: "ownerDriver",
+    message: "Hey, how are you?",
+    timestamp: new Date("2025-04-25T14:30:00"), // Full date and time
+  },
   {
     id: 2,
-    sender: "other",
+    sender: "consumer",
     message: "I'm doing great! Thanks for asking.",
-    time: "2:31 PM",
+    timestamp: new Date("2025-04-25T14:31:00"),
   },
   {
     id: 3,
-    sender: "user",
+    sender: "ownerDriver",
     message: "That's good to hear! What are you up to?",
-    time: "2:31 PM",
+    timestamp: new Date("2025-04-25T14:31:00"),
   },
   {
     id: 4,
-    sender: "other",
+    sender: "consumer",
     message: "Just working on some projects. How about you?",
-    time: "2:32 PM",
+    timestamp: new Date("2025-04-25T14:32:00"),
   },
   {
     id: 5,
-    sender: "user",
+    sender: "ownerDriver",
     message: "Same here! Working on a new website design.",
-    time: "2:33 PM",
+    timestamp: new Date("2025-04-25T14:33:00"),
   },
   {
     id: 6,
-    sender: "other",
+    sender: "consumer",
     message: "That sounds interesting! What kind of website is it?",
-    time: "2:34 PM",
+    timestamp: new Date("2025-04-25T14:34:00"),
   },
   {
     id: 7,
-    sender: "user",
+    sender: "ownerDriver",
     message:
       "It's a social media platform, kind of like Facebook but for a specific niche.",
-    time: "2:35 PM",
+    timestamp: new Date("2025-04-25T14:35:00"),
   },
   {
     id: 8,
-    sender: "other",
+    sender: "consumer",
     message: "Wow, that's cool! Would love to see it when it's done.",
-    time: "2:36 PM",
+    timestamp: new Date("2025-04-25T14:36:00"),
   },
   {
     id: 9,
-    sender: "user",
+    sender: "ownerDriver",
     message: "Sure, I'll show you once it's ready!",
-    time: "2:36 PM",
+    timestamp: new Date("2025-04-25T14:36:00"),
   },
   {
     id: 10,
-    sender: "other",
+    sender: "consumer",
     message: "Looking forward to it! 😊",
-    time: "2:37 PM",
+    timestamp: new Date("2025-04-25T14:37:00"),
   },
   {
     id: 11,
-    sender: "user",
+    sender: "ownerDriver",
     message: "By the way, are you free this weekend?",
-    time: "2:38 PM",
+    timestamp: new Date("2025-04-25T14:38:00"),
   },
   {
     id: 12,
-    sender: "other",
+    sender: "consumer",
     message: "Yes, I should be! What do you have in mind?",
-    time: "2:39 PM",
+    timestamp: new Date("2025-04-25T14:39:00"),
   },
   {
     id: 13,
-    sender: "user",
+    sender: "ownerDriver",
     message: "There's this new coffee shop downtown, want to check it out?",
-    time: "2:40 PM",
+    timestamp: new Date("2025-04-25T14:40:00"),
   },
   {
     id: 14,
-    sender: "other",
+    sender: "consumer",
     message: "That sounds perfect! What time were you thinking?",
-    time: "2:41 PM",
+    timestamp: new Date("2025-04-25T14:41:00"),
   },
   {
     id: 15,
-    sender: "user",
+    sender: "ownerDriver",
     message: "How about Saturday around 2 PM?",
-    time: "2:42 PM",
+    timestamp: new Date("2025-04-25T14:42:00"),
   },
 ];
 
-function ChatModalWithRenter({ onClose }) {
+// Sort chatData by timestamp
+const sortedChatData = [...chatData].sort(
+  (a, b) => a.timestamp.getTime() - b.timestamp.getTime()
+);
+
+function ChatModalWithRenter({ id, onClose }) {
   const [message, setMessage] = useState("");
   const [isMinimized, setIsMinimized] = useState(false);
   const messagesEndRef = useRef(null);
+  const [userRole, userData] = useRole();
+  const useAxiosPublic = useAxiosPublic();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -104,10 +119,37 @@ function ChatModalWithRenter({ onClose }) {
     scrollToBottom();
   }, []);
 
+  // Sender data
+  let sender = "";
+  if (userRole === "ownerDriver") {
+    sender = "ownerDriver";
+  } else if (userRole === "consumer") {
+    sender = "consumer";
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle message submission here
-    setMessage("");
+    if (message.trim()) {
+      const now = new Date();
+      const isoDate = format(now, "yyyy-MM-dd'T'HH:mm:ss"); // Using date-fns
+      const newMessage = {
+        chatId: id,
+        sender: sender,
+        message: message,
+        timestamp: isoDate,
+      };
+      console.log(newMessage);
+      // send the message to the server
+      const res = useAxiosPublic.post(`/chat/${id}/message`, newMessage);
+      console.log(res);
+
+      setMessage("");
+    }
+  };
+
+  // Format timestamp for display
+  const formatTimestamp = (timestamp) => {
+    return format(timestamp, "MMMM d, yyyy, h:mm a"); // e.g., "April 25, 2025, 2:30 PM"
   };
 
   if (isMinimized) {
@@ -164,19 +206,19 @@ function ChatModalWithRenter({ onClose }) {
         className="flex-1 p-4 overflow-y-auto bg-white"
         style={{ scrollbarWidth: "thin" }}
       >
-        {chatData.map((chat) => (
+        {sortedChatData.map((chat) => (
           <div
             key={chat.id}
             className={`flex ${
-              chat.sender === "user" ? "justify-end" : "justify-start"
+              chat.sender === "ownerDriver" ? "justify-end" : "justify-start"
             } mb-4`}
           >
-            {chat.sender === "other" && (
+            {chat.sender === "consumer" && (
               <div className="w-6 h-6 rounded-full bg-gray-200 mr-2 flex-shrink-0 mt-1" />
             )}
             <div
               className={`${
-                chat.sender === "user"
+                chat.sender === "ownerDriver"
                   ? "bg-blue-500 text-white"
                   : "bg-gray-100 text-black"
               } rounded-2xl py-2 px-4 max-w-[60%] break-words`}
@@ -184,10 +226,12 @@ function ChatModalWithRenter({ onClose }) {
               <p>{chat.message}</p>
               <p
                 className={`text-xs mt-1 ${
-                  chat.sender === "user" ? "text-blue-100" : "text-gray-500"
+                  chat.sender === "ownerDriver"
+                    ? "text-blue-100"
+                    : "text-gray-500"
                 }`}
               >
-                {chat.time}
+                {formatTimestamp(chat.timestamp)}
               </p>
             </div>
           </div>
@@ -219,8 +263,8 @@ function ChatModalWithRenter({ onClose }) {
             placeholder="Aa"
             className="flex-1 px-4 w-10 py-2 rounded-full bg-gray-100 focus:outline-none"
           />
-          <button type="button" className="p-2 hover:bg-gray-100 rounded-full">
-            <ThumbsUp size={20} className="text-blue-500" />
+          <button type="submit" className="p-2 hover:bg-gray-100 rounded-full">
+            <Send size={20} className="text-blue-500" />
           </button>
         </div>
       </form>
