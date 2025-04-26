@@ -122,7 +122,7 @@ const TrendingCars = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Our Most <span className="text-blue-600">Trending</span> Cars
+            Our Most <span className="text-primary-light-600">Trending</span> Cars
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Discover the most popular cars that our customers love to rent
@@ -159,7 +159,7 @@ const TrendingCars = () => {
                 whileHover="hover"
                 onMouseEnter={() => setHoveredCar(index)}
                 onMouseLeave={() => setHoveredCar(null)}
-                className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 relative"
+                className="bg-accent-light-100 rounded-xl shadow-md overflow-hidden border border-gray-100 relative"
               >
                 {/* Favorite button */}
                 <button className="absolute top-4 right-4 z-10 p-2 bg-white rounded-full shadow-md hover:bg-red-50 transition-colors">
@@ -221,7 +221,7 @@ const TrendingCars = () => {
                   <div className="flex justify-between items-center pt-4 border-t border-gray-100">
                     <div>
                       <p className="text-sm text-gray-500">Starting from</p>
-                      <p className="text-xl font-bold text-blue-600">
+                      <p className="text-xl font-bold text-light-600">
                         ${car.price.toLocaleString()}
                         <span className="text-sm font-normal text-gray-500">
                           /day
@@ -234,7 +234,7 @@ const TrendingCars = () => {
                     >
                       <Link
                         to={`/rent-car/${car?._id}`}
-                        className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200"
+                        className="flex items-center px-4 py-2 bg-primary-light-700 text-white rounded-lg hover:bg-primary-light-500 transition-all duration-200"
                       >
                         Rent Now <FaArrowRight className="ml-2" />
                       </Link>
@@ -255,7 +255,7 @@ const TrendingCars = () => {
           >
             <Link
               to="/rent-a-car"
-              className="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 font-medium rounded-full hover:bg-blue-50 transition-colors"
+              className="inline-flex items-center px-6 py-3 border border-primary-light-800 text-primary-light-600 font-medium rounded-full hover:bg-blue-50 transition-colors"
             >
               View All Cars <FaArrowRight className="ml-2" />
             </Link>
