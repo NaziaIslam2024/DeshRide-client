@@ -44,7 +44,6 @@ const Home = () => {
       <div className="container mx-auto">
         <Stories></Stories>
         <WhyChooseUs></WhyChooseUs>
-        <Host></Host>
         <Testimonial></Testimonial>
       </div>
 
