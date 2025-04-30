@@ -330,7 +330,10 @@ function RentalCarDetails() {
       </div>
       {/* Chat Modal */}
       {showChat && (
-        <ChatModalWithRenter id={id} onClose={() => setShowChat(false)} />
+        <ChatModalWithRenter
+          chatId={data._id}
+          onClose={() => setShowChat(false)}
+        />
       )}
     </div>
   );

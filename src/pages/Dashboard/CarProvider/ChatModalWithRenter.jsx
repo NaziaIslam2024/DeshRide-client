@@ -104,7 +104,7 @@ const sortedChatData = [...chatData].sort(
   (a, b) => a.timestamp.getTime() - b.timestamp.getTime()
 );
 
-function ChatModalWithRenter({ id, onClose }) {
+function ChatModalWithRenter({ chatId, onClose }) {
   const [message, setMessage] = useState("");
   const [isMinimized, setIsMinimized] = useState(false);
   const messagesEndRef = useRef(null);
@@ -119,8 +119,9 @@ function ChatModalWithRenter({ id, onClose }) {
     scrollToBottom();
   }, []);
 
-  // Sender data
+  // Sender and me logic
   let sender = "";
+  let me = userRole === "ownerDriver" ? "ownerDriver" : "consumer"; // Set 'me' based on userRole
   if (userRole === "ownerDriver") {
     sender = "ownerDriver";
   } else if (userRole === "consumer") {
@@ -133,13 +134,13 @@ function ChatModalWithRenter({ id, onClose }) {
       const now = new Date();
       const isoDate = format(now, "yyyy-MM-dd'T'HH:mm:ss"); // Using date-fns
       const newMessage = {
-        chatId: id,
+        chatId: chatId,
         sender: sender,
         message: message,
         timestamp: isoDate,
       };
       console.log(newMessage);
-      // send the message to the server
+      // Send the message to the server
       // const res = axiosPublic.post(`/chat/${id}/message`, newMessage);
       // console.log(res);
 
@@ -210,15 +211,15 @@ function ChatModalWithRenter({ id, onClose }) {
           <div
             key={chat.id}
             className={`flex ${
-              chat.sender === "ownerDriver" ? "justify-end" : "justify-start"
+              chat.sender === me ? "justify-end" : "justify-start"
             } mb-4`}
           >
-            {chat.sender === "consumer" && (
+            {chat.sender !== me && (
               <div className="w-6 h-6 rounded-full bg-gray-200 mr-2 flex-shrink-0 mt-1" />
             )}
             <div
               className={`${
-                chat.sender === "ownerDriver"
+                chat.sender === me
                   ? "bg-blue-500 text-white"
                   : "bg-gray-100 text-black"
               } rounded-2xl py-2 px-4 max-w-[60%] break-words`}
@@ -226,9 +227,7 @@ function ChatModalWithRenter({ id, onClose }) {
               <p>{chat.message}</p>
               <p
                 className={`text-xs mt-1 ${
-                  chat.sender === "ownerDriver"
-                    ? "text-blue-100"
-                    : "text-gray-500"
+                  chat.sender === me ? "text-blue-100" : "text-gray-500"
                 }`}
               >
                 {formatTimestamp(chat.timestamp)}
