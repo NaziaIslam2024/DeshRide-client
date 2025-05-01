@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useRentCar } from "../../../providers/RentACarProvider";
 import ChatModalWithOwner from "./ChatModalWithOwner";
+import ChatModalWithRenter from "../CarProvider/ChatModalWithRenter";
 
 function MyRentDetails() {
   const { id } = useParams();
@@ -71,6 +72,7 @@ function MyRentDetails() {
       setRentalRequests(data);
     }
   }, [data]);
+  console.log(data._id);
 
   const handleChat = () => {
     console.log("Opening chat with:", request?.requesterUsername);
@@ -373,7 +375,12 @@ function MyRentDetails() {
         </div>
       </div>
       {/* Chat Modal */}
-      {showChat && <ChatModalWithOwner onClose={() => setShowChat(false)} />}
+      {showChat && (
+        <ChatModalWithRenter
+          chatId={data._id}
+          onClose={() => setShowChat(false)}
+        />
+      )}
     </div>
   );
 }
