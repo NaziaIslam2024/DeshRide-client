@@ -1,100 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
-import { X, Minus, Phone, Video, Image, Smile, ThumbsUp } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { X, Minus, Phone, Video, Image, Smile, Send } from "lucide-react";
+import { format } from "date-fns";
+import useRole from "../../../hooks/useRole";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useFetchChats from "../../../hooks/useFetchChats";
 
-// Fake chat data
-const chatData = [
-  { id: 1, sender: "user", message: "Hey, how are you?", time: "2:30 PM" },
-  {
-    id: 2,
-    sender: "other",
-    message: "I'm doing great! Thanks for asking.",
-    time: "2:31 PM",
-  },
-  {
-    id: 3,
-    sender: "user",
-    message: "That's good to hear! What are you up to?",
-    time: "2:31 PM",
-  },
-  {
-    id: 4,
-    sender: "other",
-    message: "Just working on some projects. How about you?",
-    time: "2:32 PM",
-  },
-  {
-    id: 5,
-    sender: "user",
-    message: "Same here! Working on a new website design.",
-    time: "2:33 PM",
-  },
-  {
-    id: 6,
-    sender: "other",
-    message: "That sounds interesting! What kind of website is it?",
-    time: "2:34 PM",
-  },
-  {
-    id: 7,
-    sender: "user",
-    message:
-      "It's a social media platform, kind of like Facebook but for a specific niche.",
-    time: "2:35 PM",
-  },
-  {
-    id: 8,
-    sender: "other",
-    message: "Wow, that's cool! Would love to see it when it's done.",
-    time: "2:36 PM",
-  },
-  {
-    id: 9,
-    sender: "user",
-    message: "Sure, I'll show you once it's ready!",
-    time: "2:36 PM",
-  },
-  {
-    id: 10,
-    sender: "other",
-    message: "Looking forward to it! 😊",
-    time: "2:37 PM",
-  },
-  {
-    id: 11,
-    sender: "user",
-    message: "By the way, are you free this weekend?",
-    time: "2:38 PM",
-  },
-  {
-    id: 12,
-    sender: "other",
-    message: "Yes, I should be! What do you have in mind?",
-    time: "2:39 PM",
-  },
-  {
-    id: 13,
-    sender: "user",
-    message: "There's this new coffee shop downtown, want to check it out?",
-    time: "2:40 PM",
-  },
-  {
-    id: 14,
-    sender: "other",
-    message: "That sounds perfect! What time were you thinking?",
-    time: "2:41 PM",
-  },
-  {
-    id: 15,
-    sender: "user",
-    message: "How about Saturday around 2 PM?",
-    time: "2:42 PM",
-  },
-];
-
-function ChatModalWithRenter({ onClose }) {
+function ChatModalWithRenter({ chatId, onClose }) {
   const [message, setMessage] = useState("");
   const [isMinimized, setIsMinimized] = useState(false);
   const messagesEndRef = useRef(null);
+  const [userRole, userData] = useRole();
+  const axiosPublic = useAxiosPublic();
+
+  // Fetch chats using the custom hook
+  const { data: chats, isLoading, error, refetch } = useFetchChats(chatId);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -102,12 +21,39 @@ function ChatModalWithRenter({ onClose }) {
 
   useEffect(() => {
     scrollToBottom();
-  }, []);
+  }, [chats]); // Scroll when chats update
 
-  const handleSubmit = (e) => {
+  // Sender and me logic
+  const me = userRole === "ownerDriver" ? "ownerDriver" : "consumer";
+  const sender = me;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle message submission here
-    setMessage("");
+    if (message.trim()) {
+      const now = new Date();
+      const isoDate = format(now, "yyyy-MM-dd'T'HH:mm:ss");
+      const newMessage = {
+        chatId: chatId,
+        sender: sender,
+        message: message,
+        timestamp: isoDate,
+      };
+      try {
+        const res = await axiosPublic.post("/chats/all_chats", newMessage);
+        setMessage("");
+        refetch(); // Manually refetch chats after sending a message
+      } catch (error) {
+        console.error(
+          "Error sending message:",
+          error.response?.data || error.message
+        );
+        alert("Failed to send message. Please try again.");
+      }
+    }
+  };
+
+  const formatTimestamp = (timestamp) => {
+    return format(new Date(timestamp), "MMMM d, yyyy, h:mm a");
   };
 
   if (isMinimized) {
@@ -164,34 +110,49 @@ function ChatModalWithRenter({ onClose }) {
         className="flex-1 p-4 overflow-y-auto bg-white"
         style={{ scrollbarWidth: "thin" }}
       >
-        {chatData.map((chat) => (
-          <div
-            key={chat.id}
-            className={`flex ${
-              chat.sender === "user" ? "justify-end" : "justify-start"
-            } mb-4`}
-          >
-            {chat.sender === "other" && (
-              <div className="w-6 h-6 rounded-full bg-gray-200 mr-2 flex-shrink-0 mt-1" />
-            )}
-            <div
-              className={`${
-                chat.sender === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-100 text-black"
-              } rounded-2xl py-2 px-4 max-w-[60%] break-words`}
-            >
-              <p>{chat.message}</p>
-              <p
-                className={`text-xs mt-1 ${
-                  chat.sender === "user" ? "text-blue-100" : "text-gray-500"
-                }`}
-              >
-                {chat.time}
-              </p>
-            </div>
+        {isLoading ? (
+          <div className="text-center text-gray-500">Loading chats...</div>
+        ) : error ? (
+          <div className="text-center text-red-500">
+            Error loading chats: {error.message}
           </div>
-        ))}
+        ) : chats && chats.length > 0 ? (
+          chats
+            .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+            .map((chat) => (
+              <div
+                key={chat._id} // Using _id as the unique key
+                className={`flex ${
+                  chat.sender === me ? "justify-end" : "justify-start"
+                } mb-4`}
+              >
+                {chat.sender !== me && (
+                  <div className="w-6 h-6 rounded-full bg-gray-200 mr-2 flex-shrink-0 mt-1" />
+                )}
+                <div
+                  className={`${
+                    chat.sender === me
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-100 text-black"
+                  } rounded-2xl py-2 px-4 max-w-[60%] break-words`}
+                >
+                  <p>{chat.message}</p>
+                  <p
+                    className={`text-xs mt-1 ${
+                      chat.sender === me ? "text-blue-100" : "text-gray-500"
+                    }`}
+                  >
+                    {formatTimestamp(chat.timestamp)}
+                  </p>
+                </div>
+              </div>
+            ))
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
+            <p className="text-lg font-semibold">Start Chatting!</p>
+            <p className="text-sm">Send a message to begin the conversation.</p>
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -219,8 +180,8 @@ function ChatModalWithRenter({ onClose }) {
             placeholder="Aa"
             className="flex-1 px-4 w-10 py-2 rounded-full bg-gray-100 focus:outline-none"
           />
-          <button type="button" className="p-2 hover:bg-gray-100 rounded-full">
-            <ThumbsUp size={20} className="text-blue-500" />
+          <button type="submit" className="p-2 hover:bg-gray-100 rounded-full">
+            <Send size={20} className="text-blue-500" />
           </button>
         </div>
       </form>

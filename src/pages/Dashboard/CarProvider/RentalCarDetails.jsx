@@ -329,7 +329,12 @@ function RentalCarDetails() {
         </div>
       </div>
       {/* Chat Modal */}
-      {showChat && <ChatModalWithRenter onClose={() => setShowChat(false)} />}
+      {showChat && (
+        <ChatModalWithRenter
+          chatId={data._id}
+          onClose={() => setShowChat(false)}
+        />
+      )}
     </div>
   );
 }
