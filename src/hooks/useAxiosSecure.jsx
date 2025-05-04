@@ -4,7 +4,7 @@ import { useAuth } from "../providers/AuthProvider";
 
 const axiosSecure = axios.create({
   // baseURL: "https://desh-ride-server.vercel.app",
-  baseURL: "http://localhost:5001",
+  baseURL: "https://desh-ride-server.vercel.app",
 });
 const useAxiosSecure = () => {
   const navigate = useNavigate();

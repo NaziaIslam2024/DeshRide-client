@@ -27,8 +27,8 @@ const TrendingCars = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         const response = await axios.get(
-          // "http://localhost:5001/cars"
-          "http://localhost:5001/cars"
+          // "https://desh-ride-server.vercel.app/cars"
+          "https://desh-ride-server.vercel.app/cars"
         );
         const activeCars = (response.data.cars || [])
           .filter((car) => car.advertiseStatus === "Active")
@@ -122,7 +122,8 @@ const TrendingCars = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Our Most <span className="text-primary-light-600">Trending</span> Cars
+            Our Most <span className="text-primary-light-600">Trending</span>{" "}
+            Cars
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Discover the most popular cars that our customers love to rent

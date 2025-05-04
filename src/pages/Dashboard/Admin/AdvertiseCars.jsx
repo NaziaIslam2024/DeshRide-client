@@ -14,8 +14,8 @@ const AdvertiseCars = () => {
     const fetchAllCars = async () => {
       try {
         const response = await axios.get(
-          // "http://localhost:5001/cars"
-          "http://localhost:5001"
+          // "https://desh-ride-server.vercel.app/cars"
+          "https://desh-ride-server.vercel.app"
         );
         setCars(response.data.cars || []);
         setLoading(false);
@@ -30,10 +30,13 @@ const AdvertiseCars = () => {
 
   const handleAdvertiseToggle = async (carId, advertiseStatus) => {
     try {
-      await axios.put("http://localhost:5001/cars/update-advertise", {
-        carId,
-        advertise: advertiseStatus,
-      });
+      await axios.put(
+        "https://desh-ride-server.vercel.app/cars/update-advertise",
+        {
+          carId,
+          advertise: advertiseStatus,
+        }
+      );
       setCars(
         cars.map((car) =>
           car._id === carId
